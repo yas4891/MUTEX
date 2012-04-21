@@ -1,0 +1,22 @@
+﻿<Window x:Class="GreedyStringTiling.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="600" Width="800" Loaded="OnLoad" Foreground="White">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="122*" />
+            <ColumnDefinition Width="381*" />
+        </Grid.ColumnDefinitions>
+        <RichTextBox Height="250" HorizontalAlignment="Left" Name="TextABox" VerticalAlignment="Top" Width="370" Margin="12,41,0,0" Grid.ColumnSpan="2" />
+        <RichTextBox Height="250" HorizontalAlignment="Right" Name="TextBBox" VerticalAlignment="Top" Width="378" Margin="0,41,12,0" Grid.Column="1" />
+        <Label Content="Text A" Height="28" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" Margin="12,12,0,0" />
+        <Label Content="Text B" Height="28" HorizontalAlignment="Left" Margin="200,12,0,0" Name="label2" VerticalAlignment="Top" Grid.Column="1" />
+        <Button Content="Start" Height="23" HorizontalAlignment="Left" Margin="201,297,0,0" Name="StartButton" VerticalAlignment="Top" Width="59" Click="StartAlgorithm" Grid.Column="1" />
+        <Label Content="Finished:" Height="28" HorizontalAlignment="Left" Margin="12,297,0,0" Name="label3" VerticalAlignment="Top" />
+        <Label Content="MML:" Height="28" HorizontalAlignment="Left" Margin="12,331,0,0" Name="label4" VerticalAlignment="Top" />
+        <Label Height="28" HorizontalAlignment="Left" Margin="122,297,0,0" Name="labelFinished" VerticalAlignment="Top" Width="107" Grid.ColumnSpan="2" Background="Red" />
+        <Button Content="Step" Height="23" HorizontalAlignment="Left" Margin="275,297,0,0" Name="StepButton" VerticalAlignment="Top" Width="59" Grid.Column="1" Click="DoOneStep" />
+        <Button Content="Run" Height="23" HorizontalAlignment="Right" Margin="0,297,191,0" Name="RunButton" VerticalAlignment="Top" Width="59" Grid.Column="1" Click="RunToCompletion" />
+        <TextBox Grid.ColumnSpan="2" Height="23" HorizontalAlignment="Left" Margin="122,331,0,0" Name="MMLTB" VerticalAlignment="Top" Width="107" Text="5" />
+    </Grid>
+</Window>

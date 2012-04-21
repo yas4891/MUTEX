@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="true">
+  <TopNode>[0-1000]D:\wissen\csharp\GreedyStringTiling\GSTTests.nunit</TopNode>
+  <SelectedNode>[0-1000]D:\wissen\csharp\GreedyStringTiling\GSTTests.nunit</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]D:\wissen\csharp\GreedyStringTiling\GSTTests.nunit" Expanded="true" />
+    <Node UniqueName="[0-1019]D:\wissen\csharp\GreedyStringTiling\GSTLibrary\bin\Debug\GSTLibrary.dll" Expanded="true" />
+    <Node UniqueName="[0-1020]GSTLibrary" Expanded="true" />
+    <Node UniqueName="[0-1021]GSTLibrary.test" Expanded="true" />
+    <Node UniqueName="[0-1022]GSTLibrary.test.tile" Expanded="true" />
+    <Node UniqueName="[0-1006]GSTLibrary.test.tile.GSTAlgorithmTest" Expanded="true" />
+    <Node UniqueName="[0-1001]GSTLibrary.test.tile.TileTest" Expanded="true" />
+    <Node UniqueName="[0-1023]GSTLibrary.test.token" Expanded="true" />
+    <Node UniqueName="[0-1004]GSTLibrary.test.token.GSTTokenTest" Expanded="true" />
+  </Nodes>
+</VisualState>
