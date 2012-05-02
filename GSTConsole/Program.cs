@@ -1,10 +1,6 @@
 ﻿using System;
 using System.IO;
-using CTokenizer;
-using DataRepository;
 using GSTAppLogic.app;
-using GSTAppLogic.app.model;
-using GSTAppLogic.test.model;
 
 namespace GSTConsole
 {
@@ -19,7 +15,10 @@ namespace GSTConsole
             if(!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("QUERY_STRING")))
             {
                 var queryString = Environment.GetEnvironmentVariable("QUERY_STRING");
+
+                assignment = GeneralHelper.GetAssignmentIdentifier(queryString);
                 student = GeneralHelper.GetStudentIdentifier(queryString);
+                path = GeneralHelper.GetPath(queryString);
             }
             else if(3 == args.Length)
             {
