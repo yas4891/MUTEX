@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// $ANTLR 3.4 D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g 2012-04-17 15:52:25
+// $ANTLR 3.4 D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g 2012-04-22 11:57:49
 
 // The variable 'variable' is assigned but its value is never used.
 #pragma warning disable 168, 219
@@ -28,15 +28,20 @@ using ConditionalAttribute = System.Diagnostics.ConditionalAttribute;
 public partial class MutexCLexer : Antlr.Runtime.Lexer
 {
 	public const int EOF=-1;
-	public const int DIGIT=4;
-	public const int FLOAT_DATATYPE=5;
-	public const int HEX_DIGIT=6;
-	public const int IDENTIFIER=7;
-	public const int INTEGER_DATATYPE=8;
-	public const int LETTER=9;
-	public const int POINTER_DATATYPE=10;
-	public const int SIGNED_UNSIGNED=11;
-	public const int VOID_DATATYPE=12;
+	public const int CONST_MODIFIER=4;
+	public const int DATATYPE=5;
+	public const int DIGIT=6;
+	public const int FLOAT_DATATYPE=7;
+	public const int FUNCTION_CALL=8;
+	public const int FUNCTION_DEFINITION=9;
+	public const int HEX_DIGIT=10;
+	public const int IDENTIFIER=11;
+	public const int INTEGER_DATATYPE=12;
+	public const int LETTER=13;
+	public const int PARAMETER_LIST=14;
+	public const int POINTER=15;
+	public const int SIGNED_UNSIGNED=16;
+	public const int VOID_DATATYPE=17;
 
     // delegates
     // delegators
@@ -127,97 +132,160 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
 	protected virtual void LeaveRule(string ruleName, int ruleIndex) {}
 
     [Conditional("ANTLR_TRACE")]
-    protected virtual void EnterRule_POINTER_DATATYPE() {}
+    protected virtual void EnterRule_FUNCTION_DEFINITION() {}
     [Conditional("ANTLR_TRACE")]
-    protected virtual void LeaveRule_POINTER_DATATYPE() {}
+    protected virtual void LeaveRule_FUNCTION_DEFINITION() {}
 
-    // $ANTLR start "POINTER_DATATYPE"
-    [GrammarRule("POINTER_DATATYPE")]
-    private void mPOINTER_DATATYPE()
+    // $ANTLR start "FUNCTION_DEFINITION"
+    [GrammarRule("FUNCTION_DEFINITION")]
+    private void mFUNCTION_DEFINITION()
     {
-    	EnterRule_POINTER_DATATYPE();
-    	EnterRule("POINTER_DATATYPE", 1);
-    	TraceIn("POINTER_DATATYPE", 1);
+    	EnterRule_FUNCTION_DEFINITION();
+    	EnterRule("FUNCTION_DEFINITION", 1);
+    	TraceIn("FUNCTION_DEFINITION", 1);
     		try
     		{
-    		int _type = POINTER_DATATYPE;
+    		int _type = FUNCTION_DEFINITION;
     		int _channel = DefaultTokenChannel;
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:10:2: ( ( FLOAT_DATATYPE | INTEGER_DATATYPE | VOID_DATATYPE ) ( ' ' )* ( '*' )+ )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:10:2: ( DATATYPE IDENTIFIER '(' PARAMETER_LIST ')' )
     		DebugEnterAlt(1);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:10:4: ( FLOAT_DATATYPE | INTEGER_DATATYPE | VOID_DATATYPE ) ( ' ' )* ( '*' )+
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:10:4: DATATYPE IDENTIFIER '(' PARAMETER_LIST ')'
     		{
     		DebugLocation(10, 4);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:10:4: ( FLOAT_DATATYPE | INTEGER_DATATYPE | VOID_DATATYPE )
-    		int alt1=3;
+    		mDATATYPE(); if (state.failed) return;
+    		DebugLocation(10, 13);
+    		mIDENTIFIER(); if (state.failed) return;
+    		DebugLocation(10, 24);
+    		Match('('); if (state.failed) return;
+    		DebugLocation(10, 28);
+    		mPARAMETER_LIST(); if (state.failed) return;
+    		DebugLocation(10, 43);
+    		Match(')'); if (state.failed) return;
+
+    		}
+
+    		state.type = _type;
+    		state.channel = _channel;
+    	}
+    	finally
+    	{
+    		TraceOut("FUNCTION_DEFINITION", 1);
+    		LeaveRule("FUNCTION_DEFINITION", 1);
+    		LeaveRule_FUNCTION_DEFINITION();
+        }
+    }
+    // $ANTLR end "FUNCTION_DEFINITION"
+
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void EnterRule_FUNCTION_CALL() {}
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void LeaveRule_FUNCTION_CALL() {}
+
+    // $ANTLR start "FUNCTION_CALL"
+    [GrammarRule("FUNCTION_CALL")]
+    private void mFUNCTION_CALL()
+    {
+    	EnterRule_FUNCTION_CALL();
+    	EnterRule("FUNCTION_CALL", 2);
+    	TraceIn("FUNCTION_CALL", 2);
+    		try
+    		{
+    		int _type = FUNCTION_CALL;
+    		int _channel = DefaultTokenChannel;
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:12:16: ( IDENTIFIER '(' IDENTIFIER ( ', ' IDENTIFIER )* ')' )
+    		DebugEnterAlt(1);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:12:18: IDENTIFIER '(' IDENTIFIER ( ', ' IDENTIFIER )* ')'
+    		{
+    		DebugLocation(12, 18);
+    		mIDENTIFIER(); if (state.failed) return;
+    		DebugLocation(12, 29);
+    		Match('('); if (state.failed) return;
+    		DebugLocation(12, 33);
+    		mIDENTIFIER(); if (state.failed) return;
+    		DebugLocation(12, 44);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:12:44: ( ', ' IDENTIFIER )*
     		try { DebugEnterSubRule(1);
-    		try { DebugEnterDecision(1, decisionCanBacktrack[1]);
-    		switch (input.LA(1))
+    		while (true)
     		{
-    		case 'd':
-    		case 'f':
+    			int alt1=2;
+    			try { DebugEnterDecision(1, decisionCanBacktrack[1]);
+    			int LA1_0 = input.LA(1);
+
+    			if ((LA1_0==','))
     			{
-    			alt1 = 1;
+    				alt1 = 1;
     			}
-    			break;
-    		case 'c':
-    		case 'i':
-    		case 'l':
-    		case 's':
-    		case 'u':
+
+
+    			} finally { DebugExitDecision(1); }
+    			switch ( alt1 )
     			{
-    			alt1 = 2;
-    			}
-    			break;
-    		case 'v':
-    			{
-    			alt1 = 3;
-    			}
-    			break;
-    		default:
-    			{
-    				if (state.backtracking>0) {state.failed=true; return;}
-    				NoViableAltException nvae = new NoViableAltException("", 1, 0, input);
-    				DebugRecognitionException(nvae);
-    				throw nvae;
+    			case 1:
+    				DebugEnterAlt(1);
+    				// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:12:45: ', ' IDENTIFIER
+    				{
+    				DebugLocation(12, 45);
+    				Match(", "); if (state.failed) return;
+
+    				DebugLocation(12, 50);
+    				mIDENTIFIER(); if (state.failed) return;
+
+    				}
+    				break;
+
+    			default:
+    				goto loop1;
     			}
     		}
 
-    		} finally { DebugExitDecision(1); }
-    		switch (alt1)
-    		{
-    		case 1:
-    			DebugEnterAlt(1);
-    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:10:5: FLOAT_DATATYPE
-    			{
-    			DebugLocation(10, 5);
-    			mFLOAT_DATATYPE(); if (state.failed) return;
+    		loop1:
+    			;
 
-    			}
-    			break;
-    		case 2:
-    			DebugEnterAlt(2);
-    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:10:22: INTEGER_DATATYPE
-    			{
-    			DebugLocation(10, 22);
-    			mINTEGER_DATATYPE(); if (state.failed) return;
-
-    			}
-    			break;
-    		case 3:
-    			DebugEnterAlt(3);
-    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:10:41: VOID_DATATYPE
-    			{
-    			DebugLocation(10, 41);
-    			mVOID_DATATYPE(); if (state.failed) return;
-
-    			}
-    			break;
-
-    		}
     		} finally { DebugExitSubRule(1); }
 
-    		DebugLocation(10, 56);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:10:56: ( ' ' )*
+    		DebugLocation(12, 63);
+    		Match(')'); if (state.failed) return;
+
+    		}
+
+    		state.type = _type;
+    		state.channel = _channel;
+    	}
+    	finally
+    	{
+    		TraceOut("FUNCTION_CALL", 2);
+    		LeaveRule("FUNCTION_CALL", 2);
+    		LeaveRule_FUNCTION_CALL();
+        }
+    }
+    // $ANTLR end "FUNCTION_CALL"
+
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void EnterRule_PARAMETER_LIST() {}
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void LeaveRule_PARAMETER_LIST() {}
+
+    // $ANTLR start "PARAMETER_LIST"
+    [GrammarRule("PARAMETER_LIST")]
+    private void mPARAMETER_LIST()
+    {
+    	EnterRule_PARAMETER_LIST();
+    	EnterRule("PARAMETER_LIST", 3);
+    	TraceIn("PARAMETER_LIST", 3);
+    		try
+    		{
+    		int _type = PARAMETER_LIST;
+    		int _channel = DefaultTokenChannel;
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:16:2: ( DATATYPE IDENTIFIER ( ',' DATATYPE IDENTIFIER )* )
+    		DebugEnterAlt(1);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:16:4: DATATYPE IDENTIFIER ( ',' DATATYPE IDENTIFIER )*
+    		{
+    		DebugLocation(16, 4);
+    		mDATATYPE(); if (state.failed) return;
+    		DebugLocation(16, 13);
+    		mIDENTIFIER(); if (state.failed) return;
+    		DebugLocation(16, 24);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:16:24: ( ',' DATATYPE IDENTIFIER )*
     		try { DebugEnterSubRule(2);
     		while (true)
     		{
@@ -225,7 +293,7 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     			try { DebugEnterDecision(2, decisionCanBacktrack[2]);
     			int LA2_0 = input.LA(1);
 
-    			if ((LA2_0==' '))
+    			if ((LA2_0==','))
     			{
     				alt2 = 1;
     			}
@@ -236,10 +304,14 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     			{
     			case 1:
     				DebugEnterAlt(1);
-    				// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:10:56: ' '
+    				// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:16:25: ',' DATATYPE IDENTIFIER
     				{
-    				DebugLocation(10, 56);
-    				Match(' '); if (state.failed) return;
+    				DebugLocation(16, 25);
+    				Match(','); if (state.failed) return;
+    				DebugLocation(16, 29);
+    				mDATATYPE(); if (state.failed) return;
+    				DebugLocation(16, 38);
+    				mIDENTIFIER(); if (state.failed) return;
 
     				}
     				break;
@@ -254,50 +326,43 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
 
     		} finally { DebugExitSubRule(2); }
 
-    		DebugLocation(10, 61);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:10:61: ( '*' )+
-    		int cnt3=0;
-    		try { DebugEnterSubRule(3);
-    		while (true)
-    		{
-    			int alt3=2;
-    			try { DebugEnterDecision(3, decisionCanBacktrack[3]);
-    			int LA3_0 = input.LA(1);
 
-    			if ((LA3_0=='*'))
-    			{
-    				alt3 = 1;
-    			}
-
-
-    			} finally { DebugExitDecision(3); }
-    			switch (alt3)
-    			{
-    			case 1:
-    				DebugEnterAlt(1);
-    				// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:10:61: '*'
-    				{
-    				DebugLocation(10, 61);
-    				Match('*'); if (state.failed) return;
-
-    				}
-    				break;
-
-    			default:
-    				if (cnt3 >= 1)
-    					goto loop3;
-
-    				if (state.backtracking>0) {state.failed=true; return;}
-    				EarlyExitException eee3 = new EarlyExitException( 3, input );
-    				DebugRecognitionException(eee3);
-    				throw eee3;
-    			}
-    			cnt3++;
     		}
-    		loop3:
-    			;
 
-    		} finally { DebugExitSubRule(3); }
+    		state.type = _type;
+    		state.channel = _channel;
+    	}
+    	finally
+    	{
+    		TraceOut("PARAMETER_LIST", 3);
+    		LeaveRule("PARAMETER_LIST", 3);
+    		LeaveRule_PARAMETER_LIST();
+        }
+    }
+    // $ANTLR end "PARAMETER_LIST"
+
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void EnterRule_CONST_MODIFIER() {}
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void LeaveRule_CONST_MODIFIER() {}
+
+    // $ANTLR start "CONST_MODIFIER"
+    [GrammarRule("CONST_MODIFIER")]
+    private void mCONST_MODIFIER()
+    {
+    	EnterRule_CONST_MODIFIER();
+    	EnterRule("CONST_MODIFIER", 4);
+    	TraceIn("CONST_MODIFIER", 4);
+    		try
+    		{
+    		int _type = CONST_MODIFIER;
+    		int _channel = DefaultTokenChannel;
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:21:2: ( 'const' )
+    		DebugEnterAlt(1);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:21:4: 'const'
+    		{
+    		DebugLocation(21, 4);
+    		Match("const"); if (state.failed) return;
 
 
     		}
@@ -307,12 +372,186 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	}
     	finally
     	{
-    		TraceOut("POINTER_DATATYPE", 1);
-    		LeaveRule("POINTER_DATATYPE", 1);
-    		LeaveRule_POINTER_DATATYPE();
+    		TraceOut("CONST_MODIFIER", 4);
+    		LeaveRule("CONST_MODIFIER", 4);
+    		LeaveRule_CONST_MODIFIER();
         }
     }
-    // $ANTLR end "POINTER_DATATYPE"
+    // $ANTLR end "CONST_MODIFIER"
+
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void EnterRule_DATATYPE() {}
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void LeaveRule_DATATYPE() {}
+
+    // $ANTLR start "DATATYPE"
+    [GrammarRule("DATATYPE")]
+    private void mDATATYPE()
+    {
+    	EnterRule_DATATYPE();
+    	EnterRule("DATATYPE", 5);
+    	TraceIn("DATATYPE", 5);
+    		try
+    		{
+    		int _type = DATATYPE;
+    		int _channel = DefaultTokenChannel;
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:23:10: ( VOID_DATATYPE | INTEGER_DATATYPE | FLOAT_DATATYPE )
+    		int alt3=3;
+    		try { DebugEnterDecision(3, decisionCanBacktrack[3]);
+    		switch (input.LA(1))
+    		{
+    		case 'v':
+    			{
+    			alt3 = 1;
+    			}
+    			break;
+    		case 'c':
+    		case 'i':
+    		case 'l':
+    		case 's':
+    		case 'u':
+    			{
+    			alt3 = 2;
+    			}
+    			break;
+    		case 'd':
+    		case 'f':
+    			{
+    			alt3 = 3;
+    			}
+    			break;
+    		default:
+    			{
+    				if (state.backtracking>0) {state.failed=true; return;}
+    				NoViableAltException nvae = new NoViableAltException("", 3, 0, input);
+    				DebugRecognitionException(nvae);
+    				throw nvae;
+    			}
+    		}
+
+    		} finally { DebugExitDecision(3); }
+    		switch (alt3)
+    		{
+    		case 1:
+    			DebugEnterAlt(1);
+    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:23:12: VOID_DATATYPE
+    			{
+    			DebugLocation(23, 12);
+    			mVOID_DATATYPE(); if (state.failed) return;
+
+    			}
+    			break;
+    		case 2:
+    			DebugEnterAlt(2);
+    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:23:28: INTEGER_DATATYPE
+    			{
+    			DebugLocation(23, 28);
+    			mINTEGER_DATATYPE(); if (state.failed) return;
+
+    			}
+    			break;
+    		case 3:
+    			DebugEnterAlt(3);
+    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:23:47: FLOAT_DATATYPE
+    			{
+    			DebugLocation(23, 47);
+    			mFLOAT_DATATYPE(); if (state.failed) return;
+
+    			}
+    			break;
+
+    		}
+    		state.type = _type;
+    		state.channel = _channel;
+    	}
+    	finally
+    	{
+    		TraceOut("DATATYPE", 5);
+    		LeaveRule("DATATYPE", 5);
+    		LeaveRule_DATATYPE();
+        }
+    }
+    // $ANTLR end "DATATYPE"
+
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void EnterRule_POINTER() {}
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void LeaveRule_POINTER() {}
+
+    // $ANTLR start "POINTER"
+    [GrammarRule("POINTER")]
+    private void mPOINTER()
+    {
+    	EnterRule_POINTER();
+    	EnterRule("POINTER", 6);
+    	TraceIn("POINTER", 6);
+    		try
+    		{
+    		int _type = POINTER;
+    		int _channel = DefaultTokenChannel;
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:26:2: ( ( '*' )+ )
+    		DebugEnterAlt(1);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:26:4: ( '*' )+
+    		{
+    		DebugLocation(26, 4);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:26:4: ( '*' )+
+    		int cnt4=0;
+    		try { DebugEnterSubRule(4);
+    		while (true)
+    		{
+    			int alt4=2;
+    			try { DebugEnterDecision(4, decisionCanBacktrack[4]);
+    			int LA4_0 = input.LA(1);
+
+    			if ((LA4_0=='*'))
+    			{
+    				alt4 = 1;
+    			}
+
+
+    			} finally { DebugExitDecision(4); }
+    			switch (alt4)
+    			{
+    			case 1:
+    				DebugEnterAlt(1);
+    				// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:26:4: '*'
+    				{
+    				DebugLocation(26, 4);
+    				Match('*'); if (state.failed) return;
+
+    				}
+    				break;
+
+    			default:
+    				if (cnt4 >= 1)
+    					goto loop4;
+
+    				if (state.backtracking>0) {state.failed=true; return;}
+    				EarlyExitException eee4 = new EarlyExitException( 4, input );
+    				DebugRecognitionException(eee4);
+    				throw eee4;
+    			}
+    			cnt4++;
+    		}
+    		loop4:
+    			;
+
+    		} finally { DebugExitSubRule(4); }
+
+
+    		}
+
+    		state.type = _type;
+    		state.channel = _channel;
+    	}
+    	finally
+    	{
+    		TraceOut("POINTER", 6);
+    		LeaveRule("POINTER", 6);
+    		LeaveRule_POINTER();
+        }
+    }
+    // $ANTLR end "POINTER"
 
     [Conditional("ANTLR_TRACE")]
     protected virtual void EnterRule_VOID_DATATYPE() {}
@@ -324,17 +563,17 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     private void mVOID_DATATYPE()
     {
     	EnterRule_VOID_DATATYPE();
-    	EnterRule("VOID_DATATYPE", 2);
-    	TraceIn("VOID_DATATYPE", 2);
+    	EnterRule("VOID_DATATYPE", 7);
+    	TraceIn("VOID_DATATYPE", 7);
     		try
     		{
     		int _type = VOID_DATATYPE;
     		int _channel = DefaultTokenChannel;
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:13:2: ( 'void' )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:28:15: ( 'void' )
     		DebugEnterAlt(1);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:13:5: 'void'
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:28:19: 'void'
     		{
-    		DebugLocation(13, 5);
+    		DebugLocation(28, 19);
     		Match("void"); if (state.failed) return;
 
 
@@ -345,8 +584,8 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	}
     	finally
     	{
-    		TraceOut("VOID_DATATYPE", 2);
-    		LeaveRule("VOID_DATATYPE", 2);
+    		TraceOut("VOID_DATATYPE", 7);
+    		LeaveRule("VOID_DATATYPE", 7);
     		LeaveRule_VOID_DATATYPE();
         }
     }
@@ -362,40 +601,40 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     private void mFLOAT_DATATYPE()
     {
     	EnterRule_FLOAT_DATATYPE();
-    	EnterRule("FLOAT_DATATYPE", 3);
-    	TraceIn("FLOAT_DATATYPE", 3);
+    	EnterRule("FLOAT_DATATYPE", 8);
+    	TraceIn("FLOAT_DATATYPE", 8);
     		try
     		{
     		int _type = FLOAT_DATATYPE;
     		int _channel = DefaultTokenChannel;
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:14:16: ( 'float' | 'double' )
-    		int alt4=2;
-    		try { DebugEnterDecision(4, decisionCanBacktrack[4]);
-    		int LA4_0 = input.LA(1);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:29:16: ( 'float' | 'double' )
+    		int alt5=2;
+    		try { DebugEnterDecision(5, decisionCanBacktrack[5]);
+    		int LA5_0 = input.LA(1);
 
-    		if ((LA4_0=='f'))
+    		if ((LA5_0=='f'))
     		{
-    			alt4 = 1;
+    			alt5 = 1;
     		}
-    		else if ((LA4_0=='d'))
+    		else if ((LA5_0=='d'))
     		{
-    			alt4 = 2;
+    			alt5 = 2;
     		}
     		else
     		{
     			if (state.backtracking>0) {state.failed=true; return;}
-    			NoViableAltException nvae = new NoViableAltException("", 4, 0, input);
+    			NoViableAltException nvae = new NoViableAltException("", 5, 0, input);
     			DebugRecognitionException(nvae);
     			throw nvae;
     		}
-    		} finally { DebugExitDecision(4); }
-    		switch (alt4)
+    		} finally { DebugExitDecision(5); }
+    		switch (alt5)
     		{
     		case 1:
     			DebugEnterAlt(1);
-    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:14:18: 'float'
+    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:29:18: 'float'
     			{
-    			DebugLocation(14, 18);
+    			DebugLocation(29, 18);
     			Match("float"); if (state.failed) return;
 
 
@@ -403,9 +642,9 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     			break;
     		case 2:
     			DebugEnterAlt(2);
-    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:14:28: 'double'
+    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:29:28: 'double'
     			{
-    			DebugLocation(14, 28);
+    			DebugLocation(29, 28);
     			Match("double"); if (state.failed) return;
 
 
@@ -418,8 +657,8 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	}
     	finally
     	{
-    		TraceOut("FLOAT_DATATYPE", 3);
-    		LeaveRule("FLOAT_DATATYPE", 3);
+    		TraceOut("FLOAT_DATATYPE", 8);
+    		LeaveRule("FLOAT_DATATYPE", 8);
     		LeaveRule_FLOAT_DATATYPE();
         }
     }
@@ -435,96 +674,96 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     private void mINTEGER_DATATYPE()
     {
     	EnterRule_INTEGER_DATATYPE();
-    	EnterRule("INTEGER_DATATYPE", 4);
-    	TraceIn("INTEGER_DATATYPE", 4);
+    	EnterRule("INTEGER_DATATYPE", 9);
+    	TraceIn("INTEGER_DATATYPE", 9);
     		try
     		{
     		int _type = INTEGER_DATATYPE;
     		int _channel = DefaultTokenChannel;
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:16:18: ( ( SIGNED_UNSIGNED )? ( 'short' | 'int' | 'long' | 'char' ) )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:31:18: ( ( SIGNED_UNSIGNED )? ( 'short' | 'int' | 'long' | 'char' ) )
     		DebugEnterAlt(1);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:16:20: ( SIGNED_UNSIGNED )? ( 'short' | 'int' | 'long' | 'char' )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:31:20: ( SIGNED_UNSIGNED )? ( 'short' | 'int' | 'long' | 'char' )
     		{
-    		DebugLocation(16, 20);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:16:20: ( SIGNED_UNSIGNED )?
-    		int alt5=2;
-    		try { DebugEnterSubRule(5);
-    		try { DebugEnterDecision(5, decisionCanBacktrack[5]);
-    		int LA5_0 = input.LA(1);
+    		DebugLocation(31, 20);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:31:20: ( SIGNED_UNSIGNED )?
+    		int alt6=2;
+    		try { DebugEnterSubRule(6);
+    		try { DebugEnterDecision(6, decisionCanBacktrack[6]);
+    		int LA6_0 = input.LA(1);
 
-    		if ((LA5_0=='s'))
+    		if ((LA6_0=='s'))
     		{
-    			int LA5_1 = input.LA(2);
+    			int LA6_1 = input.LA(2);
 
-    			if ((LA5_1=='i'))
+    			if ((LA6_1=='i'))
     			{
-    				alt5 = 1;
+    				alt6 = 1;
     			}
     		}
-    		else if ((LA5_0=='u'))
+    		else if ((LA6_0=='u'))
     		{
-    			alt5 = 1;
+    			alt6 = 1;
     		}
-    		} finally { DebugExitDecision(5); }
-    		switch (alt5)
+    		} finally { DebugExitDecision(6); }
+    		switch (alt6)
     		{
     		case 1:
     			DebugEnterAlt(1);
-    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:16:21: SIGNED_UNSIGNED
+    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:31:21: SIGNED_UNSIGNED
     			{
-    			DebugLocation(16, 21);
+    			DebugLocation(31, 21);
     			mSIGNED_UNSIGNED(); if (state.failed) return;
 
     			}
     			break;
 
     		}
-    		} finally { DebugExitSubRule(5); }
+    		} finally { DebugExitSubRule(6); }
 
-    		DebugLocation(16, 39);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:16:39: ( 'short' | 'int' | 'long' | 'char' )
-    		int alt6=4;
-    		try { DebugEnterSubRule(6);
-    		try { DebugEnterDecision(6, decisionCanBacktrack[6]);
+    		DebugLocation(31, 39);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:31:39: ( 'short' | 'int' | 'long' | 'char' )
+    		int alt7=4;
+    		try { DebugEnterSubRule(7);
+    		try { DebugEnterDecision(7, decisionCanBacktrack[7]);
     		switch (input.LA(1))
     		{
     		case 's':
     			{
-    			alt6 = 1;
+    			alt7 = 1;
     			}
     			break;
     		case 'i':
     			{
-    			alt6 = 2;
+    			alt7 = 2;
     			}
     			break;
     		case 'l':
     			{
-    			alt6 = 3;
+    			alt7 = 3;
     			}
     			break;
     		case 'c':
     			{
-    			alt6 = 4;
+    			alt7 = 4;
     			}
     			break;
     		default:
     			{
     				if (state.backtracking>0) {state.failed=true; return;}
-    				NoViableAltException nvae = new NoViableAltException("", 6, 0, input);
+    				NoViableAltException nvae = new NoViableAltException("", 7, 0, input);
     				DebugRecognitionException(nvae);
     				throw nvae;
     			}
     		}
 
-    		} finally { DebugExitDecision(6); }
-    		switch (alt6)
+    		} finally { DebugExitDecision(7); }
+    		switch (alt7)
     		{
     		case 1:
     			DebugEnterAlt(1);
-    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:16:40: 'short'
+    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:31:40: 'short'
     			{
-    			DebugLocation(16, 40);
+    			DebugLocation(31, 40);
     			Match("short"); if (state.failed) return;
 
 
@@ -532,9 +771,9 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     			break;
     		case 2:
     			DebugEnterAlt(2);
-    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:16:50: 'int'
+    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:31:50: 'int'
     			{
-    			DebugLocation(16, 50);
+    			DebugLocation(31, 50);
     			Match("int"); if (state.failed) return;
 
 
@@ -542,9 +781,9 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     			break;
     		case 3:
     			DebugEnterAlt(3);
-    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:16:58: 'long'
+    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:31:58: 'long'
     			{
-    			DebugLocation(16, 58);
+    			DebugLocation(31, 58);
     			Match("long"); if (state.failed) return;
 
 
@@ -552,9 +791,9 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     			break;
     		case 4:
     			DebugEnterAlt(4);
-    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:16:67: 'char'
+    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:31:67: 'char'
     			{
-    			DebugLocation(16, 67);
+    			DebugLocation(31, 67);
     			Match("char"); if (state.failed) return;
 
 
@@ -562,7 +801,7 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     			break;
 
     		}
-    		} finally { DebugExitSubRule(6); }
+    		} finally { DebugExitSubRule(7); }
 
 
     		}
@@ -572,8 +811,8 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	}
     	finally
     	{
-    		TraceOut("INTEGER_DATATYPE", 4);
-    		LeaveRule("INTEGER_DATATYPE", 4);
+    		TraceOut("INTEGER_DATATYPE", 9);
+    		LeaveRule("INTEGER_DATATYPE", 9);
     		LeaveRule_INTEGER_DATATYPE();
         }
     }
@@ -589,40 +828,40 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     private void mSIGNED_UNSIGNED()
     {
     	EnterRule_SIGNED_UNSIGNED();
-    	EnterRule("SIGNED_UNSIGNED", 5);
-    	TraceIn("SIGNED_UNSIGNED", 5);
+    	EnterRule("SIGNED_UNSIGNED", 10);
+    	TraceIn("SIGNED_UNSIGNED", 10);
     		try
     		{
     		int _type = SIGNED_UNSIGNED;
     		int _channel = DefaultTokenChannel;
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:18:17: ( 'signed' | 'unsigned' )
-    		int alt7=2;
-    		try { DebugEnterDecision(7, decisionCanBacktrack[7]);
-    		int LA7_0 = input.LA(1);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:33:17: ( 'signed' | 'unsigned' )
+    		int alt8=2;
+    		try { DebugEnterDecision(8, decisionCanBacktrack[8]);
+    		int LA8_0 = input.LA(1);
 
-    		if ((LA7_0=='s'))
+    		if ((LA8_0=='s'))
     		{
-    			alt7 = 1;
+    			alt8 = 1;
     		}
-    		else if ((LA7_0=='u'))
+    		else if ((LA8_0=='u'))
     		{
-    			alt7 = 2;
+    			alt8 = 2;
     		}
     		else
     		{
     			if (state.backtracking>0) {state.failed=true; return;}
-    			NoViableAltException nvae = new NoViableAltException("", 7, 0, input);
+    			NoViableAltException nvae = new NoViableAltException("", 8, 0, input);
     			DebugRecognitionException(nvae);
     			throw nvae;
     		}
-    		} finally { DebugExitDecision(7); }
-    		switch (alt7)
+    		} finally { DebugExitDecision(8); }
+    		switch (alt8)
     		{
     		case 1:
     			DebugEnterAlt(1);
-    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:18:19: 'signed'
+    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:33:19: 'signed'
     			{
-    			DebugLocation(18, 19);
+    			DebugLocation(33, 19);
     			Match("signed"); if (state.failed) return;
 
 
@@ -630,9 +869,9 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     			break;
     		case 2:
     			DebugEnterAlt(2);
-    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:18:30: 'unsigned'
+    			// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:33:30: 'unsigned'
     			{
-    			DebugLocation(18, 30);
+    			DebugLocation(33, 30);
     			Match("unsigned"); if (state.failed) return;
 
 
@@ -645,8 +884,8 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	}
     	finally
     	{
-    		TraceOut("SIGNED_UNSIGNED", 5);
-    		LeaveRule("SIGNED_UNSIGNED", 5);
+    		TraceOut("SIGNED_UNSIGNED", 10);
+    		LeaveRule("SIGNED_UNSIGNED", 10);
     		LeaveRule_SIGNED_UNSIGNED();
         }
     }
@@ -662,41 +901,41 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     private void mIDENTIFIER()
     {
     	EnterRule_IDENTIFIER();
-    	EnterRule("IDENTIFIER", 6);
-    	TraceIn("IDENTIFIER", 6);
+    	EnterRule("IDENTIFIER", 11);
+    	TraceIn("IDENTIFIER", 11);
     		try
     		{
     		int _type = IDENTIFIER;
     		int _channel = DefaultTokenChannel;
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:21:2: ( LETTER ( LETTER | DIGIT )* )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:36:2: ( LETTER ( LETTER | DIGIT )* )
     		DebugEnterAlt(1);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:21:4: LETTER ( LETTER | DIGIT )*
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:36:4: LETTER ( LETTER | DIGIT )*
     		{
-    		DebugLocation(21, 4);
+    		DebugLocation(36, 4);
     		mLETTER(); if (state.failed) return;
-    		DebugLocation(21, 11);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:21:11: ( LETTER | DIGIT )*
-    		try { DebugEnterSubRule(8);
+    		DebugLocation(36, 11);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:36:11: ( LETTER | DIGIT )*
+    		try { DebugEnterSubRule(9);
     		while (true)
     		{
-    			int alt8=2;
-    			try { DebugEnterDecision(8, decisionCanBacktrack[8]);
-    			int LA8_0 = input.LA(1);
+    			int alt9=2;
+    			try { DebugEnterDecision(9, decisionCanBacktrack[9]);
+    			int LA9_0 = input.LA(1);
 
-    			if (((LA8_0>='0' && LA8_0<='9')||(LA8_0>='A' && LA8_0<='Z')||LA8_0=='_'||(LA8_0>='a' && LA8_0<='z')))
+    			if (((LA9_0>='0' && LA9_0<='9')||(LA9_0>='A' && LA9_0<='Z')||LA9_0=='_'||(LA9_0>='a' && LA9_0<='z')))
     			{
-    				alt8 = 1;
+    				alt9 = 1;
     			}
 
 
-    			} finally { DebugExitDecision(8); }
-    			switch ( alt8 )
+    			} finally { DebugExitDecision(9); }
+    			switch ( alt9 )
     			{
     			case 1:
     				DebugEnterAlt(1);
     				// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:
     				{
-    				DebugLocation(21, 11);
+    				DebugLocation(36, 11);
     				input.Consume();
     				state.failed=false;
 
@@ -704,14 +943,14 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     				break;
 
     			default:
-    				goto loop8;
+    				goto loop9;
     			}
     		}
 
-    		loop8:
+    		loop9:
     			;
 
-    		} finally { DebugExitSubRule(8); }
+    		} finally { DebugExitSubRule(9); }
 
 
     		}
@@ -721,8 +960,8 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	}
     	finally
     	{
-    		TraceOut("IDENTIFIER", 6);
-    		LeaveRule("IDENTIFIER", 6);
+    		TraceOut("IDENTIFIER", 11);
+    		LeaveRule("IDENTIFIER", 11);
     		LeaveRule_IDENTIFIER();
         }
     }
@@ -738,17 +977,17 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     private void mLETTER()
     {
     	EnterRule_LETTER();
-    	EnterRule("LETTER", 7);
-    	TraceIn("LETTER", 7);
+    	EnterRule("LETTER", 12);
+    	TraceIn("LETTER", 12);
     		try
     		{
     		int _type = LETTER;
     		int _channel = DefaultTokenChannel;
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:23:8: ( 'A' .. 'Z' | 'a' .. 'z' | '_' )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:38:8: ( 'A' .. 'Z' | 'a' .. 'z' | '_' )
     		DebugEnterAlt(1);
     		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:
     		{
-    		DebugLocation(23, 8);
+    		DebugLocation(38, 8);
     		if ((input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z'))
     		{
     			input.Consume();
@@ -771,8 +1010,8 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	}
     	finally
     	{
-    		TraceOut("LETTER", 7);
-    		LeaveRule("LETTER", 7);
+    		TraceOut("LETTER", 12);
+    		LeaveRule("LETTER", 12);
     		LeaveRule_LETTER();
         }
     }
@@ -788,17 +1027,17 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     private void mHEX_DIGIT()
     {
     	EnterRule_HEX_DIGIT();
-    	EnterRule("HEX_DIGIT", 8);
-    	TraceIn("HEX_DIGIT", 8);
+    	EnterRule("HEX_DIGIT", 13);
+    	TraceIn("HEX_DIGIT", 13);
     		try
     		{
     		int _type = HEX_DIGIT;
     		int _channel = DefaultTokenChannel;
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:25:11: ( DIGIT | 'a' .. 'f' | 'A' .. 'F' )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:40:11: ( DIGIT | 'a' .. 'f' | 'A' .. 'F' )
     		DebugEnterAlt(1);
     		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:
     		{
-    		DebugLocation(25, 11);
+    		DebugLocation(40, 11);
     		if ((input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='F')||(input.LA(1)>='a' && input.LA(1)<='f'))
     		{
     			input.Consume();
@@ -821,8 +1060,8 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	}
     	finally
     	{
-    		TraceOut("HEX_DIGIT", 8);
-    		LeaveRule("HEX_DIGIT", 8);
+    		TraceOut("HEX_DIGIT", 13);
+    		LeaveRule("HEX_DIGIT", 13);
     		LeaveRule_HEX_DIGIT();
         }
     }
@@ -838,17 +1077,17 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     private void mDIGIT()
     {
     	EnterRule_DIGIT();
-    	EnterRule("DIGIT", 9);
-    	TraceIn("DIGIT", 9);
+    	EnterRule("DIGIT", 14);
+    	TraceIn("DIGIT", 14);
     		try
     		{
     		int _type = DIGIT;
     		int _channel = DefaultTokenChannel;
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:27:7: ( '0' .. '9' )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:42:7: ( '0' .. '9' )
     		DebugEnterAlt(1);
     		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:
     		{
-    		DebugLocation(27, 7);
+    		DebugLocation(42, 7);
     		if ((input.LA(1)>='0' && input.LA(1)<='9'))
     		{
     			input.Consume();
@@ -871,8 +1110,8 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	}
     	finally
     	{
-    		TraceOut("DIGIT", 9);
-    		LeaveRule("DIGIT", 9);
+    		TraceOut("DIGIT", 14);
+    		LeaveRule("DIGIT", 14);
     		LeaveRule_DIGIT();
         }
     }
@@ -880,136 +1119,55 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
 
     public override void mTokens()
     {
-    	// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:39: ( POINTER_DATATYPE | VOID_DATATYPE | FLOAT_DATATYPE | INTEGER_DATATYPE | SIGNED_UNSIGNED | IDENTIFIER | LETTER | HEX_DIGIT | DIGIT )
-    	int alt9=9;
-    	try { DebugEnterDecision(9, decisionCanBacktrack[9]);
+    	// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:39: ( FUNCTION_DEFINITION | FUNCTION_CALL | PARAMETER_LIST | CONST_MODIFIER | DATATYPE | POINTER | VOID_DATATYPE | FLOAT_DATATYPE | INTEGER_DATATYPE | SIGNED_UNSIGNED | IDENTIFIER | LETTER | HEX_DIGIT | DIGIT )
+    	int alt10=14;
+    	try { DebugEnterDecision(10, decisionCanBacktrack[10]);
     	switch (input.LA(1))
     	{
-    	case 'v':
+    	case 'c':
     		{
-    		int LA9_1 = input.LA(2);
+    		int LA10_1 = input.LA(2);
 
     		if ((EvaluatePredicate(synpred1_MutexCLexer_fragment)))
     		{
-    			alt9 = 1;
+    			alt10 = 1;
     		}
     		else if ((EvaluatePredicate(synpred2_MutexCLexer_fragment)))
     		{
-    			alt9 = 2;
-    		}
-    		else if ((EvaluatePredicate(synpred6_MutexCLexer_fragment)))
-    		{
-    			alt9 = 6;
-    		}
-    		else if ((EvaluatePredicate(synpred7_MutexCLexer_fragment)))
-    		{
-    			alt9 = 7;
-    		}
-    		else
-    		{
-    			if (state.backtracking>0) {state.failed=true; return;}
-    			NoViableAltException nvae = new NoViableAltException("", 9, 1, input);
-    			DebugRecognitionException(nvae);
-    			throw nvae;
-    		}
-    		}
-    		break;
-    	case 'd':
-    	case 'f':
-    		{
-    		int LA9_6 = input.LA(2);
-
-    		if ((EvaluatePredicate(synpred1_MutexCLexer_fragment)))
-    		{
-    			alt9 = 1;
+    			alt10 = 2;
     		}
     		else if ((EvaluatePredicate(synpred3_MutexCLexer_fragment)))
     		{
-    			alt9 = 3;
-    		}
-    		else if ((EvaluatePredicate(synpred6_MutexCLexer_fragment)))
-    		{
-    			alt9 = 6;
-    		}
-    		else if ((EvaluatePredicate(synpred7_MutexCLexer_fragment)))
-    		{
-    			alt9 = 7;
-    		}
-    		else if ((EvaluatePredicate(synpred8_MutexCLexer_fragment)))
-    		{
-    			alt9 = 8;
-    		}
-    		else
-    		{
-    			if (state.backtracking>0) {state.failed=true; return;}
-    			NoViableAltException nvae = new NoViableAltException("", 9, 6, input);
-    			DebugRecognitionException(nvae);
-    			throw nvae;
-    		}
-    		}
-    		break;
-    	case 's':
-    	case 'u':
-    		{
-    		int LA9_9 = input.LA(2);
-
-    		if ((EvaluatePredicate(synpred1_MutexCLexer_fragment)))
-    		{
-    			alt9 = 1;
+    			alt10 = 3;
     		}
     		else if ((EvaluatePredicate(synpred4_MutexCLexer_fragment)))
     		{
-    			alt9 = 4;
+    			alt10 = 4;
     		}
     		else if ((EvaluatePredicate(synpred5_MutexCLexer_fragment)))
     		{
-    			alt9 = 5;
+    			alt10 = 5;
     		}
-    		else if ((EvaluatePredicate(synpred6_MutexCLexer_fragment)))
+    		else if ((EvaluatePredicate(synpred9_MutexCLexer_fragment)))
     		{
-    			alt9 = 6;
+    			alt10 = 9;
     		}
-    		else if ((EvaluatePredicate(synpred7_MutexCLexer_fragment)))
+    		else if ((EvaluatePredicate(synpred11_MutexCLexer_fragment)))
     		{
-    			alt9 = 7;
+    			alt10 = 11;
     		}
-    		else
+    		else if ((EvaluatePredicate(synpred12_MutexCLexer_fragment)))
     		{
-    			if (state.backtracking>0) {state.failed=true; return;}
-    			NoViableAltException nvae = new NoViableAltException("", 9, 9, input);
-    			DebugRecognitionException(nvae);
-    			throw nvae;
+    			alt10 = 12;
     		}
-    		}
-    		break;
-    	case 'c':
+    		else if ((EvaluatePredicate(synpred13_MutexCLexer_fragment)))
     		{
-    		int LA9_12 = input.LA(2);
-
-    		if ((EvaluatePredicate(synpred1_MutexCLexer_fragment)))
-    		{
-    			alt9 = 1;
-    		}
-    		else if ((EvaluatePredicate(synpred4_MutexCLexer_fragment)))
-    		{
-    			alt9 = 4;
-    		}
-    		else if ((EvaluatePredicate(synpred6_MutexCLexer_fragment)))
-    		{
-    			alt9 = 6;
-    		}
-    		else if ((EvaluatePredicate(synpred7_MutexCLexer_fragment)))
-    		{
-    			alt9 = 7;
-    		}
-    		else if ((EvaluatePredicate(synpred8_MutexCLexer_fragment)))
-    		{
-    			alt9 = 8;
+    			alt10 = 13;
     		}
     		else
     		{
     			if (state.backtracking>0) {state.failed=true; return;}
-    			NoViableAltException nvae = new NoViableAltException("", 9, 12, input);
+    			NoViableAltException nvae = new NoViableAltException("", 10, 1, input);
     			DebugRecognitionException(nvae);
     			throw nvae;
     		}
@@ -1025,24 +1183,166 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	case 'b':
     	case 'e':
     		{
-    		int LA9_13 = input.LA(2);
+    		int LA10_11 = input.LA(2);
 
-    		if ((EvaluatePredicate(synpred6_MutexCLexer_fragment)))
+    		if ((EvaluatePredicate(synpred2_MutexCLexer_fragment)))
     		{
-    			alt9 = 6;
+    			alt10 = 2;
     		}
-    		else if ((EvaluatePredicate(synpred7_MutexCLexer_fragment)))
+    		else if ((EvaluatePredicate(synpred11_MutexCLexer_fragment)))
     		{
-    			alt9 = 7;
+    			alt10 = 11;
     		}
-    		else if ((EvaluatePredicate(synpred8_MutexCLexer_fragment)))
+    		else if ((EvaluatePredicate(synpred12_MutexCLexer_fragment)))
     		{
-    			alt9 = 8;
+    			alt10 = 12;
+    		}
+    		else if ((EvaluatePredicate(synpred13_MutexCLexer_fragment)))
+    		{
+    			alt10 = 13;
     		}
     		else
     		{
     			if (state.backtracking>0) {state.failed=true; return;}
-    			NoViableAltException nvae = new NoViableAltException("", 9, 13, input);
+    			NoViableAltException nvae = new NoViableAltException("", 10, 11, input);
+    			DebugRecognitionException(nvae);
+    			throw nvae;
+    		}
+    		}
+    		break;
+    	case 'v':
+    		{
+    		int LA10_12 = input.LA(2);
+
+    		if ((EvaluatePredicate(synpred1_MutexCLexer_fragment)))
+    		{
+    			alt10 = 1;
+    		}
+    		else if ((EvaluatePredicate(synpred2_MutexCLexer_fragment)))
+    		{
+    			alt10 = 2;
+    		}
+    		else if ((EvaluatePredicate(synpred3_MutexCLexer_fragment)))
+    		{
+    			alt10 = 3;
+    		}
+    		else if ((EvaluatePredicate(synpred5_MutexCLexer_fragment)))
+    		{
+    			alt10 = 5;
+    		}
+    		else if ((EvaluatePredicate(synpred7_MutexCLexer_fragment)))
+    		{
+    			alt10 = 7;
+    		}
+    		else if ((EvaluatePredicate(synpred11_MutexCLexer_fragment)))
+    		{
+    			alt10 = 11;
+    		}
+    		else if ((EvaluatePredicate(synpred12_MutexCLexer_fragment)))
+    		{
+    			alt10 = 12;
+    		}
+    		else
+    		{
+    			if (state.backtracking>0) {state.failed=true; return;}
+    			NoViableAltException nvae = new NoViableAltException("", 10, 12, input);
+    			DebugRecognitionException(nvae);
+    			throw nvae;
+    		}
+    		}
+    		break;
+    	case '*':
+    		{
+    		alt10 = 6;
+    		}
+    		break;
+    	case 'd':
+    	case 'f':
+    		{
+    		int LA10_15 = input.LA(2);
+
+    		if ((EvaluatePredicate(synpred1_MutexCLexer_fragment)))
+    		{
+    			alt10 = 1;
+    		}
+    		else if ((EvaluatePredicate(synpred2_MutexCLexer_fragment)))
+    		{
+    			alt10 = 2;
+    		}
+    		else if ((EvaluatePredicate(synpred3_MutexCLexer_fragment)))
+    		{
+    			alt10 = 3;
+    		}
+    		else if ((EvaluatePredicate(synpred5_MutexCLexer_fragment)))
+    		{
+    			alt10 = 5;
+    		}
+    		else if ((EvaluatePredicate(synpred8_MutexCLexer_fragment)))
+    		{
+    			alt10 = 8;
+    		}
+    		else if ((EvaluatePredicate(synpred11_MutexCLexer_fragment)))
+    		{
+    			alt10 = 11;
+    		}
+    		else if ((EvaluatePredicate(synpred12_MutexCLexer_fragment)))
+    		{
+    			alt10 = 12;
+    		}
+    		else if ((EvaluatePredicate(synpred13_MutexCLexer_fragment)))
+    		{
+    			alt10 = 13;
+    		}
+    		else
+    		{
+    			if (state.backtracking>0) {state.failed=true; return;}
+    			NoViableAltException nvae = new NoViableAltException("", 10, 15, input);
+    			DebugRecognitionException(nvae);
+    			throw nvae;
+    		}
+    		}
+    		break;
+    	case 's':
+    	case 'u':
+    		{
+    		int LA10_17 = input.LA(2);
+
+    		if ((EvaluatePredicate(synpred1_MutexCLexer_fragment)))
+    		{
+    			alt10 = 1;
+    		}
+    		else if ((EvaluatePredicate(synpred2_MutexCLexer_fragment)))
+    		{
+    			alt10 = 2;
+    		}
+    		else if ((EvaluatePredicate(synpred3_MutexCLexer_fragment)))
+    		{
+    			alt10 = 3;
+    		}
+    		else if ((EvaluatePredicate(synpred5_MutexCLexer_fragment)))
+    		{
+    			alt10 = 5;
+    		}
+    		else if ((EvaluatePredicate(synpred9_MutexCLexer_fragment)))
+    		{
+    			alt10 = 9;
+    		}
+    		else if ((EvaluatePredicate(synpred10_MutexCLexer_fragment)))
+    		{
+    			alt10 = 10;
+    		}
+    		else if ((EvaluatePredicate(synpred11_MutexCLexer_fragment)))
+    		{
+    			alt10 = 11;
+    		}
+    		else if ((EvaluatePredicate(synpred12_MutexCLexer_fragment)))
+    		{
+    			alt10 = 12;
+    		}
+    		else
+    		{
+    			if (state.backtracking>0) {state.failed=true; return;}
+    			NoViableAltException nvae = new NoViableAltException("", 10, 17, input);
     			DebugRecognitionException(nvae);
     			throw nvae;
     		}
@@ -1051,28 +1351,40 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	case 'i':
     	case 'l':
     		{
-    		int LA9_14 = input.LA(2);
+    		int LA10_19 = input.LA(2);
 
     		if ((EvaluatePredicate(synpred1_MutexCLexer_fragment)))
     		{
-    			alt9 = 1;
+    			alt10 = 1;
     		}
-    		else if ((EvaluatePredicate(synpred4_MutexCLexer_fragment)))
+    		else if ((EvaluatePredicate(synpred2_MutexCLexer_fragment)))
     		{
-    			alt9 = 4;
+    			alt10 = 2;
     		}
-    		else if ((EvaluatePredicate(synpred6_MutexCLexer_fragment)))
+    		else if ((EvaluatePredicate(synpred3_MutexCLexer_fragment)))
     		{
-    			alt9 = 6;
+    			alt10 = 3;
     		}
-    		else if ((EvaluatePredicate(synpred7_MutexCLexer_fragment)))
+    		else if ((EvaluatePredicate(synpred5_MutexCLexer_fragment)))
     		{
-    			alt9 = 7;
+    			alt10 = 5;
+    		}
+    		else if ((EvaluatePredicate(synpred9_MutexCLexer_fragment)))
+    		{
+    			alt10 = 9;
+    		}
+    		else if ((EvaluatePredicate(synpred11_MutexCLexer_fragment)))
+    		{
+    			alt10 = 11;
+    		}
+    		else if ((EvaluatePredicate(synpred12_MutexCLexer_fragment)))
+    		{
+    			alt10 = 12;
     		}
     		else
     		{
     			if (state.backtracking>0) {state.failed=true; return;}
-    			NoViableAltException nvae = new NoViableAltException("", 9, 14, input);
+    			NoViableAltException nvae = new NoViableAltException("", 10, 19, input);
     			DebugRecognitionException(nvae);
     			throw nvae;
     		}
@@ -1115,20 +1427,24 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	case 'y':
     	case 'z':
     		{
-    		int LA9_15 = input.LA(2);
+    		int LA10_20 = input.LA(2);
 
-    		if ((EvaluatePredicate(synpred6_MutexCLexer_fragment)))
+    		if ((EvaluatePredicate(synpred2_MutexCLexer_fragment)))
     		{
-    			alt9 = 6;
+    			alt10 = 2;
     		}
-    		else if ((EvaluatePredicate(synpred7_MutexCLexer_fragment)))
+    		else if ((EvaluatePredicate(synpred11_MutexCLexer_fragment)))
     		{
-    			alt9 = 7;
+    			alt10 = 11;
+    		}
+    		else if ((EvaluatePredicate(synpred12_MutexCLexer_fragment)))
+    		{
+    			alt10 = 12;
     		}
     		else
     		{
     			if (state.backtracking>0) {state.failed=true; return;}
-    			NoViableAltException nvae = new NoViableAltException("", 9, 15, input);
+    			NoViableAltException nvae = new NoViableAltException("", 10, 20, input);
     			DebugRecognitionException(nvae);
     			throw nvae;
     		}
@@ -1145,20 +1461,20 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	case '8':
     	case '9':
     		{
-    		int LA9_16 = input.LA(2);
+    		int LA10_21 = input.LA(2);
 
-    		if ((EvaluatePredicate(synpred8_MutexCLexer_fragment)))
+    		if ((EvaluatePredicate(synpred13_MutexCLexer_fragment)))
     		{
-    			alt9 = 8;
+    			alt10 = 13;
     		}
     		else if ((true))
     		{
-    			alt9 = 9;
+    			alt10 = 14;
     		}
     		else
     		{
     			if (state.backtracking>0) {state.failed=true; return;}
-    			NoViableAltException nvae = new NoViableAltException("", 9, 16, input);
+    			NoViableAltException nvae = new NoViableAltException("", 10, 21, input);
     			DebugRecognitionException(nvae);
     			throw nvae;
     		}
@@ -1167,92 +1483,137 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	default:
     		{
     			if (state.backtracking>0) {state.failed=true; return;}
-    			NoViableAltException nvae = new NoViableAltException("", 9, 0, input);
+    			NoViableAltException nvae = new NoViableAltException("", 10, 0, input);
     			DebugRecognitionException(nvae);
     			throw nvae;
     		}
     	}
 
-    	} finally { DebugExitDecision(9); }
-    	switch (alt9)
+    	} finally { DebugExitDecision(10); }
+    	switch (alt10)
     	{
     	case 1:
     		DebugEnterAlt(1);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:41: POINTER_DATATYPE
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:41: FUNCTION_DEFINITION
     		{
     		DebugLocation(1, 41);
-    		mPOINTER_DATATYPE(); if (state.failed) return;
+    		mFUNCTION_DEFINITION(); if (state.failed) return;
 
     		}
     		break;
     	case 2:
     		DebugEnterAlt(2);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:58: VOID_DATATYPE
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:61: FUNCTION_CALL
     		{
-    		DebugLocation(1, 58);
-    		mVOID_DATATYPE(); if (state.failed) return;
+    		DebugLocation(1, 61);
+    		mFUNCTION_CALL(); if (state.failed) return;
 
     		}
     		break;
     	case 3:
     		DebugEnterAlt(3);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:72: FLOAT_DATATYPE
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:75: PARAMETER_LIST
     		{
-    		DebugLocation(1, 72);
-    		mFLOAT_DATATYPE(); if (state.failed) return;
+    		DebugLocation(1, 75);
+    		mPARAMETER_LIST(); if (state.failed) return;
 
     		}
     		break;
     	case 4:
     		DebugEnterAlt(4);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:87: INTEGER_DATATYPE
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:90: CONST_MODIFIER
     		{
-    		DebugLocation(1, 87);
-    		mINTEGER_DATATYPE(); if (state.failed) return;
+    		DebugLocation(1, 90);
+    		mCONST_MODIFIER(); if (state.failed) return;
 
     		}
     		break;
     	case 5:
     		DebugEnterAlt(5);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:104: SIGNED_UNSIGNED
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:105: DATATYPE
     		{
-    		DebugLocation(1, 104);
-    		mSIGNED_UNSIGNED(); if (state.failed) return;
+    		DebugLocation(1, 105);
+    		mDATATYPE(); if (state.failed) return;
 
     		}
     		break;
     	case 6:
     		DebugEnterAlt(6);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:120: IDENTIFIER
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:114: POINTER
     		{
-    		DebugLocation(1, 120);
-    		mIDENTIFIER(); if (state.failed) return;
+    		DebugLocation(1, 114);
+    		mPOINTER(); if (state.failed) return;
 
     		}
     		break;
     	case 7:
     		DebugEnterAlt(7);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:131: LETTER
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:122: VOID_DATATYPE
     		{
-    		DebugLocation(1, 131);
-    		mLETTER(); if (state.failed) return;
+    		DebugLocation(1, 122);
+    		mVOID_DATATYPE(); if (state.failed) return;
 
     		}
     		break;
     	case 8:
     		DebugEnterAlt(8);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:138: HEX_DIGIT
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:136: FLOAT_DATATYPE
     		{
-    		DebugLocation(1, 138);
-    		mHEX_DIGIT(); if (state.failed) return;
+    		DebugLocation(1, 136);
+    		mFLOAT_DATATYPE(); if (state.failed) return;
 
     		}
     		break;
     	case 9:
     		DebugEnterAlt(9);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:148: DIGIT
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:151: INTEGER_DATATYPE
     		{
-    		DebugLocation(1, 148);
+    		DebugLocation(1, 151);
+    		mINTEGER_DATATYPE(); if (state.failed) return;
+
+    		}
+    		break;
+    	case 10:
+    		DebugEnterAlt(10);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:168: SIGNED_UNSIGNED
+    		{
+    		DebugLocation(1, 168);
+    		mSIGNED_UNSIGNED(); if (state.failed) return;
+
+    		}
+    		break;
+    	case 11:
+    		DebugEnterAlt(11);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:184: IDENTIFIER
+    		{
+    		DebugLocation(1, 184);
+    		mIDENTIFIER(); if (state.failed) return;
+
+    		}
+    		break;
+    	case 12:
+    		DebugEnterAlt(12);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:195: LETTER
+    		{
+    		DebugLocation(1, 195);
+    		mLETTER(); if (state.failed) return;
+
+    		}
+    		break;
+    	case 13:
+    		DebugEnterAlt(13);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:202: HEX_DIGIT
+    		{
+    		DebugLocation(1, 202);
+    		mHEX_DIGIT(); if (state.failed) return;
+
+    		}
+    		break;
+    	case 14:
+    		DebugEnterAlt(14);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:212: DIGIT
+    		{
+    		DebugLocation(1, 212);
     		mDIGIT(); if (state.failed) return;
 
     		}
@@ -1270,24 +1631,24 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     public void synpred1_MutexCLexer_fragment()
     {
     	EnterRule_synpred1_MutexCLexer_fragment();
-    	EnterRule("synpred1_MutexCLexer_fragment", 11);
-    	TraceIn("synpred1_MutexCLexer_fragment", 11);
+    	EnterRule("synpred1_MutexCLexer_fragment", 16);
+    	TraceIn("synpred1_MutexCLexer_fragment", 16);
     	try
     	{
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:41: ( POINTER_DATATYPE )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:41: ( FUNCTION_DEFINITION )
     		DebugEnterAlt(1);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:41: POINTER_DATATYPE
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:41: FUNCTION_DEFINITION
     		{
     		DebugLocation(1, 41);
-    		mPOINTER_DATATYPE(); if (state.failed) return;
+    		mFUNCTION_DEFINITION(); if (state.failed) return;
 
     		}
 
     	}
     	finally
     	{
-    		TraceOut("synpred1_MutexCLexer_fragment", 11);
-    		LeaveRule("synpred1_MutexCLexer_fragment", 11);
+    		TraceOut("synpred1_MutexCLexer_fragment", 16);
+    		LeaveRule("synpred1_MutexCLexer_fragment", 16);
     		LeaveRule_synpred1_MutexCLexer_fragment();
     	}
     }
@@ -1301,24 +1662,24 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     public void synpred2_MutexCLexer_fragment()
     {
     	EnterRule_synpred2_MutexCLexer_fragment();
-    	EnterRule("synpred2_MutexCLexer_fragment", 12);
-    	TraceIn("synpred2_MutexCLexer_fragment", 12);
+    	EnterRule("synpred2_MutexCLexer_fragment", 17);
+    	TraceIn("synpred2_MutexCLexer_fragment", 17);
     	try
     	{
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:58: ( VOID_DATATYPE )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:61: ( FUNCTION_CALL )
     		DebugEnterAlt(1);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:58: VOID_DATATYPE
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:61: FUNCTION_CALL
     		{
-    		DebugLocation(1, 58);
-    		mVOID_DATATYPE(); if (state.failed) return;
+    		DebugLocation(1, 61);
+    		mFUNCTION_CALL(); if (state.failed) return;
 
     		}
 
     	}
     	finally
     	{
-    		TraceOut("synpred2_MutexCLexer_fragment", 12);
-    		LeaveRule("synpred2_MutexCLexer_fragment", 12);
+    		TraceOut("synpred2_MutexCLexer_fragment", 17);
+    		LeaveRule("synpred2_MutexCLexer_fragment", 17);
     		LeaveRule_synpred2_MutexCLexer_fragment();
     	}
     }
@@ -1332,24 +1693,24 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     public void synpred3_MutexCLexer_fragment()
     {
     	EnterRule_synpred3_MutexCLexer_fragment();
-    	EnterRule("synpred3_MutexCLexer_fragment", 13);
-    	TraceIn("synpred3_MutexCLexer_fragment", 13);
+    	EnterRule("synpred3_MutexCLexer_fragment", 18);
+    	TraceIn("synpred3_MutexCLexer_fragment", 18);
     	try
     	{
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:72: ( FLOAT_DATATYPE )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:75: ( PARAMETER_LIST )
     		DebugEnterAlt(1);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:72: FLOAT_DATATYPE
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:75: PARAMETER_LIST
     		{
-    		DebugLocation(1, 72);
-    		mFLOAT_DATATYPE(); if (state.failed) return;
+    		DebugLocation(1, 75);
+    		mPARAMETER_LIST(); if (state.failed) return;
 
     		}
 
     	}
     	finally
     	{
-    		TraceOut("synpred3_MutexCLexer_fragment", 13);
-    		LeaveRule("synpred3_MutexCLexer_fragment", 13);
+    		TraceOut("synpred3_MutexCLexer_fragment", 18);
+    		LeaveRule("synpred3_MutexCLexer_fragment", 18);
     		LeaveRule_synpred3_MutexCLexer_fragment();
     	}
     }
@@ -1363,24 +1724,24 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     public void synpred4_MutexCLexer_fragment()
     {
     	EnterRule_synpred4_MutexCLexer_fragment();
-    	EnterRule("synpred4_MutexCLexer_fragment", 14);
-    	TraceIn("synpred4_MutexCLexer_fragment", 14);
+    	EnterRule("synpred4_MutexCLexer_fragment", 19);
+    	TraceIn("synpred4_MutexCLexer_fragment", 19);
     	try
     	{
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:87: ( INTEGER_DATATYPE )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:90: ( CONST_MODIFIER )
     		DebugEnterAlt(1);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:87: INTEGER_DATATYPE
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:90: CONST_MODIFIER
     		{
-    		DebugLocation(1, 87);
-    		mINTEGER_DATATYPE(); if (state.failed) return;
+    		DebugLocation(1, 90);
+    		mCONST_MODIFIER(); if (state.failed) return;
 
     		}
 
     	}
     	finally
     	{
-    		TraceOut("synpred4_MutexCLexer_fragment", 14);
-    		LeaveRule("synpred4_MutexCLexer_fragment", 14);
+    		TraceOut("synpred4_MutexCLexer_fragment", 19);
+    		LeaveRule("synpred4_MutexCLexer_fragment", 19);
     		LeaveRule_synpred4_MutexCLexer_fragment();
     	}
     }
@@ -1394,59 +1755,28 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     public void synpred5_MutexCLexer_fragment()
     {
     	EnterRule_synpred5_MutexCLexer_fragment();
-    	EnterRule("synpred5_MutexCLexer_fragment", 15);
-    	TraceIn("synpred5_MutexCLexer_fragment", 15);
+    	EnterRule("synpred5_MutexCLexer_fragment", 20);
+    	TraceIn("synpred5_MutexCLexer_fragment", 20);
     	try
     	{
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:104: ( SIGNED_UNSIGNED )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:105: ( DATATYPE )
     		DebugEnterAlt(1);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:104: SIGNED_UNSIGNED
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:105: DATATYPE
     		{
-    		DebugLocation(1, 104);
-    		mSIGNED_UNSIGNED(); if (state.failed) return;
+    		DebugLocation(1, 105);
+    		mDATATYPE(); if (state.failed) return;
 
     		}
 
     	}
     	finally
     	{
-    		TraceOut("synpred5_MutexCLexer_fragment", 15);
-    		LeaveRule("synpred5_MutexCLexer_fragment", 15);
+    		TraceOut("synpred5_MutexCLexer_fragment", 20);
+    		LeaveRule("synpred5_MutexCLexer_fragment", 20);
     		LeaveRule_synpred5_MutexCLexer_fragment();
     	}
     }
     // $ANTLR end synpred5_MutexCLexer
-    [Conditional("ANTLR_TRACE")]
-    protected virtual void EnterRule_synpred6_MutexCLexer_fragment() {}
-    [Conditional("ANTLR_TRACE")]
-    protected virtual void LeaveRule_synpred6_MutexCLexer_fragment() {}
-
-    // $ANTLR start synpred6_MutexCLexer
-    public void synpred6_MutexCLexer_fragment()
-    {
-    	EnterRule_synpred6_MutexCLexer_fragment();
-    	EnterRule("synpred6_MutexCLexer_fragment", 16);
-    	TraceIn("synpred6_MutexCLexer_fragment", 16);
-    	try
-    	{
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:120: ( IDENTIFIER )
-    		DebugEnterAlt(1);
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:120: IDENTIFIER
-    		{
-    		DebugLocation(1, 120);
-    		mIDENTIFIER(); if (state.failed) return;
-
-    		}
-
-    	}
-    	finally
-    	{
-    		TraceOut("synpred6_MutexCLexer_fragment", 16);
-    		LeaveRule("synpred6_MutexCLexer_fragment", 16);
-    		LeaveRule_synpred6_MutexCLexer_fragment();
-    	}
-    }
-    // $ANTLR end synpred6_MutexCLexer
     [Conditional("ANTLR_TRACE")]
     protected virtual void EnterRule_synpred7_MutexCLexer_fragment() {}
     [Conditional("ANTLR_TRACE")]
@@ -1456,15 +1786,170 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     public void synpred7_MutexCLexer_fragment()
     {
     	EnterRule_synpred7_MutexCLexer_fragment();
-    	EnterRule("synpred7_MutexCLexer_fragment", 17);
-    	TraceIn("synpred7_MutexCLexer_fragment", 17);
+    	EnterRule("synpred7_MutexCLexer_fragment", 22);
+    	TraceIn("synpred7_MutexCLexer_fragment", 22);
     	try
     	{
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:131: ( LETTER )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:122: ( VOID_DATATYPE )
+    		DebugEnterAlt(1);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:122: VOID_DATATYPE
+    		{
+    		DebugLocation(1, 122);
+    		mVOID_DATATYPE(); if (state.failed) return;
+
+    		}
+
+    	}
+    	finally
+    	{
+    		TraceOut("synpred7_MutexCLexer_fragment", 22);
+    		LeaveRule("synpred7_MutexCLexer_fragment", 22);
+    		LeaveRule_synpred7_MutexCLexer_fragment();
+    	}
+    }
+    // $ANTLR end synpred7_MutexCLexer
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void EnterRule_synpred8_MutexCLexer_fragment() {}
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void LeaveRule_synpred8_MutexCLexer_fragment() {}
+
+    // $ANTLR start synpred8_MutexCLexer
+    public void synpred8_MutexCLexer_fragment()
+    {
+    	EnterRule_synpred8_MutexCLexer_fragment();
+    	EnterRule("synpred8_MutexCLexer_fragment", 23);
+    	TraceIn("synpred8_MutexCLexer_fragment", 23);
+    	try
+    	{
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:136: ( FLOAT_DATATYPE )
+    		DebugEnterAlt(1);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:136: FLOAT_DATATYPE
+    		{
+    		DebugLocation(1, 136);
+    		mFLOAT_DATATYPE(); if (state.failed) return;
+
+    		}
+
+    	}
+    	finally
+    	{
+    		TraceOut("synpred8_MutexCLexer_fragment", 23);
+    		LeaveRule("synpred8_MutexCLexer_fragment", 23);
+    		LeaveRule_synpred8_MutexCLexer_fragment();
+    	}
+    }
+    // $ANTLR end synpred8_MutexCLexer
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void EnterRule_synpred9_MutexCLexer_fragment() {}
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void LeaveRule_synpred9_MutexCLexer_fragment() {}
+
+    // $ANTLR start synpred9_MutexCLexer
+    public void synpred9_MutexCLexer_fragment()
+    {
+    	EnterRule_synpred9_MutexCLexer_fragment();
+    	EnterRule("synpred9_MutexCLexer_fragment", 24);
+    	TraceIn("synpred9_MutexCLexer_fragment", 24);
+    	try
+    	{
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:151: ( INTEGER_DATATYPE )
+    		DebugEnterAlt(1);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:151: INTEGER_DATATYPE
+    		{
+    		DebugLocation(1, 151);
+    		mINTEGER_DATATYPE(); if (state.failed) return;
+
+    		}
+
+    	}
+    	finally
+    	{
+    		TraceOut("synpred9_MutexCLexer_fragment", 24);
+    		LeaveRule("synpred9_MutexCLexer_fragment", 24);
+    		LeaveRule_synpred9_MutexCLexer_fragment();
+    	}
+    }
+    // $ANTLR end synpred9_MutexCLexer
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void EnterRule_synpred10_MutexCLexer_fragment() {}
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void LeaveRule_synpred10_MutexCLexer_fragment() {}
+
+    // $ANTLR start synpred10_MutexCLexer
+    public void synpred10_MutexCLexer_fragment()
+    {
+    	EnterRule_synpred10_MutexCLexer_fragment();
+    	EnterRule("synpred10_MutexCLexer_fragment", 25);
+    	TraceIn("synpred10_MutexCLexer_fragment", 25);
+    	try
+    	{
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:168: ( SIGNED_UNSIGNED )
+    		DebugEnterAlt(1);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:168: SIGNED_UNSIGNED
+    		{
+    		DebugLocation(1, 168);
+    		mSIGNED_UNSIGNED(); if (state.failed) return;
+
+    		}
+
+    	}
+    	finally
+    	{
+    		TraceOut("synpred10_MutexCLexer_fragment", 25);
+    		LeaveRule("synpred10_MutexCLexer_fragment", 25);
+    		LeaveRule_synpred10_MutexCLexer_fragment();
+    	}
+    }
+    // $ANTLR end synpred10_MutexCLexer
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void EnterRule_synpred11_MutexCLexer_fragment() {}
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void LeaveRule_synpred11_MutexCLexer_fragment() {}
+
+    // $ANTLR start synpred11_MutexCLexer
+    public void synpred11_MutexCLexer_fragment()
+    {
+    	EnterRule_synpred11_MutexCLexer_fragment();
+    	EnterRule("synpred11_MutexCLexer_fragment", 26);
+    	TraceIn("synpred11_MutexCLexer_fragment", 26);
+    	try
+    	{
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:184: ( IDENTIFIER )
+    		DebugEnterAlt(1);
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:184: IDENTIFIER
+    		{
+    		DebugLocation(1, 184);
+    		mIDENTIFIER(); if (state.failed) return;
+
+    		}
+
+    	}
+    	finally
+    	{
+    		TraceOut("synpred11_MutexCLexer_fragment", 26);
+    		LeaveRule("synpred11_MutexCLexer_fragment", 26);
+    		LeaveRule_synpred11_MutexCLexer_fragment();
+    	}
+    }
+    // $ANTLR end synpred11_MutexCLexer
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void EnterRule_synpred12_MutexCLexer_fragment() {}
+    [Conditional("ANTLR_TRACE")]
+    protected virtual void LeaveRule_synpred12_MutexCLexer_fragment() {}
+
+    // $ANTLR start synpred12_MutexCLexer
+    public void synpred12_MutexCLexer_fragment()
+    {
+    	EnterRule_synpred12_MutexCLexer_fragment();
+    	EnterRule("synpred12_MutexCLexer_fragment", 27);
+    	TraceIn("synpred12_MutexCLexer_fragment", 27);
+    	try
+    	{
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:195: ( LETTER )
     		DebugEnterAlt(1);
     		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:
     		{
-    		DebugLocation(1, 131);
+    		DebugLocation(1, 195);
     		if ((input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z'))
     		{
     			input.Consume();
@@ -1485,30 +1970,30 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	}
     	finally
     	{
-    		TraceOut("synpred7_MutexCLexer_fragment", 17);
-    		LeaveRule("synpred7_MutexCLexer_fragment", 17);
-    		LeaveRule_synpred7_MutexCLexer_fragment();
+    		TraceOut("synpred12_MutexCLexer_fragment", 27);
+    		LeaveRule("synpred12_MutexCLexer_fragment", 27);
+    		LeaveRule_synpred12_MutexCLexer_fragment();
     	}
     }
-    // $ANTLR end synpred7_MutexCLexer
+    // $ANTLR end synpred12_MutexCLexer
     [Conditional("ANTLR_TRACE")]
-    protected virtual void EnterRule_synpred8_MutexCLexer_fragment() {}
+    protected virtual void EnterRule_synpred13_MutexCLexer_fragment() {}
     [Conditional("ANTLR_TRACE")]
-    protected virtual void LeaveRule_synpred8_MutexCLexer_fragment() {}
+    protected virtual void LeaveRule_synpred13_MutexCLexer_fragment() {}
 
-    // $ANTLR start synpred8_MutexCLexer
-    public void synpred8_MutexCLexer_fragment()
+    // $ANTLR start synpred13_MutexCLexer
+    public void synpred13_MutexCLexer_fragment()
     {
-    	EnterRule_synpred8_MutexCLexer_fragment();
-    	EnterRule("synpred8_MutexCLexer_fragment", 18);
-    	TraceIn("synpred8_MutexCLexer_fragment", 18);
+    	EnterRule_synpred13_MutexCLexer_fragment();
+    	EnterRule("synpred13_MutexCLexer_fragment", 28);
+    	TraceIn("synpred13_MutexCLexer_fragment", 28);
     	try
     	{
-    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:138: ( HEX_DIGIT )
+    		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:1:202: ( HEX_DIGIT )
     		DebugEnterAlt(1);
     		// D:\\wissen\\csharp\\GreedyStringTiling\\CTokenizer\\MutexCLexer.g:
     		{
-    		DebugLocation(1, 138);
+    		DebugLocation(1, 202);
     		if ((input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='F')||(input.LA(1)>='a' && input.LA(1)<='f'))
     		{
     			input.Consume();
@@ -1529,12 +2014,12 @@ public partial class MutexCLexer : Antlr.Runtime.Lexer
     	}
     	finally
     	{
-    		TraceOut("synpred8_MutexCLexer_fragment", 18);
-    		LeaveRule("synpred8_MutexCLexer_fragment", 18);
-    		LeaveRule_synpred8_MutexCLexer_fragment();
+    		TraceOut("synpred13_MutexCLexer_fragment", 28);
+    		LeaveRule("synpred13_MutexCLexer_fragment", 28);
+    		LeaveRule_synpred13_MutexCLexer_fragment();
     	}
     }
-    // $ANTLR end synpred8_MutexCLexer
+    // $ANTLR end synpred13_MutexCLexer
 
 	#region Synpreds
 	private bool EvaluatePredicate(System.Action fragment)

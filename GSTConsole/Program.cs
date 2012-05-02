@@ -1,70 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using Antlr.Runtime;
 using CTokenizer;
-using GSTLibrary.tile;
-using GSTLibrary.token;
+using DataRepository;
+using GSTAppLogic.app;
+using GSTAppLogic.app.model;
+using GSTAppLogic.test.model;
 
 namespace GSTConsole
 {
     static class Program
     {
-        private const string RelativePathToTestFiles = @"..\..\..\test";
-        private static GSTAlgorithm<GSTToken<TokenWrapper>> Algorithm;
- 
         static void Main(string[] args)
         {
-            /*
-            var listA = GetTokenList(new MutexCLexer(new ANTLRStringStream("void main(void) { }")));
-            var listB = GetTokenList(new MutexCLexer(new ANTLRStringStream("void main(void) { }")));
-            /* */
+            string student = null;
+            string assignment = null;
+            string path = null;
 
-            
-            var listA = GetTokenList(new MutexCLexer(new ANTLRFileStream(Path.Combine(RelativePathToTestFiles, "main-01.c"))));
-            var listB = GetTokenList(new MutexCLexer(new ANTLRFileStream(Path.Combine(RelativePathToTestFiles, "main-13.c"))));
-            /* */
-            Algorithm = new GSTAlgorithm<GSTToken<TokenWrapper>>(listA, listB)
-                {
-                    MinimumMatchLength = 5
-                };
-            
-
-            Algorithm.RunToCompletion();
-
-            Console.WriteLine("Similarity: {0}", Algorithm.Similarity);
-            /*
-            var fileStream = new ANTLRFileStream(@"test\main-01.c");
-            
-            Lexer lexer = new MutexCLexer(fileStream);
-            
-            var lexerType = lexer.GetType();
-            IToken myToken;
-
-            while(-1 != (myToken = lexer.NextToken()).Type)
+            if(!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("QUERY_STRING")))
             {
-                Console.WriteLine("Lexer-Token: {0} => {1}", 
-                    myToken.Type.GetTokenName(lexerType), 
-                    myToken.Text);
+                var queryString = Environment.GetEnvironmentVariable("QUERY_STRING");
+                student = GeneralHelper.GetStudentIdentifier(queryString);
             }
-            /* */
-            Console.WriteLine("Finished Lexer run");
+            else if(3 == args.Length)
+            {
+                student = args[0];
+                assignment = args[1];
+                path = args[2];
+            }
+            else
+            {
+                Console.WriteLine("Usage: mutex.exe [student_identifier] [assignment_identifier] [path_to_sourcefile]");
+#if DEBUG
+                Console.ReadLine();
+#endif
+                Environment.Exit(-1);
+            }
+            
+            string source;
+            using (var reader = new StreamReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)))
+            {
+                source = reader.ReadToEnd();
+            }
+
+            var appLogic = AppLogic.GetAppLogic();
+            appLogic.Start(student, assignment, source);
+            
+            Console.WriteLine("Similarity:{0}", appLogic.MaximumSimilarity);
+#if DEBUG
             Console.ReadLine();
-        }
-
-        internal static GSTTokenList<GSTToken<TokenWrapper>> GetTokenList(Lexer lexer)
-        {
-            var list = new GSTTokenList<GSTToken<TokenWrapper>>();
-            IToken myToken;
-
-            while(-1 != (myToken = lexer.NextToken()).Type)
-            {
-                list.Add(new GSTToken<TokenWrapper>(new TokenWrapper(myToken)));    
-            }
-
-            return list;
+#endif
         }
     }
 }

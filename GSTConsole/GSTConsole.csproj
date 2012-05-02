@@ -15,7 +15,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -53,6 +53,14 @@
     <ProjectReference Include="..\CTokenizer\CTokenizer.csproj">
       <Project>{BEF91472-4566-4604-9DEB-3FDFA17E6048}</Project>
       <Name>CTokenizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataRepository\DataRepository.csproj">
+      <Project>{06C6CCC0-81EC-4C6C-9AB0-47F409858382}</Project>
+      <Name>DataRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GSTAppLogic\GSTAppLogic.csproj">
+      <Project>{D00B37DB-1567-4F8C-9476-A31A8005D7D2}</Project>
+      <Name>GSTAppLogic</Name>
     </ProjectReference>
     <ProjectReference Include="..\GSTLibrary\GSTLibrary.csproj">
       <Project>{B80B2459-2992-4F3A-A6C4-EE692EDA01FF}</Project>

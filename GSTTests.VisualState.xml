@@ -13,5 +13,12 @@
     <Node UniqueName="[0-1001]GSTLibrary.test.tile.TileTest" Expanded="true" />
     <Node UniqueName="[0-1023]GSTLibrary.test.token" Expanded="true" />
     <Node UniqueName="[0-1004]GSTLibrary.test.token.GSTTokenTest" Expanded="true" />
+    <Node UniqueName="[0-1026]D:\wissen\csharp\GreedyStringTiling\CTokenizer\bin\Debug\CTokenizer.dll" Expanded="true" />
+    <Node UniqueName="[0-1027]CTokenizer" Expanded="true" />
+    <Node UniqueName="[0-1028]CTokenizer.test" Expanded="true" />
+    <Node UniqueName="[0-1031]D:\wissen\csharp\GreedyStringTiling\GSTAppLogic\bin\Debug\GSTAppLogic.dll" Expanded="true" />
+    <Node UniqueName="[0-1032]GSTAppLogic" Expanded="true" />
+    <Node UniqueName="[0-1033]GSTAppLogic.test" Expanded="true" />
+    <Node UniqueName="[0-1034]GSTAppLogic.test.model" Expanded="true" />
   </Nodes>
 </VisualState>

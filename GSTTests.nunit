@@ -2,6 +2,8 @@
   <Settings activeconfig="Debug" />
   <Config name="Debug" binpathtype="Auto">
     <assembly path="GSTLibrary\bin\Debug\GSTLibrary.dll" />
+    <assembly path="CTokenizer\bin\Debug\CTokenizer.dll" />
+    <assembly path="GSTAppLogic\bin\Debug\GSTAppLogic.dll" />
   </Config>
   <Config name="Release" binpathtype="Auto" />
 </NUnitProject>

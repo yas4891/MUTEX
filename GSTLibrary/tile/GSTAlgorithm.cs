@@ -94,9 +94,10 @@ namespace GSTLibrary.tile
             {
                 double lenList = ListA.Count < ListB.Count ? ListA.Count : ListB.Count;
                 double lenTiles = Tiles.Select(tile => tile.Tokens.Count()).Sum();
-
+                /*
                 Console.WriteLine("list length: {0}, {1}", ListA.Count, ListB.Count);
                 Console.WriteLine("simil: {0} / {1}", lenTiles, lenList);
+                /* */
                 return (int) (100 * lenTiles / lenList);
             }
         }
