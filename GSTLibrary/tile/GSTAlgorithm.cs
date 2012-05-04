@@ -316,7 +316,5 @@ namespace GSTLibrary.tile
 
             return index;
         }
-
-        
     }
 }

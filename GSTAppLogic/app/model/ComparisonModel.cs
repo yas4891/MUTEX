@@ -50,12 +50,13 @@ namespace GSTAppLogic.app.model
         /// </summary>
         public void Start()
         {
-            var gstTokenList = Tokens.ToGSTTokenList();
-
             int max = 0;
             foreach (var data in ReferenceData)
             {
-                var referenceTokens = data.Tokens.GetTokens().ToGSTTokenList();
+                // create the list here, because this way it is local to this run
+                // ==> more functional and separated
+                var gstTokenList = Tokens.ToGSTTokenList(); 
+                var referenceTokens = data.Tokens.ToGSTTokenList();
                 var algorithm = new GSTAlgorithm<GSTToken<TokenWrapper>>(gstTokenList, referenceTokens)
                 {
                     MinimumMatchLength = DEFAULT_MML
