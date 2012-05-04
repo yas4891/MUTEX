@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿
 using Antlr.Runtime;
 
-namespace CTokenizer
+namespace Tokenizer
 {
     /// <summary>
-    /// wrapper around IToken to override Equals.
+    /// wrapper around ANTLR's IToken to override Equals.
     /// Needed to make it work with GSTToken / GSTAlgorithm
     /// </summary>
     public class TokenWrapper
@@ -15,7 +12,11 @@ namespace CTokenizer
         /// <summary>
         /// the saved token object from ANTLR lexers
         /// </summary>
-        public IToken Token { get; private set; }
+        private IToken Token { get; set; }
+
+        private string Text { get; set; }
+
+        private TokenType Type { get; set; }
 
         public TokenWrapper(IToken token)
         {
