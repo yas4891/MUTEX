@@ -26,7 +26,7 @@ namespace GSTAppLogic.app
 
             var comparisonModel = new ComparisonModel(tokens, repo.LoadByAssignment(assignment));
 
-            MaximumSimilarity = comparisonModel.Start();
+            MaximumSimilarity = comparisonModel.Calculate();
 
             var sourceEntityData = new SourceEntityData(student, assignment, tokens.ToStringEnumerable(), source);
 

@@ -29,7 +29,7 @@ namespace GSTAppLogic.test.model
                         new SourceEntityData("stud2", "assignment1", new[] {"IDENTIFIER", "INTEGER_DATATYPE"}, "bla2")
                     });
 
-            model.Start();
+            model.Calculate();
 
             Assert.AreEqual(100, model.MaximumSimilarity);
         }

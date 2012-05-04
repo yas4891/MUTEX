@@ -45,7 +45,7 @@ namespace GSTAppLogic.app.model
         /// starts the comparison. 
         /// After this method has completed you can retrieve the maximum found similarity 
         /// </summary>
-        public int Start()
+        public int Calculate()
         {
             int max = 0;
             foreach (var data in ReferenceData)
