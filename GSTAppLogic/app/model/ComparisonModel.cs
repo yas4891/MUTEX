@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using CTokenizer;
 using DataRepository;
 using GSTAppLogic.ext;
@@ -48,7 +45,7 @@ namespace GSTAppLogic.app.model
         /// starts the comparison. 
         /// After this method has completed you can retrieve the maximum found similarity 
         /// </summary>
-        public void Start()
+        public int Start()
         {
             int max = 0;
             foreach (var data in ReferenceData)
@@ -69,6 +66,7 @@ namespace GSTAppLogic.app.model
             }
 
             MaximumSimilarity = max;
+            return max;
         }
     }
 }

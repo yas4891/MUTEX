@@ -8,15 +8,15 @@ using GSTAppLogic.app.model;
 
 namespace GSTAppLogic.app
 {
+    /// <summary>
+    /// implementation of the IAppLogic interface
+    /// </summary>
     public class AppLogicImpl : IAppLogic
     {
-        //private IRepository DataRepository = Repository.GetRepository();
-        private ComparisonModel Comparison = null;
-
-        public int MaximumSimilarity
-        {
-            get { return null != Comparison ? Comparison.MaximumSimilarity : 0; }
-        }
+        /// <summary>
+        /// the maximum similarity found
+        /// </summary>
+        public int MaximumSimilarity { get; private set; }
 
         public void Start(string student, string assignment, string source)
         {
@@ -24,11 +24,11 @@ namespace GSTAppLogic.app
 
             var tokens = LexerHelper.CreateLexerFromSource(source).GetTokenWrappers().ToList();
 
-            Comparison = new ComparisonModel(tokens, repo.LoadByAssignment(assignment));
+            var comparisonModel = new ComparisonModel(tokens, repo.LoadByAssignment(assignment));
 
-            Comparison.Start();
+            MaximumSimilarity = comparisonModel.Start();
 
-            var sourceEntityData = new SourceEntityData(student, assignment, tokens.GetTokensAsStrings(), source);
+            var sourceEntityData = new SourceEntityData(student, assignment, tokens.ToStringEnumerable(), source);
 
             repo.Store(sourceEntityData, MaximumSimilarity > 50);
         }

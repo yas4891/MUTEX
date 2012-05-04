@@ -122,7 +122,7 @@ namespace CTokenizer
         /// </summary>
         /// <param name="enumTokens"></param>
         /// <returns></returns>
-        public static IEnumerable<string> GetTokensAsStrings(this IEnumerable<TokenWrapper> enumTokens)
+        public static IEnumerable<string> ToStringEnumerable(this IEnumerable<TokenWrapper> enumTokens)
         {
             return enumTokens.Select(token => token.ToString());
         }
