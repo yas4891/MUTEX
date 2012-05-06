@@ -18,14 +18,14 @@ namespace CTokenizer
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static MutexCLexer CreateLexer(string path)
+        public static Lexer CreateLexer(string path)
         {
-            return new MutexCLexer(new ANTLRFileStream(path));
+            return new CLexer(new ANTLRFileStream(path));
         }
 
         public static Lexer CreateLexerFromSource(string source)
         {
-            return new MutexCLexer(new ANTLRStringStream(source));
+            return new CLexer(new ANTLRStringStream(source));
         }
 
         public static string GetTokenNameFromMUTEXLexer(this int tokenType)
@@ -59,9 +59,13 @@ namespace CTokenizer
         {
             var list = new List<IToken>();
             IToken myToken;
+            const int EOF = -1;
 
-            while (MutexCLexer.EOF != (myToken = lexer.NextToken()).Type)
+            while (EOF != (myToken = lexer.NextToken()).Type)
             {
+                if (BaseRecognizer.Hidden == myToken.Channel)
+                    continue;
+
                 list.Add(myToken);
             }
 

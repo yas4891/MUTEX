@@ -10,22 +10,37 @@ namespace CTokenizer.test
     [TestFixture]
     public class LexerHelperTest
     {
-        private MutexCLexer lexer;
-
         [SetUp]
         public void SetUp()
         {
-            lexer = new MutexCLexer();
-            lexer.CharStream = new ANTLRStringStream(
-                "void main(int argc, char** argv) {\r\n" + 
-                    "printf(argv, argc);\r\n" +
-                "}"); // \"Hello World!\"
         }
 
         [Test]
         public void TokenStringOnDefault()
         {
+            var lexer = ToLexer(
+                "void main(int argc, char** argv) {\r\n" +
+                "printf(\"Hello World!\");\r\n" +
+                "}");
+
             Assert.AreEqual("DATATYPE IDENTIFIER DATATYPE IDENTIFIER DATATYPE POINTER IDENTIFIER FUNCTION_CALL", lexer.GetJoinedTokenString());
+        }
+
+        [Test]
+        public void IgnoresComments()
+        {
+            var lexer = ToLexer(
+                "void main(int argc, char** argv) {\r\n" +
+                "/*single line comment*/ \r\n" + 
+                "printf(\"Hello World!\");\r\n" +
+                "}");
+
+            Assert.AreEqual("DATATYPE IDENTIFIER DATATYPE IDENTIFIER DATATYPE POINTER IDENTIFIER FUNCTION_CALL", lexer.GetJoinedTokenString());
+        }
+
+        private static Lexer ToLexer(string str)
+        {
+            return new CLexer(new ANTLRStringStream(str));
         }
     }
 }

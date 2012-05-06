@@ -21,6 +21,8 @@ namespace Tokenizer
         public TokenWrapper(IToken token)
         {
             Token = token;
+            Text = token.Text;
+            Type = new TokenType {Type = token.Type};
         }
 
         /// <summary>
@@ -44,7 +46,7 @@ namespace Tokenizer
                 null == other.Token)
                 return false;
 
-            return other.Token.Type == Token.Type;
+            return other.Type.Equals(Type);
         }
 
         public override int GetHashCode()

@@ -1,17 +1,22 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using GSTAppLogic.app;
+using log4net;
+using log4net.Config;
 
 namespace GSTConsole
 {
     static class Program
     {
+        private static ILog cLogger = LogManager.GetLogger(typeof (Program).Name);
+
         static void Main(string[] args)
         {
             string student = null;
             string assignment = null;
             string path = null;
-
+            
             if(!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("QUERY_STRING")))
             {
                 var queryString = Environment.GetEnvironmentVariable("QUERY_STRING");
@@ -29,12 +34,13 @@ namespace GSTConsole
             else
             {
                 Console.WriteLine("Usage: mutex.exe [student_identifier] [assignment_identifier] [path_to_sourcefile]");
-#if DEBUG
-                Console.ReadLine();
-#endif
+
                 Environment.Exit(-1);
             }
-            
+
+            XmlConfigurator.Configure(new FileInfo("log4net.xml"));
+            Stopwatch watch = Stopwatch.StartNew();
+
             string source;
             using (var reader = new StreamReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)))
             {
@@ -44,9 +50,11 @@ namespace GSTConsole
             var appLogic = AppLogic.GetAppLogic();
             appLogic.Start(student, assignment, source);
             
+            cLogger.DebugFormat("total runtime: {0} ms", watch.ElapsedMilliseconds);
             Console.WriteLine("Similarity:{0}", appLogic.MaximumSimilarity);
 #if DEBUG
-            Console.ReadLine();
+            if(Environment.UserInteractive)
+                Console.ReadLine();
 #endif
         }
     }

@@ -7,8 +7,10 @@ namespace Tokenizer
     /// </summary>
     public class TokenType
     {
+        /// <summary>
+        /// the underlying type 
+        /// </summary>
         public Int32 Type { get; set; }
-
 
         public override bool Equals(object obj)
         {
@@ -17,7 +19,7 @@ namespace Tokenizer
                 return false;
             }
 
-            return Type == ((TokenType)obj).Type;   
+            return Type == ((TokenType)obj).Type;
         }
 
         public override int GetHashCode()
@@ -27,7 +29,7 @@ namespace Tokenizer
 
         public override string ToString()
         {
-            return "TokenType:" + Type;
+            return string.Format("TokenType:{0}", Type);
         }
     }
 }

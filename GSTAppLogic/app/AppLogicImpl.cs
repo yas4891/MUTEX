@@ -18,11 +18,17 @@ namespace GSTAppLogic.app
         /// </summary>
         public int MaximumSimilarity { get; private set; }
 
+        /// <summary>
+        /// calculates the maximum similarity of the provided source against
+        /// all sources for the given asignment in the reference database
+        /// </summary>
+        /// <param name="student"></param>
+        /// <param name="assignment"></param>
+        /// <param name="source"></param>
         public void Start(string student, string assignment, string source)
         {
-            var repo = Repository.GetRepository();
-
             var tokens = LexerHelper.CreateLexerFromSource(source).GetTokenWrappers().ToList();
+            var repo = Repository.GetRepository();
 
             var comparisonModel = new ComparisonModel(tokens, repo.LoadByAssignment(assignment));
 
