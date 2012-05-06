@@ -9,7 +9,7 @@ namespace GSTConsole
 {
     static class Program
     {
-        private static ILog cLogger = LogManager.GetLogger(typeof (Program).Name);
+        private static readonly ILog cLogger = LogManager.GetLogger(typeof (Program).Name);
 
         static void Main(string[] args)
         {
@@ -34,7 +34,6 @@ namespace GSTConsole
             else
             {
                 Console.WriteLine("Usage: mutex.exe [student_identifier] [assignment_identifier] [path_to_sourcefile]");
-
                 Environment.Exit(-1);
             }
 
@@ -52,6 +51,7 @@ namespace GSTConsole
             
             cLogger.DebugFormat("total runtime: {0} ms", watch.ElapsedMilliseconds);
             Console.WriteLine("Similarity:{0}", appLogic.MaximumSimilarity);
+
 #if DEBUG
             if(Environment.UserInteractive)
                 Console.ReadLine();
