@@ -6,7 +6,7 @@ using Tokenizer;
 
 namespace GSTAppLogic.ext
 {
-    static class LexerExtensions
+    public static class LexerExtensions
     {
         public static GSTTokenList<GSTToken<TokenWrapper>> ToGSTTokenList(this IEnumerable<TokenWrapper> tokens)
         {

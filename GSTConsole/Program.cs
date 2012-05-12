@@ -1,8 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using CTokenizer;
 using GSTAppLogic.app;
+using GSTAppLogic.ext;
+using GSTLibrary.tile;
+using GSTLibrary.token;
+using Tokenizer;
 using log4net;
+using System.Linq;
 using log4net.Config;
 
 namespace GSTConsole
@@ -13,6 +20,7 @@ namespace GSTConsole
 
         static void Main(string[] args)
         {
+            doEvaulate();
             string student = null;
             string assignment = null;
             string path = null;
@@ -56,6 +64,60 @@ namespace GSTConsole
             if(Environment.UserInteractive)
                 Console.ReadLine();
 #endif
+        }
+
+        private static void doEvaulate()
+        {
+            var doneList = new List<string>();
+
+            var args = Environment.GetCommandLineArgs();
+            
+            var dir = new DirectoryInfo(@"X:\Katharina und Christoph\Christoph\Studium\Bachelorarbeit\Quelltexte\nach Versuch\1\Reihe");
+
+            if(args.Length > 1)
+                dir = new DirectoryInfo(args[1]);
+
+            Console.WriteLine("directory: {0}", dir.FullName);
+            foreach (var subdir in dir.GetDirectories())
+            {
+                DirectoryInfo subdir1 = subdir;
+                var otherFiles = dir.GetDirectories().Where(od => subdir1.Name != od.Name).Select(od => new FileInfo(Path.Combine(od.FullName, "main.c")));
+
+                
+                var fileA = new FileInfo(Path.Combine(subdir.FullName, "main.c"));
+
+                var tokensA = GetTokens(fileA);
+
+
+                foreach(var fileB in otherFiles)
+                {
+                    if (doneList.Contains(string.Format("{0}-{1}", fileA.Directory.Name, fileB.Directory.Name)) ||
+                        doneList.Contains(string.Format("{1}-{0}", fileA.Directory.Name, fileB.Directory.Name)))
+                        continue;
+
+                    var tokensB = GetTokens(fileB);
+
+                    var algo = new GSTAlgorithm<GSTToken<TokenWrapper>>(tokensA, tokensB) {MinimumMatchLength = 5};
+                    algo.RunToCompletion();
+                    Console.WriteLine("{0}-{1}:{2}", fileA.Directory.Name, fileB.Directory.Name, algo.Similarity);
+                }
+            }
+            
+
+            Console.WriteLine("FINISHED EVAL");
+            Environment.Exit(0);
+        }
+
+        private static GSTTokenList<GSTToken<TokenWrapper>> GetTokens(FileInfo file)
+        {
+            string source;
+            using (var reader = new StreamReader(new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)))
+            {
+                source = reader.ReadToEnd();
+            }
+            var tokens = LexerHelper.CreateLexerFromSource(source).GetTokenWrappers().ToList();
+
+            return tokens.ToGSTTokenList();
         }
     }
 }

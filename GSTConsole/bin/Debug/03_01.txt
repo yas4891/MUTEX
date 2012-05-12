@@ -1,0 +1,14 @@
+directory: X:\Katharina und Christoph\Christoph\Studium\Bachelorarbeit\Quelltexte\nach Versuch\3\Replace
+01-02:75
+01-03:6
+01-04:6
+02-01:75
+02-03:5
+02-04:8
+03-01:35
+03-02:4
+03-04:3
+04-01:83
+04-02:2
+04-03:2
+FINISHED EVAL

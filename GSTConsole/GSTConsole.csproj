@@ -79,8 +79,15 @@
       <Project>{B80B2459-2992-4F3A-A6C4-EE692EDA01FF}</Project>
       <Name>GSTLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Tokenizer\Tokenizer.csproj">
+      <Project>{044DABC4-13F0-4581-A9AF-FF645FD460EB}</Project>
+      <Name>Tokenizer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>$(ProjectDir)\merge.bat</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

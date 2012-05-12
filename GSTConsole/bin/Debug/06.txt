@@ -1,0 +1,4 @@
+directory: X:\Katharina und Christoph\Christoph\Studium\Bachelorarbeit\Quelltexte\nach Versuch\6
+01-02:91
+02-01:91
+FINISHED EVAL

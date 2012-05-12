@@ -41,5 +41,13 @@ namespace GSTConsole
         {
             return queryString.Substring(0, queryString.IndexOf('&'));
         }
+        
+        internal static Int32 GetThreshold(string queryString)
+        {
+            var parts = queryString.Split(new[] {'&'});
+
+            return Int32.Parse(parts.Where(part => part.StartsWith("thres=")).Select(part => part.Substring(part.IndexOf("=") + 1)).First());
+            
+        }
     }
 }
