@@ -20,7 +20,6 @@ namespace GSTConsole
 
         static void Main(string[] args)
         {
-            doEvaulate();
             string student = null;
             string assignment = null;
             string path = null;
@@ -72,7 +71,7 @@ namespace GSTConsole
 
             var args = Environment.GetCommandLineArgs();
             
-            var dir = new DirectoryInfo(@"X:\Katharina und Christoph\Christoph\Studium\Bachelorarbeit\Quelltexte\nach Versuch\1\Reihe");
+            var dir = new DirectoryInfo(@"myDir");
 
             if(args.Length > 1)
                 dir = new DirectoryInfo(args[1]);
