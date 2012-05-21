@@ -163,6 +163,7 @@ namespace GSTLibrary.tile
         
         /// <summary>
         /// Adds the tile to the match list, if matchLength == LastMaximumMatch
+        /// and the indices don't overlap
         /// --
         /// if LastMaximumMatch is less than matchLength
         /// - the listMatches is cleared

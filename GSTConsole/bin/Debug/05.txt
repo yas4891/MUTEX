@@ -1,8 +1,0 @@
-directory: X:\Katharina und Christoph\Christoph\Studium\Bachelorarbeit\Quelltexte\nach Versuch\5\VierGewinnt
-01-02_01:90
-01-02_02:53
-02_01-01:90
-02_01-02_02:0
-02_02-01:58
-02_02-02_01:43
-FINISHED EVAL

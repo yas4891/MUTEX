@@ -193,7 +193,6 @@ namespace GSTLibrary.test.tile
             Algorithm.RunToCompletion();
 
             Assert.AreEqual(1, Algorithm.Tiles.Count(), "too many tiles found"); 
-            /* */
         }
 
         [Test]

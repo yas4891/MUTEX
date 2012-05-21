@@ -1,8 +1,0 @@
-directory: X:\Katharina und Christoph\Christoph\Studium\Bachelorarbeit\Quelltexte\nach Versuch\7
-01-02:80
-01-03:22
-02-01:80
-02-03:4
-03-01:99
-03-02:0
-FINISHED EVAL

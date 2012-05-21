@@ -1,4 +1,0 @@
-directory: X:\Katharina und Christoph\Christoph\Studium\Bachelorarbeit\Quelltexte\nach Versuch\4\Mandelbrot
-01-02:95
-02-01:95
-FINISHED EVAL

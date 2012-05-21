@@ -20,6 +20,14 @@ namespace GSTConsole
 
         static void Main(string[] args)
         {
+            /*
+            var lexer = LexerHelper.CreateLexer(@"X:\Katharina und Christoph\Christoph\Studium\Bachelorarbeit\Quelltexte\nach Versuch\1\Reihe\01\main.c");
+            Console.WriteLine(lexer.GetJoinedTokenString());
+            Console.WriteLine(lexer.GetTokens().Count());
+            Environment.Exit(1);
+            /* */
+            doEvaluate();
+            /* */
             string student = null;
             string assignment = null;
             string path = null;
@@ -65,7 +73,7 @@ namespace GSTConsole
 #endif
         }
 
-        private static void doEvaulate()
+        private static void doEvaluate()
         {
             var doneList = new List<string>();
 
@@ -77,10 +85,10 @@ namespace GSTConsole
                 dir = new DirectoryInfo(args[1]);
 
             Console.WriteLine("directory: {0}", dir.FullName);
-            foreach (var subdir in dir.GetDirectories())
+            foreach (var subdir in dir.GetDirectories().OrderBy(sd => sd.Name))
             {
                 DirectoryInfo subdir1 = subdir;
-                var otherFiles = dir.GetDirectories().Where(od => subdir1.Name != od.Name).Select(od => new FileInfo(Path.Combine(od.FullName, "main.c")));
+                var otherFiles = dir.GetDirectories().Where(od => subdir1.Name != od.Name).OrderBy(od => od.Name).Select(od => new FileInfo(Path.Combine(od.FullName, "main.c")));
 
                 
                 var fileA = new FileInfo(Path.Combine(subdir.FullName, "main.c"));
@@ -90,10 +98,13 @@ namespace GSTConsole
 
                 foreach(var fileB in otherFiles)
                 {
-                    if (doneList.Contains(string.Format("{0}-{1}", fileA.Directory.Name, fileB.Directory.Name)) ||
-                        doneList.Contains(string.Format("{1}-{0}", fileA.Directory.Name, fileB.Directory.Name)))
+                    var format1 = string.Format("{0}-{1}", fileA.Directory.Name, fileB.Directory.Name);
+                    var format2 = string.Format("{1}-{0}", fileA.Directory.Name, fileB.Directory.Name);
+
+                    if (doneList.Any(str => str.Equals(format1) || str.Equals(format2)))
                         continue;
 
+                    doneList.Add(format1);
                     var tokensB = GetTokens(fileB);
 
                     var algo = new GSTAlgorithm<GSTToken<TokenWrapper>>(tokensA, tokensB) {MinimumMatchLength = 5};
