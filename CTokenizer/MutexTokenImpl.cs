@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Antlr.Runtime;
+using log4net;
 
 namespace CTokenizer
 {
@@ -11,6 +12,7 @@ namespace CTokenizer
     /// </summary>
     public class MutexTokenImpl : IToken
     {
+        private static readonly ILog cLogger = LogManager.GetLogger(typeof(MutexTokenImpl).Name);
         public int Channel { get; set; }
 
         public int CharPositionInLine { get; set; }
@@ -31,7 +33,17 @@ namespace CTokenizer
 
         public MutexTokenImpl(string tokenName)
         {
-            Type = (int) typeof (MutexCLexer).GetField(tokenName.ToUpper()).GetValue(null);
+            try
+            {
+                Type = (int)LexerHelper.USED_LEXER.GetField(tokenName.ToUpper()).GetValue(null);
+            }
+            catch (Exception ex)
+            {
+                var msg = string.Format("could not find token '{0}'", tokenName);
+                cLogger.Warn(msg);
+                cLogger.Debug(msg, ex);
+                throw;
+            }
         }
     }
 }

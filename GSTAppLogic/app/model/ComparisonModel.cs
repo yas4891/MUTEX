@@ -5,6 +5,7 @@ using GSTAppLogic.ext;
 using GSTLibrary.tile;
 using GSTLibrary.token;
 using Tokenizer;
+using log4net;
 
 namespace GSTAppLogic.app.model
 {
@@ -13,6 +14,7 @@ namespace GSTAppLogic.app.model
     /// </summary>
     public class ComparisonModel
     {
+        private static readonly ILog cLogger = LogManager.GetLogger(typeof(ComparisonModel).Name);
         public static readonly int DEFAULT_MML = 4;
         public int MaximumSimilarity { get; private set; }
         
@@ -48,6 +50,9 @@ namespace GSTAppLogic.app.model
         public int Calculate()
         {
             int max = 0;
+
+            cLogger.DebugFormat("calculating similarity");
+
             foreach (var data in ReferenceData)
             {
                 // create the list here, because this way it is local to this run
@@ -61,6 +66,7 @@ namespace GSTAppLogic.app.model
 
                 algorithm.RunToCompletion();
 
+                cLogger.DebugFormat("similarity compared to {0}:{1}", data.StudentIdentifier, algorithm.Similarity);
                 if (max < algorithm.Similarity)
                     max = algorithm.Similarity;
             }

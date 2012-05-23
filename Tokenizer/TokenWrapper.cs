@@ -16,7 +16,7 @@ namespace Tokenizer
 
         private string Text { get; set; }
 
-        private TokenType Type { get; set; }
+        public TokenType Type { get; private set; }
 
         public TokenWrapper(IToken token)
         {

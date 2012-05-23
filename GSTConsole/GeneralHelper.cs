@@ -52,11 +52,12 @@ namespace GSTConsole
         internal static Int32 GetThreshold(string queryString)
         {
             var parts = queryString.Split(new[] {'&'});
+
+            var first = parts.Where(part => part.StartsWith("thres=")).Select(part => part.Substring(part.IndexOf("=") + 1)).
+                FirstOrDefault();
             int result;
 
-            return Int32.TryParse(
-                parts.Where(part => part.StartsWith("thres=")).Select(part => part.Substring(part.IndexOf("=") + 1)).
-                First(), out result) ? result : DEFAULT_THRESHOLD;
+            return Int32.TryParse(first, out result) ? result : DEFAULT_THRESHOLD;
         }
 
 
@@ -100,6 +101,8 @@ namespace GSTConsole
         /// <returns></returns>
         public static string GetPathFromArgs(string[] args)
         {
+            if (args.Length < 1)
+                return string.Empty;
             return args[args.Length - 1];
         }
 

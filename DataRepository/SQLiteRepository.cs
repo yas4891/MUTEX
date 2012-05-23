@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
+using log4net;
 
 namespace DataRepository
 {
@@ -13,6 +14,7 @@ namespace DataRepository
     /// </summary>
     public class SQLiteRepository : IRepository
     {
+        private static readonly ILog cLogger = LogManager.GetLogger(typeof(SQLiteRepository).Name);
         private const string SOURCE_TABLE_NAME = "source";
 
         private const string SQL_CREATE_TABLE =
@@ -57,9 +59,10 @@ namespace DataRepository
         {
             referenceConnection = new SQLiteConnection(string.Format("Data Source={0}", REFERENCE_DB_PATH));
             archiveConnection = new SQLiteConnection(string.Format("Data Source={0}", ARCHIVE_DB_PATH));
-
+            cLogger.Debug("creating SQLiteRepository");
             if (!Directory.Exists(REPOSITORY_PATH))
             {
+                cLogger.DebugFormat("directory '{0}' does not exist", REPOSITORY_PATH);
                 Directory.CreateDirectory(REPOSITORY_PATH);
                 SQLiteConnection.CreateFile(REFERENCE_DB_PATH);
                 SQLiteConnection.CreateFile(ARCHIVE_DB_PATH);
@@ -86,7 +89,6 @@ namespace DataRepository
             command.ExecuteNonQuery();
 
             command.CommandText = SQL_CREATE_TABLE;
-
             command.ExecuteNonQuery();
         }
 
@@ -106,6 +108,8 @@ namespace DataRepository
                     }
             };
 
+            cLogger.DebugFormat("storing '{0}' by '{1}'", data.AssignmentIdentifier, data.StudentIdentifier);
+            cLogger.DebugFormat("tokens stored: {0}", SerializeTokens(data.Tokens));
             command.ExecuteNonQuery();
         }
 
@@ -135,6 +139,7 @@ namespace DataRepository
                 }
             }
 
+            cLogger.DebugFormat("loaded {0} data sets for assignment {1}", list.Count, assignment);
             return list;
         }
 

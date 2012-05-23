@@ -5,6 +5,7 @@ using System.Text;
 using CTokenizer;
 using DataRepository;
 using GSTAppLogic.app.model;
+using log4net;
 
 namespace GSTAppLogic.app
 {
@@ -13,6 +14,7 @@ namespace GSTAppLogic.app
     /// </summary>
     public class AppLogicImpl : IAppLogic
     {
+        private static readonly ILog cLogger = LogManager.GetLogger(typeof(AppLogicImpl).Name);
         /// <summary>
         /// the maximum similarity found
         /// </summary>
@@ -29,6 +31,7 @@ namespace GSTAppLogic.app
         /// <param name="source"></param>
         public void Start(string student, string assignment, string source)
         {
+            cLogger.DebugFormat("starting with threshold {0}", Threshold);
             var tokens = LexerHelper.CreateLexerFromSource(source).GetTokenWrappers().ToList();
             var repo = Repository.GetRepository();
 
@@ -38,7 +41,7 @@ namespace GSTAppLogic.app
 
             var sourceEntityData = new SourceEntityData(student, assignment, tokens.ToStringEnumerable(), source);
 
-            repo.Store(sourceEntityData, MaximumSimilarity > Threshold);
+            repo.Store(sourceEntityData, MaximumSimilarity < Threshold);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace CTokenizer
     /// </summary>
     public static class LexerHelper
     {
+        internal static readonly Type USED_LEXER = typeof(CLexer);
         /// <summary>
         /// creates a lexer from the passed file
         /// </summary>
@@ -27,7 +28,7 @@ namespace CTokenizer
         {
             return new CLexer(new ANTLRStringStream(source));
         }
-
+        
         public static string GetTokenNameFromMUTEXLexer(this int tokenType)
         {
             return tokenType.GetTokenName(typeof (MutexCLexer));
@@ -36,6 +37,11 @@ namespace CTokenizer
         public static string GetTokenNameFromCLexer(this int tokenType)
         {
             return tokenType.GetTokenName(typeof (CLexer));
+        }
+
+        internal static string GetTokenName(this int tokenType)
+        {
+            return tokenType.GetTokenName(USED_LEXER);
         }
 
         internal static string GetTokenName(this int tokenType, Type lexerType)
@@ -128,7 +134,7 @@ namespace CTokenizer
         /// <returns></returns>
         public static IEnumerable<string> ToStringEnumerable(this IEnumerable<TokenWrapper> enumTokens)
         {
-            return enumTokens.Select(token => token.ToString());
+            return enumTokens.Select(token => token.Type.Type.GetTokenName());
         }
 
         

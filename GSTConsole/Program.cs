@@ -11,6 +11,7 @@ using Tokenizer;
 using log4net;
 using System.Linq;
 using log4net.Config;
+using System.Web;
 
 namespace GSTConsole
 {
@@ -20,22 +21,10 @@ namespace GSTConsole
 
         static void Main(string[] args)
         {
-            /*
-            var lexer = LexerHelper.CreateLexer(@"X:\Katharina und Christoph\Christoph\Studium\Bachelorarbeit\Quelltexte\nach Versuch\1\Reihe\01\main.c");
-            Console.WriteLine(lexer.GetJoinedTokenString());
-            Console.WriteLine(lexer.GetTokens().Count());
-            Environment.Exit(1);
-            /* */
-            /*
-            doEvaluate();
-            /* */
-
-            /*
-            EvaluateOverallSpeed();
-
-            /*
-            EvaluateGSTSpeed();
-            /* */
+            XmlConfigurator.Configure(new FileInfo("log4net.xml"));
+            cLogger.DebugFormat("starting MUTEX");
+            cLogger.DebugFormat("64-bit process: {0}", Environment.Is64BitProcess);
+            Console.WriteLine();
 
             string student;
             string assignment;
@@ -45,11 +34,16 @@ namespace GSTConsole
             if(!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("QUERY_STRING")))
             {
                 var queryString = Environment.GetEnvironmentVariable("QUERY_STRING");
+                cLogger.DebugFormat("reading from query string: {0}", queryString);
 
-                assignment = GeneralHelper.GetAssignmentIdentifier(queryString);
-                student = GeneralHelper.GetStudentIdentifier(queryString);
-                path = GeneralHelper.GetPath(queryString);
-                threshold = GeneralHelper.GetThreshold(queryString);
+                
+                var normalizedQS = queryString.Replace("+", " ");
+
+
+                assignment = GeneralHelper.GetAssignmentIdentifier(normalizedQS);
+                student = GeneralHelper.GetStudentIdentifier(normalizedQS);
+                path = GeneralHelper.GetPath(normalizedQS);
+                threshold = GeneralHelper.GetThreshold(normalizedQS);
             }
             else
             {
@@ -61,17 +55,17 @@ namespace GSTConsole
 
             HandleInputErrors(assignment, student, path);
 
-            XmlConfigurator.Configure(new FileInfo("log4net.xml"));
+            cLogger.DebugFormat("assignment: {0}, student: {1}, path: {2}", assignment, student, path);
             Stopwatch watch = Stopwatch.StartNew();
 
-            string source = ReadFile(path);
+            string source = File.ReadAllText(path);
 
             var appLogic = AppLogic.GetAppLogic();
             appLogic.Threshold = threshold;
             appLogic.Start(student, assignment, source);
             
             cLogger.DebugFormat("total runtime: {0} ms", watch.ElapsedMilliseconds);
-            Console.WriteLine("Similarity:{0}", appLogic.MaximumSimilarity);
+            Console.WriteLine("{0}", appLogic.MaximumSimilarity);
 
 #if DEBUG
             if(Environment.UserInteractive)
@@ -84,33 +78,35 @@ namespace GSTConsole
             if (!File.Exists(path))
             {
                 Console.WriteLine("could not find file at {0}. aborting", path);
+                cLogger.DebugFormat("could not find file at {0}. aborting", path);
+                cLogger.DebugFormat("current working directory: {0}", new DirectoryInfo(".").FullName);
+                PrintUsageInformation();
                 Environment.Exit(1);
             }
             else if (string.IsNullOrWhiteSpace(student))
             {
                 Console.WriteLine("no student identifier. ");
+                cLogger.DebugFormat("no student identifier. ");
+                PrintUsageInformation();
                 Environment.Exit(2);
             }
             else if (string.IsNullOrWhiteSpace(assignment))
             {
-                Console.WriteLine("no assignment identifier");
+                Console.WriteLine("no assignment identifier"); 
+                cLogger.DebugFormat("no assignment identifier");
+                PrintUsageInformation();
                 Environment.Exit(3);
             }
         }
 
-        private static string ReadFile(string path)
+        private static void PrintUsageInformation()
         {
-            string source;
-            using (var reader = new StreamReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)))
-            {
-                source = reader.ReadToEnd();
-            }
-            return source;
+            Console.WriteLine("Usage: {OPTIONS} --student [STUDENT_ID] --assignment [ASSIGNMENT_ID] [PATH_TO_FILE]");
         }
 
         private static GSTTokenList<GSTToken<TokenWrapper>> GetTokens(FileInfo file)
         {
-            string source = ReadFile(file.FullName);
+            string source = File.ReadAllText(file.FullName);
             var tokens = LexerHelper.CreateLexerFromSource(source).GetTokenWrappers().ToList();
 
             return tokens.ToGSTTokenList();
@@ -128,7 +124,7 @@ namespace GSTConsole
         /// </summary>
         private static void EvaluateOverallSpeed()
         {
-            var fileContents = Directory.GetFiles(@"C:\Quelltexte", @"main.c", SearchOption.AllDirectories).Select(ReadFile).ToList();
+            var fileContents = Directory.GetFiles(@"C:\Quelltexte", @"main.c", SearchOption.AllDirectories).Select(File.ReadAllText).ToList();
 
             Console.WriteLine("number of files: {0}", fileContents.Count());
             var appLogic = AppLogic.GetAppLogic();
@@ -144,7 +140,6 @@ namespace GSTConsole
             Environment.Exit(0);
         }
 
-
         /// <summary>
         /// evaluation of GST speed only. 
         /// DO NOT TRY THIS AT HOME!
@@ -154,26 +149,40 @@ namespace GSTConsole
             var files = Directory.GetFiles(@"C:\Quelltexte", @"main.c", SearchOption.AllDirectories).Select(GetTokens).ToList();
 
             
-            var cartesianProduct = from first in files
-                                   from second in files
-                                   select new[] {first, second};
+            
 
-            Console.WriteLine(string.Format("total product count: {0}", cartesianProduct.Count()));
+            //Console.WriteLine(string.Format("total product count: {0}", cartesianProduct.Count()));
 
             long cRuntime = 0;
+            int similarity = 0;
+            IEnumerable<GSTTokenList<GSTToken<TokenWrapper>>[]> product = null;
 
-            foreach(var set in cartesianProduct)
+            for (int i = 100; i >= 0; i--)
             {
-                var alg = new GSTAlgorithm<GSTToken<TokenWrapper>>(set[0], set[1]) {MinimumMatchLength = 5};
+                var cartesianProduct = from first in files
+                                       from second in files
+                                       select new[] { first, second };
 
-                var watch = Stopwatch.StartNew();
-                alg.RunToCompletion();
+                GSTAlgorithm<GSTToken<TokenWrapper>> algorithm = null;
+                foreach (var set in cartesianProduct)
+                {
+                    var alg = new GSTAlgorithm<GSTToken<TokenWrapper>>(set[0], set[1]) {MinimumMatchLength = 5};
+                    algorithm = alg;
+                    var watch = Stopwatch.StartNew();
+                    alg.RunToCompletion();
 
-                cRuntime += watch.ElapsedTicks;
-                watch.Stop();
+                    cRuntime += watch.ElapsedTicks;
+                    watch.Stop();
+                }
+                similarity += algorithm.Similarity;
+                product = cartesianProduct;
             }
 
-            Console.WriteLine("finished in {0} seconds", TimeSpan.FromTicks(cRuntime).TotalSeconds);
+            Console.WriteLine("Number: {0}, Similarity: {1}", product.Count(), similarity);
+
+
+
+            Console.WriteLine("finished in {0} seconds", TimeSpan.FromTicks(cRuntime).TotalSeconds / 100);
             Console.ReadLine();
             Environment.Exit(0);
         }
