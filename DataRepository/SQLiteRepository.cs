@@ -57,9 +57,11 @@ namespace DataRepository
         /// </summary>
         public SQLiteRepository()
         {
+            cLogger.DebugFormat("reference db connection string: {0}", string.Format("Data Source={0}", REFERENCE_DB_PATH));
+
             referenceConnection = new SQLiteConnection(string.Format("Data Source={0}", REFERENCE_DB_PATH));
             archiveConnection = new SQLiteConnection(string.Format("Data Source={0}", ARCHIVE_DB_PATH));
-            cLogger.Debug("creating SQLiteRepository");
+            cLogger.Debug("SQLiteRepository.ctor()");
             if (!Directory.Exists(REPOSITORY_PATH))
             {
                 cLogger.DebugFormat("directory '{0}' does not exist", REPOSITORY_PATH);

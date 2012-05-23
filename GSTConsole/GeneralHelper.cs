@@ -16,9 +16,12 @@ namespace GSTConsole
         /// <returns></returns>
         internal static string GetStudentIdentifier(string queryString)
         {
+            return GetValueFromQueryString("pin", queryString);
+            /*
             var firstPart = queryString.Substring(0, queryString.IndexOf('&'));
             var afterSecondSlash = firstPart.Substring(firstPart.IndexOf('/', firstPart.IndexOf('/') + 1) + 1);
             return afterSecondSlash.Substring(0, afterSecondSlash.IndexOf('/'));
+            /* */
         }
 
         /// <summary>
@@ -28,10 +31,13 @@ namespace GSTConsole
         /// <returns></returns>
         internal static string GetAssignmentIdentifier(string queryString)
         {
+            return GetValueFromQueryString("repository", queryString);
+            /*
             var middlePart = queryString.Substring(queryString.IndexOf('&') + 1);
             middlePart = middlePart.Substring(0, middlePart.IndexOf('&'));
 
             return middlePart.Substring(middlePart.LastIndexOf('/') + 1);
+            /* */
         }
 
         /// <summary>
@@ -41,7 +47,8 @@ namespace GSTConsole
         /// <returns></returns>
         internal static string GetPath(string queryString)
         {
-            return queryString.Substring(0, queryString.IndexOf('&'));
+            return GetValueFromQueryString("path", queryString);
+            //return queryString.Substring(0, queryString.IndexOf('&'));
         }
         
         /// <summary>
@@ -51,13 +58,19 @@ namespace GSTConsole
         /// <returns></returns>
         internal static Int32 GetThreshold(string queryString)
         {
-            var parts = queryString.Split(new[] {'&'});
-
-            var first = parts.Where(part => part.StartsWith("thres=")).Select(part => part.Substring(part.IndexOf("=") + 1)).
-                FirstOrDefault();
+            var first = GetValueFromQueryString("thres", queryString);
             int result;
 
             return Int32.TryParse(first, out result) ? result : DEFAULT_THRESHOLD;
+        }
+
+        internal static string GetValueFromQueryString(string key, string queryString)
+        {
+            var parts = queryString.Split(new[] { '&' });
+            var first = parts.Where(part => part.StartsWith(key)).Select(part => part.Substring(part.IndexOf("=") + 1)).
+                FirstOrDefault();
+
+            return first;
         }
 
 

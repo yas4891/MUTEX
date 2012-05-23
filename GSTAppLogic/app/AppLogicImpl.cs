@@ -33,6 +33,7 @@ namespace GSTAppLogic.app
         {
             cLogger.DebugFormat("starting with threshold {0}", Threshold);
             var tokens = LexerHelper.CreateLexerFromSource(source).GetTokenWrappers().ToList();
+            cLogger.Debug("tokenized source... loading Data Repository");
             var repo = Repository.GetRepository();
 
             var comparisonModel = new ComparisonModel(tokens, repo.LoadByAssignment(assignment));
