@@ -18,6 +18,8 @@ namespace GSTAppLogic.app
         /// </summary>
         public int MaximumSimilarity { get; private set; }
 
+        public int Threshold { get; set; }
+
         /// <summary>
         /// calculates the maximum similarity of the provided source against
         /// all sources for the given asignment in the reference database
@@ -36,7 +38,7 @@ namespace GSTAppLogic.app
 
             var sourceEntityData = new SourceEntityData(student, assignment, tokens.ToStringEnumerable(), source);
 
-            repo.Store(sourceEntityData, MaximumSimilarity > 50);
+            repo.Store(sourceEntityData, MaximumSimilarity > Threshold);
         }
     }
 }

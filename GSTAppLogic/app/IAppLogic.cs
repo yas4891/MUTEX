@@ -17,6 +17,12 @@ namespace GSTAppLogic.app
         int MaximumSimilarity { get; }
 
         /// <summary>
+        /// the threshold beyond which a source code will be considered plagiarism and stored
+        /// in the corresponding data repo
+        /// </summary>
+        int Threshold { get; set; }
+
+        /// <summary>
         /// starts the comparison using the passed in parameter
         /// </summary>
         /// <param name="student"></param>
