@@ -13,6 +13,7 @@
 */bin/*/*.dll
 */bin/*/*.manifest
 */bin/*/*.pdb
+*/bin/*/*.exe.config
 */obj
 /obj
 /bin/*/*.exe
@@ -20,6 +21,7 @@
 /bin/*/*.manifest
 /bin/*/*.pdb
 
+*.log
 
 # ignore user-specific Visual Studio files
 GreedyStringTiling.suo

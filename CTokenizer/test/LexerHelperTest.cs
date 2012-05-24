@@ -23,20 +23,9 @@ namespace CTokenizer.test
                 "printf(\"Hello World!\");\r\n" +
                 "}");
 
-            Assert.AreEqual("DATATYPE IDENTIFIER DATATYPE IDENTIFIER DATATYPE POINTER IDENTIFIER FUNCTION_CALL", lexer.GetJoinedTokenString());
+            Assert.AreEqual("T__92 IDENTIFIER T__30 T__79 IDENTIFIER T__37 T__66 T__32 T__32 IDENTIFIER T__31 T__95 IDENTIFIER T__30 STRING_LITERAL T__31 T__47 T__99", lexer.GetJoinedTokenString());
         }
 
-        [Test]
-        public void IgnoresComments()
-        {
-            var lexer = ToLexer(
-                "void main(int argc, char** argv) {\r\n" +
-                "/*single line comment*/ \r\n" + 
-                "printf(\"Hello World!\");\r\n" +
-                "}");
-
-            Assert.AreEqual("DATATYPE IDENTIFIER DATATYPE IDENTIFIER DATATYPE POINTER IDENTIFIER FUNCTION_CALL", lexer.GetJoinedTokenString());
-        }
 
         private static Lexer ToLexer(string str)
         {

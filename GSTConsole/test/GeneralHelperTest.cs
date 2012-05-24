@@ -9,12 +9,12 @@ namespace GSTConsole.test
     [TestFixture]
     public class GeneralHelperTest
     {
-        private const string EXAMPLE_1 = "UPLOAD/mop/Pawelczak+Dieter/59067/V1/aufgabe2_10.c&HTML/mop/_plag/V1/aufgabe2_10&main";
+        private const string EXAMPLE_1 = "path=UPLOAD/mop/Pawelczak+Dieter/59067/V1/aufgabe2_10.c&repository=aufgabe2_10&function=main&pin=59067&thres=80";
 
         [Test]
         public void GetStudentIdentifier()
         {
-            Assert.AreEqual("Pawelczak+Dieter", GeneralHelper.GetStudentIdentifier(EXAMPLE_1));
+            Assert.AreEqual("59067", GeneralHelper.GetStudentIdentifier(EXAMPLE_1));
         }
 
         [Test]
