@@ -22,55 +22,63 @@ namespace GSTConsole
         static void Main(string[] args)
         {
             XmlConfigurator.Configure(new FileInfo("log4net.xml"));
-            cLogger.DebugFormat("starting MUTEX");
-            cLogger.DebugFormat("64-bit process: {0}", Environment.Is64BitProcess);
-            Console.WriteLine();
-
-            string student;
-            string assignment;
-            string path;
-            int threshold;
-
-            if(!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("QUERY_STRING")))
+            try
             {
-                var queryString = Environment.GetEnvironmentVariable("QUERY_STRING");
-                cLogger.DebugFormat("reading from query string: {0}", queryString);
+                cLogger.DebugFormat("starting MUTEX");
+                cLogger.DebugFormat("64-bit process: {0}", Environment.Is64BitProcess);
+                Console.WriteLine();
 
-                
-                var normalizedQS = queryString.Replace("+", " ");
+                string student;
+                string assignment;
+                string path;
+                int threshold;
+
+                if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("QUERY_STRING")))
+                {
+                    var queryString = Environment.GetEnvironmentVariable("QUERY_STRING");
+                    cLogger.DebugFormat("reading from query string: {0}", queryString);
 
 
-                assignment = GeneralHelper.GetAssignmentIdentifier(normalizedQS);
-                student = GeneralHelper.GetStudentIdentifier(normalizedQS);
-                path = GeneralHelper.GetPath(normalizedQS);
-                threshold = GeneralHelper.GetThreshold(normalizedQS);
-            }
-            else
-            {
-                student = GeneralHelper.GetStudentIdentifierFromArgs(args);
-                assignment = GeneralHelper.GetAssignmentIdentifierFromArgs(args);
-                path = GeneralHelper.GetPathFromArgs(args);
-                threshold = GeneralHelper.GetThresholdFromArgs(args);
-            }
+                    var normalizedQS = queryString.Replace("+", " ");
 
-            HandleInputErrors(assignment, student, path);
 
-            cLogger.DebugFormat("assignment: {0}, student: {1}, path: {2}", assignment, student, path);
-            Stopwatch watch = Stopwatch.StartNew();
+                    assignment = GeneralHelper.GetAssignmentIdentifier(normalizedQS);
+                    student = GeneralHelper.GetStudentIdentifier(normalizedQS);
+                    path = GeneralHelper.GetPath(normalizedQS);
+                    threshold = GeneralHelper.GetThreshold(normalizedQS);
+                }
+                else
+                {
+                    student = GeneralHelper.GetStudentIdentifierFromArgs(args);
+                    assignment = GeneralHelper.GetAssignmentIdentifierFromArgs(args);
+                    path = GeneralHelper.GetPathFromArgs(args);
+                    threshold = GeneralHelper.GetThresholdFromArgs(args);
+                }
 
-            string source = File.ReadAllText(path);
+                HandleInputErrors(assignment, student, path);
 
-            var appLogic = AppLogic.GetAppLogic();
-            appLogic.Threshold = threshold;
-            appLogic.Start(student, assignment, source);
-            
-            cLogger.DebugFormat("total runtime: {0} ms", watch.ElapsedMilliseconds);
-            Console.WriteLine("{0}", appLogic.MaximumSimilarity);
+                cLogger.DebugFormat("assignment: {0}, student: {1}, path: {2}", assignment, student, path);
+                var watch = Stopwatch.StartNew();
+
+                string source = File.ReadAllText(path);
+
+                var appLogic = AppLogic.GetAppLogic();
+                appLogic.Threshold = threshold;
+                appLogic.Start(student, assignment, source);
+
+                cLogger.DebugFormat("total runtime: {0} ms", watch.ElapsedMilliseconds);
+                Console.WriteLine("{0}", appLogic.MaximumSimilarity);
 
 #if DEBUG
-            if(Environment.UserInteractive)
-                Console.ReadLine();
+                if (Environment.UserInteractive)
+                    Console.ReadLine();
 #endif
+            }
+            catch (Exception ex)
+            {
+                cLogger.Debug("unhandled exception occured:", ex);
+                throw;
+            }
         }
 
         private static void HandleInputErrors(string assignment, string student, string path)

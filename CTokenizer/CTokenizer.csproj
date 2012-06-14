@@ -55,9 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CLexer.cs" />
+    <Compile Include="LexerHelper.cs" />
     <Compile Include="MutexTokenImpl.cs" />
     <Compile Include="test\LexerHelperTest.cs" />
-    <Compile Include="LexerHelper.cs" />
     <Compile Include="MutexCLexer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

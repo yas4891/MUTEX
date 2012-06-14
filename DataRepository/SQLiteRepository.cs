@@ -24,6 +24,8 @@ namespace DataRepository
         private const string SQL_INSERT_SET = "INSERT INTO " + SOURCE_TABLE_NAME +
             "(student, assignment, source, tokens) VALUES(@student, @assignment, @sourcecode, @tokens);";
 
+        private const string SQL_RESET = "DELETE FROM " + SOURCE_TABLE_NAME;
+
         private const string SQL_SELECT_BY_ASSIGNMENT = "SELECT student, assignment, tokens FROM " + SOURCE_TABLE_NAME + " WHERE assignment=@assignment;";
 
         /// <summary>
@@ -95,6 +97,27 @@ namespace DataRepository
         }
 
 
+        public void Reset()
+        {
+            var command = new SQLiteCommand
+                              {
+                                  Connection = referenceConnection,
+                                  CommandText = SQL_RESET
+                              };
+
+            command.ExecuteNonQuery();
+
+            command.Connection = archiveConnection;
+            command.ExecuteNonQuery();
+
+            cLogger.Debug("reset successful");
+        }
+
+        /// <summary>
+        /// stores the data
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="keepForTests"></param>
         public void Store(SourceEntityData data, bool keepForTests)
         {
             var command = new SQLiteCommand(keepForTests ? referenceConnection : archiveConnection)
@@ -115,6 +138,12 @@ namespace DataRepository
             command.ExecuteNonQuery();
         }
 
+
+        /// <summary>
+        /// loads data filtered by assignment
+        /// </summary>
+        /// <param name="assignment"></param>
+        /// <returns></returns>
         public IEnumerable<SourceEntityData> LoadByAssignment(string assignment)
         {
             var command = new SQLiteCommand
@@ -150,7 +179,7 @@ namespace DataRepository
         /// </summary>
         /// <param name="tokens"></param>
         /// <returns></returns>
-        private string SerializeTokens(IEnumerable<string> tokens)
+        private static string SerializeTokens(IEnumerable<string> tokens)
         {
             var builder = new StringBuilder();
 

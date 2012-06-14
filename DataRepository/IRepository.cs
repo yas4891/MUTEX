@@ -11,6 +11,11 @@ namespace DataRepository
     public interface IRepository : IDisposable
     {
         /// <summary>
+        /// resets the repository, deleting all stored data
+        /// </summary>
+        void Reset();
+
+        /// <summary>
         /// stores the data and if the boolean is set it will be kept for 
         /// further plagiarism tests. 
         /// If the second parameter is FALSE, the data will be stored but only for archiving purposes

@@ -35,7 +35,7 @@ namespace CTokenizer
         {
             try
             {
-                Type = (int)LexerHelper.USED_LEXER.GetField(tokenName.ToUpper()).GetValue(null);
+                Type = (int)LexerHelper.UsedLexer.GetField(tokenName.ToUpper()).GetValue(null);
             }
             catch (Exception ex)
             {

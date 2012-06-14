@@ -16,10 +16,20 @@ namespace Tokenizer
 
         private string Text { get; set; }
 
+        /// <summary>
+        /// a human readable representation of the token type
+        /// </summary>
+        public string TokenName { get; private set;}
+
+        /// <summary>
+        /// class representing the token's type. 
+        /// This is used to abstract the implementation type
+        /// </summary>
         public TokenType Type { get; private set; }
 
-        public TokenWrapper(IToken token)
+        public TokenWrapper(IToken token, string tokenName)
         {
+            TokenName = tokenName;
             Token = token;
             Text = token.Text;
             Type = new TokenType {Type = token.Type};

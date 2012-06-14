@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GSTAppLogic", "GSTAppLogic\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tokenizer", "Tokenizer\Tokenizer.csproj", "{044DABC4-13F0-4581-A9AF-FF645FD460EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreedyStringTiling", "GreedyStringTiling.csproj", "{BF5D4F83-3B8C-44C0-BF65-DCF33265738C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,16 @@ Global
 		{044DABC4-13F0-4581-A9AF-FF645FD460EB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{044DABC4-13F0-4581-A9AF-FF645FD460EB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{044DABC4-13F0-4581-A9AF-FF645FD460EB}.Release|x86.ActiveCfg = Release|Any CPU
+		{BF5D4F83-3B8C-44C0-BF65-DCF33265738C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BF5D4F83-3B8C-44C0-BF65-DCF33265738C}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{BF5D4F83-3B8C-44C0-BF65-DCF33265738C}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{BF5D4F83-3B8C-44C0-BF65-DCF33265738C}.Debug|x86.ActiveCfg = Debug|x86
+		{BF5D4F83-3B8C-44C0-BF65-DCF33265738C}.Debug|x86.Build.0 = Debug|x86
+		{BF5D4F83-3B8C-44C0-BF65-DCF33265738C}.Release|Any CPU.ActiveCfg = Release|x86
+		{BF5D4F83-3B8C-44C0-BF65-DCF33265738C}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{BF5D4F83-3B8C-44C0-BF65-DCF33265738C}.Release|Mixed Platforms.Build.0 = Release|x86
+		{BF5D4F83-3B8C-44C0-BF65-DCF33265738C}.Release|x86.ActiveCfg = Release|x86
+		{BF5D4F83-3B8C-44C0-BF65-DCF33265738C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

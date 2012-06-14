@@ -13,7 +13,13 @@ namespace CTokenizer
     /// </summary>
     public static class LexerHelper
     {
-        internal static readonly Type USED_LEXER = typeof(CLexer);
+        internal static readonly Type UsedLexer = typeof(CLexer);
+
+        internal static ConstructorInfo UsedConstructor
+        {
+           get { return UsedLexer.GetConstructor(new[] {typeof (ICharStream)}); }
+        } 
+
         /// <summary>
         /// creates a lexer from the passed file
         /// </summary>
@@ -21,12 +27,13 @@ namespace CTokenizer
         /// <returns></returns>
         public static Lexer CreateLexer(string path)
         {
-            return new CLexer(new ANTLRFileStream(path));
+            return (Lexer) UsedConstructor.Invoke(new object[] { new ANTLRFileStream(path) });
+            
         }
 
         public static Lexer CreateLexerFromSource(string source)
         {
-            return new CLexer(new ANTLRStringStream(source));
+            return (Lexer)UsedConstructor.Invoke(new object[] { new ANTLRStringStream(source)});
         }
         
         public static string GetTokenNameFromMUTEXLexer(this int tokenType)
@@ -41,7 +48,7 @@ namespace CTokenizer
 
         internal static string GetTokenName(this int tokenType)
         {
-            return tokenType.GetTokenName(USED_LEXER);
+            return tokenType.GetTokenName(UsedLexer);
         }
 
         internal static string GetTokenName(this int tokenType, Type lexerType)
@@ -65,9 +72,9 @@ namespace CTokenizer
         {
             var list = new List<IToken>();
             IToken myToken;
-            const int EOF = -1;
+            const int eof = -1;
 
-            while (EOF != (myToken = lexer.NextToken()).Type)
+            while (eof != (myToken = lexer.NextToken()).Type)
             {
                 if (BaseRecognizer.Hidden == myToken.Channel)
                     continue;
@@ -104,7 +111,7 @@ namespace CTokenizer
         /// <returns></returns>
         public static IEnumerable<TokenWrapper> GetTokenWrappers(this Lexer lexer)
         {
-            return lexer.GetTokens().Select(token => new TokenWrapper(token));
+            return lexer.GetTokens().Select(token => new TokenWrapper(token, GetTokenName(token.Type)));
         }
 
         /// <summary>
@@ -124,7 +131,7 @@ namespace CTokenizer
         /// <returns></returns>
         public static IEnumerable<TokenWrapper> GetTokens(this IEnumerable<string> enumTokens )
         {
-            return enumTokens.Select(tokenName => new TokenWrapper(new MutexTokenImpl(tokenName)));
+            return enumTokens.Select(tokenName => new TokenWrapper(new MutexTokenImpl(tokenName), tokenName));
         }
 
         /// <summary>
@@ -136,7 +143,5 @@ namespace CTokenizer
         {
             return enumTokens.Select(token => token.Type.Type.GetTokenName());
         }
-
-        
     }
 }
