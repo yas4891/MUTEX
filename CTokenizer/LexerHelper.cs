@@ -105,6 +105,23 @@ namespace CTokenizer
         }
 
         /// <summary>
+        /// joins the name of strings with whitespaces
+        /// </summary>
+        /// <param name="lexer"></param>
+        /// <returns></returns>
+        public static string GetJoinedTokenString(this IEnumerable<TokenWrapper> tokens)
+        {
+            var builder = new StringBuilder();
+            
+            foreach (var token in tokens)
+            {
+                builder.AppendFormat("{0} ", token.Type.Type.GetTokenName(UsedLexer));
+            }
+
+            return builder.ToString().TrimEnd(new[] { ' ' });
+        }
+
+        /// <summary>
         /// fetches all tokens from the lexer and wraps the ANTLR IToken objects into TokenWrapper objects
         /// </summary>
         /// <param name="lexer"></param>
