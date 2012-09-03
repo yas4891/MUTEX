@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using CTokenizer;
 using GSTAppLogic.ext;
+using GSTAppLogic.templating;
 using GSTEvaluation.storage;
 using GSTLibrary.tile;
 using GSTLibrary.token;
 using Tokenizer;
+using log4net;
 
 namespace GSTEvaluation.model
 {
@@ -17,6 +20,7 @@ namespace GSTEvaluation.model
     /// </summary>
     class ComparisonModel
     {
+        private static readonly ILog cLogger = LogManager.GetLogger(typeof(ComparisonModel));
         public Int64 EvaluationRunID { get; private set; }
 
         public string Name { get; private set; }
@@ -33,15 +37,25 @@ namespace GSTEvaluation.model
         /// <summary>
         /// takes the two sources and performs the GST 
         /// </summary>
-        /// <param name="source1"></param>
-        /// <param name="source2"></param>
+        /// <param name="sourcePath1"></param>
+        /// <param name="sourcePath2"></param>
         public ComparisonModel(string name, Int64 evalRunID, string sourcePath1, string sourcePath2)
         {
             Name = name;
             EvaluationRunID = evalRunID;
+            
+            var directory = Path.GetDirectoryName(Path.GetFullPath(sourcePath1));
+            bool tmplFileExists = File.Exists(Path.Combine(directory, "template.c"));
 
-            var tokens1 = LexerHelper.CreateLexer(sourcePath1).GetTokenWrappers();
-            var tokens2 = LexerHelper.CreateLexer(sourcePath2).GetTokenWrappers();
+            var watch = Stopwatch.StartNew();
+
+            var tmplFile = Directory.GetFiles(directory, "template.c").FirstOrDefault();
+            var path1 = tmplFileExists ? TemplatingHelper.StripTemplateFromSourceFile(sourcePath1, tmplFile) : sourcePath1;
+            var path2 = tmplFileExists ? TemplatingHelper.StripTemplateFromSourceFile(sourcePath2, tmplFile) : sourcePath2;
+            var tokens1 = LexerHelper.CreateLexer(path1).GetTokenWrappers();
+            var tokens2 = LexerHelper.CreateLexer(path2).GetTokenWrappers();
+
+            cLogger.DebugFormat("TokenStream Length: {0} -- {1}", tokens1.Count(), tokens2.Count());
             var algo = new GSTAlgorithm<GSTToken<TokenWrapper>>(
                 tokens1.ToGSTTokenList<TokenWrapper>(),
                 tokens2.ToGSTTokenList<TokenWrapper>());
@@ -51,7 +65,7 @@ namespace GSTEvaluation.model
 
             Source1 = new SourceModel(Path.GetFileNameWithoutExtension(sourcePath1), tokens1.GetJoinedTokenString());
             Source2 = new SourceModel(Path.GetFileNameWithoutExtension(sourcePath2), tokens2.GetJoinedTokenString());
-            SQLFacade.Instance.CreateComparison(name, Result, evalRunID, Source1.ID, Source2.ID);
+            SQLFacade.Instance.CreateComparison(name, Result, watch.ElapsedMilliseconds, evalRunID, Source1.ID, Source2.ID);
         }
     }
 }

@@ -10,6 +10,11 @@ namespace Tokenizer
     public class TokenWrapper
     {
         /// <summary>
+        /// stores the hash code of the underlying token to speed up comparison
+        /// </summary>
+        private readonly long tokenHashCode; 
+
+        /// <summary>
         /// the saved token object from ANTLR lexers
         /// </summary>
         private IToken Token { get; set; }
@@ -33,6 +38,7 @@ namespace Tokenizer
             Token = token;
             Text = token.Text;
             Type = new TokenType {Type = token.Type};
+            tokenHashCode = Type.GetHashCode();
         }
 
         /// <summary>
@@ -56,7 +62,9 @@ namespace Tokenizer
                 null == other.Token)
                 return false;
 
-            return other.Type.Equals(Type);
+            return tokenHashCode == other.tokenHashCode;
+
+            //return other.Type.Equals(Type);
         }
 
         public override int GetHashCode()

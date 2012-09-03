@@ -4,6 +4,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
+using GSTEvaluation.model;
 using log4net;
 
 namespace GSTEvaluation.storage
@@ -62,9 +63,10 @@ namespace GSTEvaluation.storage
                 "CREATE TABLE IF NOT EXISTS " + COMPARISON_TABLE_NAME + " " + 
                     "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, " + 
                     "source_1_id INTEGER NOT NULL, source_2_id INTEGER NOT NULL, " + 
-                    "run_id INTEGER NOT NULL, result INTEGER NOT NULL)",
+                    "run_id INTEGER NOT NULL, result INTEGER NOT NULL, runtime INTEGER NOT NULL)",
                 "CREATE TABLE IF NOT EXISTS " + EVAL_RUN_TABLE_NAME + " " +
                     "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " + 
+                    "label TEXT, " + 
                     "datetime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)"
             };
 
@@ -113,12 +115,12 @@ namespace GSTEvaluation.storage
             return (Int64)command.ExecuteScalar();
         }
 
-        public Int64 CreateComparison(string name, Int32 result, Int64 evalRunId, Int64 source1ID, Int64 source2ID)
+        public Int64 CreateComparison(string name, Int32 result, Int64 runtime, Int64 evalRunId, Int64 source1ID, Int64 source2ID)
         {
             var command = new SQLiteCommand(connection)
             {
-                CommandText = string.Format("INSERT INTO {0}(name, run_id, source_1_id, source_2_id, result) " +
-                        "VALUES('{1}', {2}, {3}, {4}, {5})", COMPARISON_TABLE_NAME, name, evalRunId, source1ID, source2ID, result)
+                CommandText = string.Format("INSERT INTO {0}(name, run_id, source_1_id, source_2_id, result, runtime) " +
+                        "VALUES('{1}', {2}, {3}, {4}, {5}, {6})", COMPARISON_TABLE_NAME, name, evalRunId, source1ID, source2ID, result, runtime)
             };
 
             command.ExecuteNonQuery();
@@ -133,11 +135,11 @@ namespace GSTEvaluation.storage
         /// </summary>
         /// <param name="comparisonName"></param>
         /// <returns></returns>
-        public IEnumerable<Tuple<Int64, Int32>> GetComparisonHistory(string comparisonName)
+        public IEnumerable<ComparisonHistoryModel.HistoryDataPoint> GetComparisonHistory(string comparisonName)
         {
             var command = new SQLiteCommand(connection)
             {
-                CommandText = string.Format("SELECT eval.id, comp.result " + 
+                CommandText = string.Format("SELECT eval.id, eval.label, comp.result, comp.runtime " + 
                                     "FROM {0} AS comp INNER JOIN {1} AS eval ON comp.run_id = eval.id " + 
                                     "WHERE comp.name='{2}' " + 
                                     "ORDER BY eval.datetime ASC ", COMPARISON_TABLE_NAME, EVAL_RUN_TABLE_NAME, comparisonName)
@@ -145,15 +147,44 @@ namespace GSTEvaluation.storage
 
             var reader = command.ExecuteReader();
 
-            var list = new List<Tuple<Int64, Int32>>();
+            var list = new List<ComparisonHistoryModel.HistoryDataPoint>();
 
             while(reader.Read())
             {
-                list.Add(new Tuple<Int64, Int32>(
-                    reader.GetInt64(reader.GetOrdinal("id")), 
-                    reader.GetInt32(reader.GetOrdinal("result"))));
+                var label = reader.GetValue(reader.GetOrdinal("label"));
+                list.Add(new ComparisonHistoryModel.HistoryDataPoint
+                             {
+                                 EvaluationRunID = reader.GetInt64(reader.GetOrdinal("id")), 
+                                 EvaluationRunLabel = label.ToString(),
+                                 Result = reader.GetInt32(reader.GetOrdinal("result")),
+                                 Runtime = reader.GetInt64(reader.GetOrdinal("runtime"))
+                             });
             }
 
+            return list;
+        }
+
+        /// <summary>
+        /// returns all the names of the different comparisons stored in the DB
+        /// </summary>
+        /// <returns></returns>
+        internal IEnumerable<string> GetComparisonNames()
+        {
+            var command = new SQLiteCommand(connection)
+            {
+                CommandText = string.Format("SELECT DISTINCT name " +
+                                    "FROM {0} AS comp " +
+                                    "ORDER BY comp.name", COMPARISON_TABLE_NAME)
+            };
+
+            var reader = command.ExecuteReader();
+
+            var list = new List<string>();
+
+            while (reader.Read())
+            {
+                list.Add(reader.GetString(reader.GetOrdinal("name")));
+            }
 
             return list;
         }

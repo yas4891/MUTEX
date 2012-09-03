@@ -62,7 +62,6 @@ namespace GSTLibrary.test.tile
             Assert.False(GSTAlgorithm<GSTToken>.IsInRange(5, 6, 7), "below range");
             Assert.True(GSTAlgorithm<GSTToken>.IsInRange(5, 3, 5), "upper edge");
             Assert.True(GSTAlgorithm<GSTToken>.IsInRange(5, 5, 7), "lower edge");
-
         }
 
         [Test]

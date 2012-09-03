@@ -61,10 +61,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="export\ComparisonExcelExport.cs" />
+    <Compile Include="export\CompleteComparisonReport.cs" />
     <Compile Include="export\ExcelExport.cs" />
     <Compile Include="export\FileExport.cs" />
     <Compile Include="export\IExport.cs" />
     <Compile Include="export\ListResultsExport.cs" />
+    <Compile Include="export\RuntimeExcelExport.cs" />
     <Compile Include="model\ComparisonHistoryModel.cs" />
     <Compile Include="model\EvaluationRunModel.cs" />
     <Compile Include="model\SourceModel.cs" />

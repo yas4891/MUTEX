@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GSTLibrary.exception;
 using GSTLibrary.token;
+using System.Diagnostics;
 
 namespace GSTLibrary.tile
 {
@@ -12,6 +13,8 @@ namespace GSTLibrary.tile
     /// <typeparam name="T"></typeparam>
     public class GSTAlgorithm<T> where T : GSTToken
     {
+        //private long counter;
+
         /// <summary>
         /// the default minimum match length used 
         /// </summary>
@@ -127,6 +130,8 @@ namespace GSTLibrary.tile
             if(Finished)
                 throw new GSTException("algorithm is finished");
 
+            var watch = Stopwatch.StartNew();
+            
             var listMatches = new List<Tile<T>>();
 
             LastMaximumMatch = MML;
@@ -140,6 +145,7 @@ namespace GSTLibrary.tile
                 // for every token in B that is unmarked and matches tokA
                 foreach(var tB in ListB.Where(t => !t.Marked).Where(tokA.EqualsTokenValue))
                 {
+                    //counter++;
                     var tokB = tB; // CLOSURE
                     int indB = ListB.IndexOf(tokB);
                     
@@ -159,6 +165,7 @@ namespace GSTLibrary.tile
             }
 
             TilesMatchedInLastRun = listMatches;
+            //Console.WriteLine("one run({1}) took {0} ms", watch.ElapsedMilliseconds, counter);
         }
         
         /// <summary>
@@ -269,7 +276,7 @@ namespace GSTLibrary.tile
         /// <returns></returns>
         private Tile<T> CreateTile(int indA, int indB, int matchLength)
         {
-            List<T> list = new List<T>();
+            var list = new List<T>();
             for (int i = indA; i < indA + matchLength; i++)
             {
                 list.Add(ListA[i]);
@@ -294,6 +301,7 @@ namespace GSTLibrary.tile
             var index = 0;
             var cListA = ListA.Count;
             var cListB = ListB.Count;
+
 
             do
             {

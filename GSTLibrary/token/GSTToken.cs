@@ -59,6 +59,7 @@ namespace GSTLibrary.token
 
         public override bool EqualsTokenValue(GSTToken other)
         {
+            
             if(other is GSTToken<T>)
             {
                 return ((GSTToken<T>) other).Token.Equals(Token);

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using GSTEvaluation.storage;
+using log4net;
 
 namespace GSTEvaluation.model
 {
@@ -13,6 +15,7 @@ namespace GSTEvaluation.model
     /// </summary>
     class EvaluationRunModel
     {
+        private static readonly ILog cLogger = LogManager.GetLogger(typeof(EvaluationRunModel));
         public Int64 ID { get; private set; }
         public IEnumerable<ComparisonModel> Comparisons { get; private set; } 
 
@@ -30,15 +33,16 @@ namespace GSTEvaluation.model
             {
                 try
                 {
-                    var file1 = dir.GetFiles()[0];
-                    var file2 = dir.GetFiles()[1];
+                    var file1 = dir.GetFiles("main*")[0];
+                    var file2 = dir.GetFiles("main*")[1];
+                    var watch = Stopwatch.StartNew();
                     var comparison = new ComparisonModel(dir.Name, ID, file1.FullName, file2.FullName);
+                    cLogger.DebugFormat("comparison {0} took {1}", comparison.Name, watch.ElapsedMilliseconds);
                     list.Add(comparison);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("could not make comparison: {0}", dir.FullName);
-                    Console.WriteLine(ex.ToString());
+                    cLogger.Debug(string.Format("could not make comparison: {0}", dir.FullName), ex);
                 }
             }
 

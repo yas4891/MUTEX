@@ -57,9 +57,12 @@
     <Compile Include="app\AppLogicImpl.cs" />
     <Compile Include="app\IAppLogic.cs" />
     <Compile Include="app\model\ComparisonModel.cs" />
+    <Compile Include="ext\AppHelper.cs" />
     <Compile Include="ext\LexerExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="templating\TemplatingHelper.cs" />
     <Compile Include="test\model\ComparisonModelTest.cs" />
+    <Compile Include="test\templating\TemplatingHelperTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CTokenizer\CTokenizer.csproj">
@@ -79,6 +82,7 @@
       <Name>Tokenizer</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

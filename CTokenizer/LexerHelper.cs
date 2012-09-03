@@ -13,7 +13,23 @@ namespace CTokenizer
     /// </summary>
     public static class LexerHelper
     {
-        internal static readonly Type UsedLexer = typeof(CLexer);
+        private static Type usedLexer = typeof(CLexer);
+
+        public static Type UsedLexer
+        {
+            get { return usedLexer; }
+            set
+            {
+                if(null == value)
+                    throw new ArgumentNullException("value can not be NULL");
+
+                if(!(typeof(Lexer).IsAssignableFrom(value)))
+                    throw new ArgumentException("value must be a sub-class of Antlr.Runtime.Lexer");
+
+
+                usedLexer = value;
+            }
+        }
 
         internal static ConstructorInfo UsedConstructor
         {
@@ -102,6 +118,24 @@ namespace CTokenizer
             }
 
             return builder.ToString().TrimEnd(new[] { ' ' });
+        }
+
+        /// <summary>
+        /// returns the tokens with a bunch of debug information
+        /// </summary>
+        /// <param name="lexer"></param>
+        /// <returns></returns>
+        public static IEnumerable<string> GetDebugTokenStrings(this Lexer lexer)
+        {
+            var lexerType = lexer.GetType();
+
+            return lexer.GetTokens().Select(
+                token => string.Format("[{0:000}:{1:00}] {2}\t\t- {3}", 
+                                        token.Line, 
+                                        token.CharPositionInLine, 
+                                        token.Type.GetTokenName(lexerType), 
+                                        token.Text))
+                .ToList();
         }
 
         /// <summary>

@@ -12,7 +12,6 @@ namespace Tokenizer
         /// </summary>
         public Int32 Type { get; set; }
 
-
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())

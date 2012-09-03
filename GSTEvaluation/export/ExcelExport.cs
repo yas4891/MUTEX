@@ -13,6 +13,14 @@ namespace GSTEvaluation.export
     /// </summary>
     abstract class ExcelExport : FileExport
     {
+        /// <summary>
+        /// this is the index of the sheet which contains all of the data
+        /// </summary>
+        protected const int DataSheetIndex = 0;
+
+        /// <summary>
+        /// the file extension is .xlsx
+        /// </summary>
         protected override string FileExtension
         {
             get { return ".xlsx"; }
@@ -30,7 +38,7 @@ namespace GSTEvaluation.export
         /// <returns></returns>
         protected override MemoryStream CreateContent(EvaluationRunModel model)
         {
-            WorkBook wb = new WorkBook();
+            var wb = new WorkBook();
             WriteData(wb, model);
             var stream = new MemoryStream();
             
@@ -41,7 +49,7 @@ namespace GSTEvaluation.export
 
         protected override MemoryStream CreateContent(IList<ComparisonHistoryModel> data)
         {
-            WorkBook wb = new WorkBook();
+            var wb = new WorkBook();
             WriteData(wb, data);
             var stream = new MemoryStream();
 
@@ -56,5 +64,11 @@ namespace GSTEvaluation.export
         protected abstract void WriteData(WorkBook wb, EvaluationRunModel model);
 
         protected abstract void WriteData(WorkBook wb, IList<ComparisonHistoryModel> data);
+
+
+        protected static char GetDataColumnIndex(int aDataColumn)
+        {
+            return (char)('A' + (char)aDataColumn);
+        }
     }
 }

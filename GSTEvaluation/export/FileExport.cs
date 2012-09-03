@@ -13,7 +13,7 @@ namespace GSTEvaluation.export
     /// </summary>
     abstract class FileExport : IExport
     {
-        public static readonly string RESULT_DIRECTORY = @"D:\test\Results";
+        public static readonly string RESULT_DIRECTORY = @"D:\test\MUTEX\Results";
 
         private string filePath;
 
