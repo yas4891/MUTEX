@@ -17,11 +17,6 @@ namespace GSTConsole
         internal static string GetStudentIdentifier(string queryString)
         {
             return GetValueFromQueryString("pin", queryString);
-            /*
-            var firstPart = queryString.Substring(0, queryString.IndexOf('&'));
-            var afterSecondSlash = firstPart.Substring(firstPart.IndexOf('/', firstPart.IndexOf('/') + 1) + 1);
-            return afterSecondSlash.Substring(0, afterSecondSlash.IndexOf('/'));
-            /* */
         }
 
         /// <summary>
@@ -32,12 +27,6 @@ namespace GSTConsole
         internal static string GetAssignmentIdentifier(string queryString)
         {
             return GetValueFromQueryString("repository", queryString);
-            /*
-            var middlePart = queryString.Substring(queryString.IndexOf('&') + 1);
-            middlePart = middlePart.Substring(0, middlePart.IndexOf('&'));
-
-            return middlePart.Substring(middlePart.LastIndexOf('/') + 1);
-            /* */
         }
 
         /// <summary>
@@ -48,7 +37,16 @@ namespace GSTConsole
         internal static string GetPath(string queryString)
         {
             return GetValueFromQueryString("path", queryString);
-            //return queryString.Substring(0, queryString.IndexOf('&'));
+        }
+
+        /// <summary>
+        /// extracts the template path from the query string
+        /// </summary>
+        /// <param name="queryString"></param>
+        /// <returns></returns>
+        internal static string GetTemplate(string queryString)
+        {
+            return GetValueFromQueryString("template", queryString);
         }
         
         /// <summary>
@@ -64,15 +62,20 @@ namespace GSTConsole
             return Int32.TryParse(first, out result) ? result : DEFAULT_THRESHOLD;
         }
 
+        /// <summary>
+        /// returns the value from the query string
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="queryString"></param>
+        /// <returns></returns>
         internal static string GetValueFromQueryString(string key, string queryString)
         {
             var parts = queryString.Split(new[] { '&' });
-            var first = parts.Where(part => part.StartsWith(key)).Select(part => part.Substring(part.IndexOf("=") + 1)).
+            var first = parts.Where(part => part.StartsWith(key)).Select(part => part.Substring(part.IndexOf("=", StringComparison.Ordinal) + 1)).
                 FirstOrDefault();
 
             return first;
         }
-
 
         /// <summary>
         /// returns the student identifier from args
@@ -117,6 +120,16 @@ namespace GSTConsole
             if (args.Length < 1)
                 return string.Empty;
             return args[args.Length - 1];
+        }
+
+        /// <summary>
+        /// returns the template from the passed arguments[]
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        internal static string GetTemplateFromArgs(string[] args)
+        {
+            return GetValueForOption("--template", args);
         }
 
         /// <summary>

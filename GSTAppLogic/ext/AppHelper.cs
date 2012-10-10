@@ -11,7 +11,6 @@ namespace GSTAppLogic.ext
 {
     public static class AppHelper
     {
-
         /// <summary>
         /// Compares the two files and returns the Similarity
         /// </summary>
@@ -23,9 +22,10 @@ namespace GSTAppLogic.ext
             var tokens1 = LexerHelper.CreateLexer(path1).GetTokenWrappers();
             var tokens2 = LexerHelper.CreateLexer(path2).GetTokenWrappers();
 
-            var algo = new GSTAlgorithm<GSTToken<TokenWrapper>>(
+            var algo = new HashingGSTAlgorithm<GSTToken<TokenWrapper>>(
                 tokens1.ToGSTTokenList<TokenWrapper>(),
                 tokens2.ToGSTTokenList<TokenWrapper>());
+            algo.MinimumMatchLength = 8;
             algo.RunToCompletion();
 
 

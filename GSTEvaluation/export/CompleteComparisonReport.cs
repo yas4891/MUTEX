@@ -50,6 +50,7 @@ namespace GSTEvaluation.export
                     el => string.Format("{0}: {1}", el[0], el[1]));
 
             File.WriteAllLines(FilePath, results);
+            Console.WriteLine("Finished complete comparison report");
         }
 
         /// <summary>

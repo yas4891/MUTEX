@@ -32,30 +32,23 @@ COMMENT
     
 // ignore single line comment   
 LINE_COMMENT
-//    : '//' ~('\n'|'\r')* ('\r' | '\n')+ {$channel= Hidden;}
     : '//' ~('\n'|'\r')* '\r'? '\n' {$channel= Hidden;}
     ;
-/* */
 
 // ignore pre-processor as well
 LINE_COMMAND 
-//    : '#' ~('\n'|'\r')* ('\r' |'\n')+ {$channel=Hidden;}
     : '#' ~('\n'|'\r')* '\r'? '\n' {$channel=Hidden;}
     ;
 
-FOR_LOOP : 
-  FOR WS LPARENTHESIS (~')')* RPARENTHESIS;
+FOR_LOOP :   FOR WS LPARENTHESIS (~')')* RPARENTHESIS;
   
-WHILE_LOOP : 
-  WHILE WS LPARENTHESIS (~')')* RPARENTHESIS;
+WHILE_LOOP :   WHILE WS LPARENTHESIS (~')')* RPARENTHESIS;
   
-COMPARISON: 
-  (IDENTIFIER) WS COMPARISONOPERATOR WS (LITERAL);
+COMPARISON:  (IDENTIFIER) WS COMPARISONOPERATOR WS (LITERAL);
   
-COMPARISONOPERATOR:
-  (COMPARISONEQUAL | LESSTHANOREQUAL | GREATERTHANOREQUAL); 
+ COMPARISONOPERATOR:  (COMPARISONEQUAL | LESSTHANOREQUAL | GREATERTHANOREQUAL); 
   
-DECLARATION_ASSIGNMENT: 
+DECLARATION_ASSIGNMENT:
   (INTEGER_DATATYPE | POINTER_DATATYPE | FLOAT_DATATYPE) WS IDENTIFIER WS ASSIGN 
   WS (INTEGER_LITERAL | STRING_LITERAL | DATATYPE);
 
@@ -63,10 +56,11 @@ fragment
 DATATYPE:
   INTEGER_DATATYPE | POINTER_DATATYPE | FLOAT_DATATYPE ;
   
-  
+ARRAY_ACCESS: IDENTIFIER WS LSQUAREBRACKET (INTEGER_LITERAL | IDENTIFIER) RSQUAREBRACKET;
+
 POINTER_DATATYPE: (INTEGER_DATATYPE | FLOAT_DATATYPE | VOID) WS STAR+;
 
-FLOAT_DATATYPE :	CONST? WS 'float' | 'double';
+FLOAT_DATATYPE :	CONST? WS ('float' | 'double');
 
 /*
  * ignore 'const' and 'signed' | 'unsigned' keywords
@@ -74,7 +68,12 @@ FLOAT_DATATYPE :	CONST? WS 'float' | 'double';
 INTEGER_DATATYPE :	CONST? WS (SIGNED_UNSIGNED)? WS ('short' | 'int' | 'long' | 'char') ;
 
 INCREMENT : IDENTIFIER (PLUSPLUS | WS ADDEQUAL WS '1') | PLUSPLUS IDENTIFIER ;
+DECREMENT : IDENTIFIER (MINUSMINUS | WS MINUSEQUAL WS '1') | MINUSMINUS IDENTIFIER ;
 
+ASSIGN_OPS: 
+  ADDEQUAL | MINUSEQUAL | TIMESEQUAL | DIVIDEEQUAL | MODEQUAL | SHIFTLEFTEQUAL |
+  SHIFTRIGHTEQUAL | ANDEQUAL | OREQUAL | XOREQUAL | ASSIGN;
+  
 fragment
 LITERAL: STRING_LITERAL | INTEGER_LITERAL;
 /*
@@ -85,19 +84,17 @@ INTEGER_LITERAL :
   
 STRING_LITERAL
 	:	'"' (~('"'))* '"'; 
-	// : '"' (~('\\' | '"'))* '"';
-
 
 /*
  * the elementary tokens need to be below the aggregated tokens
  * else the aggregated tokens will not work
  */
-LCURLYBRACE         : '{';
-RCURLYBRACE         : '}';
+fragment LCURLYBRACE         : '{';
+fragment RCURLYBRACE         : '}';
 LSQUAREBRACKET      : '[';
 RSQUAREBRACKET      : ']';
-LPARENTHESIS        : '('; 
-RPARENTHESIS        : ')';
+fragment LPARENTHESIS        : '('; 
+fragment RPARENTHESIS        : ')';
 SCOPE               : '::';
 QUESTIONMARK        : '?';
 COLON               : ':';
@@ -185,12 +182,9 @@ TRUETOK             : 'true';
 FALSETOK            : 'false';
 BACKSLASH           : '\\';
 
-
 // place this below the keywords
 IDENTIFIER 
   : LETTER (LETTER | DIGIT)*;
-  
-  
   
 fragment
 LETTER	:	'A'..'Z' | 'a'..'z';
@@ -206,10 +200,6 @@ WS : (' ' | '\n' | '\r' | '\t')*;
 
 fragment
 CONST_MODIFIER	:	'const';
-
-//fragment
-//VOID_DATATYPE :	 	'void';
-
 
 fragment
 SIGNED_UNSIGNED :	'signed' | 'unsigned';

@@ -29,7 +29,6 @@ namespace GSTLibrary.token
         /// <param name="other"></param>
         /// <returns></returns>
         public abstract bool EqualsTokenValue(GSTToken other);
-
     }
 
     /// <summary>
@@ -59,13 +58,17 @@ namespace GSTLibrary.token
 
         public override bool EqualsTokenValue(GSTToken other)
         {
-            
             if(other is GSTToken<T>)
             {
                 return ((GSTToken<T>) other).Token.Equals(Token);
             }
 
             return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Token.GetHashCode();
         }
     }
 }

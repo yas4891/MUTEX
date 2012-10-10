@@ -17,6 +17,11 @@ namespace GSTAppLogic.app
         int MaximumSimilarity { get; }
 
         /// <summary>
+        /// the student identifier of the maximum similarity
+        /// </summary>
+        string MaxSimilarityStudentIdentifier { get; }
+
+        /// <summary>
         /// the threshold beyond which a source code will be considered plagiarism and stored
         /// in the corresponding data repo
         /// </summary>
@@ -37,6 +42,5 @@ namespace GSTAppLogic.app
         {
             return new AppLogicImpl();
         }
-
     }
 }

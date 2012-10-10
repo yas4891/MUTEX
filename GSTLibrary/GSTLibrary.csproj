@@ -50,10 +50,15 @@
   <ItemGroup>
     <Compile Include="exception\GSTException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="test\tile\AbstractGSTAlgorithmTest.cs" />
     <Compile Include="test\tile\GSTAlgorithmTest.cs" />
+    <Compile Include="test\tile\HashingEntityTest.cs" />
+    <Compile Include="test\tile\HashingGSTAlgorithmTest.cs" />
     <Compile Include="test\tile\TileTest.cs" />
     <Compile Include="test\token\GSTTokenTest.cs" />
+    <Compile Include="tile\AbstractGSTAlgorithm.cs" />
     <Compile Include="tile\GSTAlgorithm.cs" />
+    <Compile Include="tile\HashingGSTAlgorithm.cs" />
     <Compile Include="tile\Tile.cs" />
     <Compile Include="token\GSTHelper.cs" />
     <Compile Include="token\GSTToken.cs" />

@@ -15,10 +15,23 @@ namespace GSTAppLogic.app
     public class AppLogicImpl : IAppLogic
     {
         private static readonly ILog cLogger = LogManager.GetLogger(typeof(AppLogicImpl).Name);
+        private ComparisonModel comparisonModel;
+
         /// <summary>
         /// the maximum similarity found
         /// </summary>
-        public int MaximumSimilarity { get; private set; }
+        public int MaximumSimilarity
+        {
+            get { return null != comparisonModel ? comparisonModel.MaximumSimilarity : 0; }
+        }
+
+        /// <summary>
+        /// the student identifier for the maximum match found
+        /// </summary>
+        public string MaxSimilarityStudentIdentifier
+        {
+            get { return null != comparisonModel ? comparisonModel.MaxSimilarityStudentID : string.Empty; }
+        }
 
         public int Threshold { get; set; }
 
@@ -36,9 +49,9 @@ namespace GSTAppLogic.app
             cLogger.Debug("tokenized source... loading Data Repository");
             var repo = Repository.GetRepository();
 
-            var comparisonModel = new ComparisonModel(tokens, repo.LoadByAssignment(assignment));
+            comparisonModel = new ComparisonModel(tokens, repo.LoadByAssignment(assignment));
 
-            MaximumSimilarity = comparisonModel.Calculate();
+            comparisonModel.Calculate();
 
             var sourceEntityData = new SourceEntityData(student, assignment, tokens.ToStringEnumerable(), source);
 

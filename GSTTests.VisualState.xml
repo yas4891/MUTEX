@@ -5,24 +5,21 @@
   <ExcludeCategories>false</ExcludeCategories>
   <Nodes>
     <Node UniqueName="[0-1000]D:\wissen\csharp\GreedyStringTiling\GSTTests.nunit" Expanded="true" />
-    <Node UniqueName="[0-1019]D:\wissen\csharp\GreedyStringTiling\GSTLibrary\bin\Debug\GSTLibrary.dll" Expanded="true" />
-    <Node UniqueName="[0-1020]GSTLibrary" Expanded="true" />
-    <Node UniqueName="[0-1021]GSTLibrary.test" Expanded="true" />
-    <Node UniqueName="[0-1022]GSTLibrary.test.tile" Expanded="true" />
-    <Node UniqueName="[0-1006]GSTLibrary.test.tile.GSTAlgorithmTest" Expanded="true" />
-    <Node UniqueName="[0-1001]GSTLibrary.test.tile.TileTest" Expanded="true" />
-    <Node UniqueName="[0-1023]GSTLibrary.test.token" Expanded="true" />
-    <Node UniqueName="[0-1004]GSTLibrary.test.token.GSTTokenTest" Expanded="true" />
-    <Node UniqueName="[0-1026]D:\wissen\csharp\GreedyStringTiling\CTokenizer\bin\Debug\CTokenizer.dll" Expanded="true" />
-    <Node UniqueName="[0-1027]CTokenizer" Expanded="true" />
-    <Node UniqueName="[0-1028]CTokenizer.test" Expanded="true" />
-    <Node UniqueName="[0-1033]D:\wissen\csharp\GreedyStringTiling\GSTAppLogic\bin\Debug\GSTAppLogic.dll" Expanded="true" />
-    <Node UniqueName="[0-1034]GSTAppLogic" Expanded="true" />
-    <Node UniqueName="[0-1035]GSTAppLogic.test" Expanded="true" />
-    <Node UniqueName="[0-1036]GSTAppLogic.test.model" Expanded="true" />
-    <Node UniqueName="[0-1037]GSTAppLogic.test.templating" Expanded="true" />
-    <Node UniqueName="[0-1041]D:\wissen\csharp\GreedyStringTiling\GSTConsole\bin\Debug\GSTConsole.exe" Expanded="true" />
-    <Node UniqueName="[0-1042]GSTConsole" Expanded="true" />
-    <Node UniqueName="[0-1043]GSTConsole.test" Expanded="true" />
+    <Node UniqueName="[0-1034]D:\wissen\csharp\GreedyStringTiling\GSTLibrary\bin\Debug\GSTLibrary.dll" Expanded="true" />
+    <Node UniqueName="[0-1035]GSTLibrary" Expanded="true" />
+    <Node UniqueName="[0-1036]GSTLibrary.test" Expanded="true" />
+    <Node UniqueName="[0-1037]GSTLibrary.test.tile" Expanded="true" />
+    <Node UniqueName="[0-1038]GSTLibrary.test.token" Expanded="true" />
+    <Node UniqueName="[0-1041]D:\wissen\csharp\GreedyStringTiling\CTokenizer\bin\Debug\CTokenizer.dll" Expanded="true" />
+    <Node UniqueName="[0-1042]CTokenizer" Expanded="true" />
+    <Node UniqueName="[0-1043]CTokenizer.test" Expanded="true" />
+    <Node UniqueName="[0-1048]D:\wissen\csharp\GreedyStringTiling\GSTAppLogic\bin\Debug\GSTAppLogic.dll" Expanded="true" />
+    <Node UniqueName="[0-1049]GSTAppLogic" Expanded="true" />
+    <Node UniqueName="[0-1050]GSTAppLogic.test" Expanded="true" />
+    <Node UniqueName="[0-1051]GSTAppLogic.test.model" Expanded="true" />
+    <Node UniqueName="[0-1052]GSTAppLogic.test.templating" Expanded="true" />
+    <Node UniqueName="[0-1056]D:\wissen\csharp\GreedyStringTiling\GSTConsole\bin\Debug\GSTConsole.exe" Expanded="true" />
+    <Node UniqueName="[0-1057]GSTConsole" Expanded="true" />
+    <Node UniqueName="[0-1058]GSTConsole.test" Expanded="true" />
   </Nodes>
 </VisualState>

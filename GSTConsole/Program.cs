@@ -12,6 +12,7 @@ using log4net;
 using System.Linq;
 using log4net.Config;
 using System.Web;
+using GSTAppLogic.templating;
 
 namespace GSTConsole
 {
@@ -31,6 +32,7 @@ namespace GSTConsole
                 string student;
                 string assignment;
                 string path;
+                string templatePath;
                 int threshold;
 
                 if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("QUERY_STRING")))
@@ -41,10 +43,10 @@ namespace GSTConsole
 
                     var normalizedQS = queryString.Replace("+", " ");
 
-
                     assignment = GeneralHelper.GetAssignmentIdentifier(normalizedQS);
                     student = GeneralHelper.GetStudentIdentifier(normalizedQS);
                     path = GeneralHelper.GetPath(normalizedQS);
+                    templatePath = GeneralHelper.GetTemplate(normalizedQS);
                     threshold = GeneralHelper.GetThreshold(normalizedQS);
                 }
                 else
@@ -52,6 +54,7 @@ namespace GSTConsole
                     student = GeneralHelper.GetStudentIdentifierFromArgs(args);
                     assignment = GeneralHelper.GetAssignmentIdentifierFromArgs(args);
                     path = GeneralHelper.GetPathFromArgs(args);
+                    templatePath = GeneralHelper.GetTemplateFromArgs(args);
                     threshold = GeneralHelper.GetThresholdFromArgs(args);
                 }
 
@@ -60,14 +63,16 @@ namespace GSTConsole
                 cLogger.DebugFormat("assignment: {0}, student: {1}, path: {2}", assignment, student, path);
                 var watch = Stopwatch.StartNew();
 
-                string source = File.ReadAllText(path);
-
+                string source = GetSource(path, templatePath);// File.ReadAllText(path);
+                
+                
                 var appLogic = AppLogic.GetAppLogic();
                 appLogic.Threshold = threshold;
                 appLogic.Start(student, assignment, source);
 
                 cLogger.DebugFormat("total runtime: {0} ms", watch.ElapsedMilliseconds);
                 Console.WriteLine("{0}", appLogic.MaximumSimilarity);
+                Console.WriteLine("{0}", appLogic.MaxSimilarityStudentIdentifier);
 
 #if DEBUG
                 if (Environment.UserInteractive)
@@ -81,6 +86,27 @@ namespace GSTConsole
             }
         }
 
+        /// <summary>
+        /// returns the source code for comparison. 
+        /// If templatePath is non-NULL, the template will be striped from the source. 
+        /// Else the whole source from the file located at *path* will be returned
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="templatePath"></param>
+        /// <returns></returns>
+        private static string GetSource(string path, string templatePath)
+        {
+            return (string.IsNullOrWhiteSpace(templatePath))
+                       ? File.ReadAllText(path)
+                       : TemplatingHelper.StripTemplateFromSourceFile(path, templatePath);
+        }
+
+        /// <summary>
+        /// this method handles the different error conditions
+        /// </summary>
+        /// <param name="assignment"></param>
+        /// <param name="student"></param>
+        /// <param name="path"></param>
         private static void HandleInputErrors(string assignment, string student, string path)
         {
             if (!File.Exists(path))
@@ -107,9 +133,12 @@ namespace GSTConsole
             }
         }
 
+        /// <summary>
+        /// prints out the different usage options
+        /// </summary>
         private static void PrintUsageInformation()
         {
-            Console.WriteLine("Usage: {OPTIONS} --student [STUDENT_ID] --assignment [ASSIGNMENT_ID] [PATH_TO_FILE]");
+            Console.WriteLine("Usage: mutex --template [PATH_TO_TEMPLATE] --student [STUDENT_ID] --assignment [ASSIGNMENT_ID] [PATH_TO_FILE]");
         }
 
         private static GSTTokenList<GSTToken<TokenWrapper>> GetTokens(FileInfo file)

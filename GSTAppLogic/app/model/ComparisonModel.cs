@@ -15,11 +15,23 @@ namespace GSTAppLogic.app.model
     public class ComparisonModel
     {
         private static readonly ILog cLogger = LogManager.GetLogger(typeof(ComparisonModel).Name);
-        public static readonly int DEFAULT_MML = 4;
-        public int MaximumSimilarity { get; private set; }
-        
+        public static readonly int DEFAULT_MML = 8;
+
         private readonly IEnumerable<SourceEntityData> ReferenceData;
 
+        /// <summary>
+        /// returns the maximum found similarity
+        /// </summary>
+        public int MaximumSimilarity { get; private set; }
+
+        /// <summary>
+        /// contains the student identifier
+        /// </summary>
+        public string MaxSimilarityStudentID { get; private set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public IEnumerable<TokenWrapper> Tokens { get; private set; } 
 
         /// <summary>
@@ -59,7 +71,7 @@ namespace GSTAppLogic.app.model
                 // ==> more functional and separated
                 var gstTokenList = Tokens.ToGSTTokenList(); 
                 var referenceTokens = data.Tokens.ToGSTTokenList();
-                var algorithm = new GSTAlgorithm<GSTToken<TokenWrapper>>(gstTokenList, referenceTokens)
+                var algorithm = new HashingGSTAlgorithm<GSTToken<TokenWrapper>>(gstTokenList, referenceTokens)
                 {
                     MinimumMatchLength = DEFAULT_MML
                 };
@@ -67,11 +79,13 @@ namespace GSTAppLogic.app.model
                 algorithm.RunToCompletion();
 
                 cLogger.DebugFormat("similarity compared to {0}:{1}", data.StudentIdentifier, algorithm.Similarity);
-                if (max < algorithm.Similarity)
-                    max = algorithm.Similarity;
+                if (MaximumSimilarity < algorithm.Similarity)
+                {
+                    MaximumSimilarity = algorithm.Similarity;
+                    MaxSimilarityStudentID = data.StudentIdentifier;
+                }
             }
 
-            MaximumSimilarity = max;
             return max;
         }
     }
