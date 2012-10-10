@@ -103,21 +103,17 @@ namespace GSTEvaluation
             Console.WriteLine("finished 3");
         }
 
-        public static void Main(string[] args)
+        /// <summary>
+        /// compares the two algorithms against each other over a rather large file (~8000 chars)
+        /// </summary>
+        private static void EvaluateSpeed()
         {
-            /*
-            var test = new HashingGSTAlgorithmTest();
-            test.SetUp();
-            test.DoOneRun();
-            /* */
-
-            /*
             XmlConfigurator.Configure(new FileInfo("log4net.xml"));
-            src1 = File.ReadAllText(@"D:\test\MUTEX\tokenizerEval\TPLV04-S01-02\main-01.c");
-            src2 = File.ReadAllText(@"D:\test\MUTEX\tokenizerEval\TPLV04-S01-02\main-02.c");
+            src1 = File.ReadAllText(@"test\TPLV04-S01-02\main-01.c");
+            src2 = File.ReadAllText(@"test\TPLV04-S01-02\main-02.c");
             var testRuns = 2;
 
-            int len = 180;
+            int len = 100;
 
             // JIT compile both algorithms before we start
             AbstractGSTAlgorithm<GSTToken<char>> initalgo = new HashingGSTAlgorithm<GSTToken<char>>(
@@ -135,7 +131,7 @@ namespace GSTEvaluation
             var liLen3 = new List<int>();
             int c = 0;
 
-            while (len == 180) // (len < src1.Length && len < src2.Length)
+            while(len < src1.Length && len < src2.Length)
             {
                 switch (c++ % 3)
                 {
@@ -150,7 +146,7 @@ namespace GSTEvaluation
                         break;
                 }
 
-                len += 10;
+                len += 100;
             }
 
             Length1 = liLen1.ToArray();
@@ -172,28 +168,26 @@ namespace GSTEvaluation
             t2.Join();
             t3.Join();
 
-            File.WriteAllLines(@"D:\test\MUTEX\performance.txt", ResultList);
+            File.WriteAllLines(@"test\performance.txt", ResultList);
 
             Console.WriteLine("finished all runs");
             Console.ReadLine();
-            /* */
+        }
 
-            /*
-            var lexer1 = LexerHelper.CreateLexer(@"D:\test\MUTEX\tokenizerEval\TPLV04-S01-02\main-01.c");
-            var lexer2 = LexerHelper.CreateLexer(@"D:\test\MUTEX\tokenizerEval\TPLV04-S01-02\main-02.c");
-            /* */
 
-            
+        private static void EvaluateCompleteSetOfSources()
+        {
             LexerHelper.UsedLexer = typeof(MutexCLexer);
             new CompleteComparisonReport("01_01").Run();
+            Console.WriteLine("Finished complete set of sources");
             Console.ReadLine();
-            Environment.Exit(0);
-            /* */
+        }
 
-            /*
+        private static void DoStandardRun()
+        {
             try
             {
-                LexerHelper.UsedLexer = typeof (MutexCLexer);
+                LexerHelper.UsedLexer = typeof(MutexCLexer);
                 var watch = Stopwatch.StartNew();
                 var evalModel = new EvaluationRunModel(TEST_SUITE_DIRECTORY);
                 cLogger.DebugFormat("evaluation run finished in {0} ms", watch.ElapsedMilliseconds);
@@ -224,8 +218,19 @@ namespace GSTEvaluation
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Done!");
-            Console.WriteLine("Type [y] if you want to create excel spreadsheets");
-            var decision = Console.ReadLine();
+            Console.ReadLine();
+        }
+
+        public static void Main(string[] args)
+        {
+            XmlConfigurator.Configure(new FileInfo("log4net.xml"));
+
+            //EvaluateSpeed();
+            
+            //EvaluateCompleteSetOfSources()
+            
+            DoStandardRun();
+            
             /* */
         }
     }
