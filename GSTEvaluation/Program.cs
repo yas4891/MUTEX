@@ -23,13 +23,14 @@ namespace GSTEvaluation
     {
         private static readonly ILog cLogger = LogManager.GetLogger(typeof(Program));
 
-        public static readonly string TEST_SUITE_DIRECTORY = @"D:\test\MUTEX\tokenizerEval";
+        public static readonly string TEST_SUITE_DIRECTORY = @"test\default_set";
         private const int testRuns = 1;
         private static string src1;
         private static string src2;
         private static int[] Length1, Length2, Length3;
-        private static readonly List<string> ResultList = new List<string>(); 
+        private static readonly List<string> ResultList = new List<string>();
 
+        #region helper for EvaluateSpeed
         private static void Calculate(int len)
         {
             var string1 = src1.Substring(0, len);
@@ -102,6 +103,7 @@ namespace GSTEvaluation
 
             Console.WriteLine("finished 3");
         }
+        #endregion
 
         /// <summary>
         /// compares the two algorithms against each other over a rather large file (~8000 chars)
@@ -109,8 +111,8 @@ namespace GSTEvaluation
         private static void EvaluateSpeed()
         {
             XmlConfigurator.Configure(new FileInfo("log4net.xml"));
-            src1 = File.ReadAllText(@"test\TPLV04-S01-02\main-01.c");
-            src2 = File.ReadAllText(@"test\TPLV04-S01-02\main-02.c");
+            src1 = File.ReadAllText(@"test\default_set\TPLV04-S01-02\main-01.c");
+            src2 = File.ReadAllText(@"test\default_set\TPLV04-S01-02\main-02.c");
             var testRuns = 2;
 
             int len = 100;
@@ -168,13 +170,15 @@ namespace GSTEvaluation
             t2.Join();
             t3.Join();
 
-            File.WriteAllLines(@"test\performance.txt", ResultList);
+            File.WriteAllLines(@"test\default_set\performance.txt", ResultList);
 
             Console.WriteLine("finished all runs");
             Console.ReadLine();
         }
 
-
+        /// <summary>
+        /// evaluates a 
+        /// </summary>
         private static void EvaluateCompleteSetOfSources()
         {
             LexerHelper.UsedLexer = typeof(MutexCLexer);
@@ -183,7 +187,10 @@ namespace GSTEvaluation
             Console.ReadLine();
         }
 
-        private static void DoStandardRun()
+        /// <summary>
+        /// just the default comparison
+        /// </summary>
+        private static void EvaluateStandardSet()
         {
             try
             {
@@ -193,10 +200,8 @@ namespace GSTEvaluation
                 cLogger.DebugFormat("evaluation run finished in {0} ms", watch.ElapsedMilliseconds);
                 new ListResultsExport().Run(evalModel);
 
-                File.WriteAllLines(@"D:\test\testfile.token.txt", LexerHelper.CreateLexer(@"D:\test\test.c").GetDebugTokenStrings());
-
-                File.WriteAllLines(@"D:\test\tok1.txt", LexerHelper.CreateLexer(@"D:\test\main-01.c").GetDebugTokenStrings());
-                File.WriteAllLines(@"D:\test\tok2.txt", LexerHelper.CreateLexer(@"D:\test\main-03.c").GetDebugTokenStrings());
+                File.WriteAllLines(@"test\tokens\tok1.txt", LexerHelper.CreateLexer(@"test\tokens\main-01.c").GetDebugTokenStrings());
+                File.WriteAllLines(@"test\tokens\tok2.txt", LexerHelper.CreateLexer(@"test\tokens\main-03.c").GetDebugTokenStrings());
             }
             catch (Exception ex)
             {
@@ -229,7 +234,7 @@ namespace GSTEvaluation
             
             //EvaluateCompleteSetOfSources()
             
-            DoStandardRun();
+            EvaluateStandardSet();
             
             /* */
         }

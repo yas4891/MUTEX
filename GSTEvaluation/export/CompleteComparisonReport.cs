@@ -67,7 +67,7 @@ namespace GSTEvaluation.export
 
 
             var wb = new WorkBook();
-            wb.readXLSX(@"D:\test\MUTEX\CompleteComparison\template-complete2.xlsx");
+            wb.readXLSX(@"test\CompleteComparison\template-complete2.xlsx");
 
             SetActiveSheet(testName, wb);
 
@@ -89,10 +89,10 @@ namespace GSTEvaluation.export
             }
             
 
-            wb.writeXLSX(@"D:\test\MUTEX\CompleteComparison\heyja.xlsx");
+            wb.writeXLSX(@"test\CompleteComparison\heyja.xlsx");
         }
 
-        private static List<int[]> GetUniqueCartesianProduct(string testName)
+        private static IEnumerable<int[]> GetUniqueCartesianProduct(string testName)
         {
             var files = Directory.GetFiles(string.Format(@"D:\test\MUTEX\CompleteComparison\sources\{0}", testName),
                                            @"main.c", SearchOption.AllDirectories).Select(p =>
@@ -132,10 +132,10 @@ namespace GSTEvaluation.export
         private static string[] Calculate(string testName, int[] elem)
         {
             var path1 = string.Format(
-                @"D:\test\MUTEX\CompleteComparison\sources\{0}\{1:00}\main.c",
+                @"test\CompleteComparison\sources\{0}\{1:00}\main.c",
                 testName, elem[0]);
             var path2 = string.Format(
-                @"D:\test\MUTEX\CompleteComparison\sources\{0}\{1:00}\main.c",
+                @"test\CompleteComparison\sources\{0}\{1:00}\main.c",
                 testName, elem[1]);
             return new[]
                        {

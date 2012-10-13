@@ -21,12 +21,15 @@
 /bin/*/*.manifest
 /bin/*/*.pdb
 
+*.psess
+*.vsp
 *.log
 *.log.*
 
 # ignore user-specific Visual Studio files
 GreedyStringTiling.suo
 GreedyStringTiling.sln.DotSettings.user
+*.user
 
 # ignore nUnit result file
 TestResult.xml
