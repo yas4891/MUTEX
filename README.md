@@ -1,7 +1,7 @@
 MUTEX
 =====
 
-MUTEX helps you prevent software plagiarism among students. 
+MUTEX helps you prevent software plagiarism among students.     
 It was designed for real-time comparison of source codes handed in by students at university. 
 It is used at the University of the German Armed Forces (http://www.unibw.de)
 
