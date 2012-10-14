@@ -9,31 +9,17 @@ using Tokenizer;
 namespace CTokenizer
 {
     /// <summary>
-    /// 
+    /// provides a bunch of useful (extension) methods for use with the Lexer class
     /// </summary>
     public static class LexerHelper
     {
-        private static Type usedLexer = typeof(CLexer);
+        /*
+        private static readonly Type usedLexer = typeof(MutexCLexer);
 
-        public static Type UsedLexer
-        {
-            get { return usedLexer; }
-            set
-            {
-                if(null == value)
-                    throw new ArgumentNullException("value can not be NULL");
-
-                if(!(typeof(Lexer).IsAssignableFrom(value)))
-                    throw new ArgumentException("value must be a sub-class of Antlr.Runtime.Lexer");
-
-
-                usedLexer = value;
-            }
-        }
 
         internal static ConstructorInfo UsedConstructor
         {
-           get { return UsedLexer.GetConstructor(new[] {typeof (ICharStream)}); }
+           get { return usedLexer.GetConstructor(new[] {typeof (ICharStream)}); }
         } 
 
         /// <summary>
@@ -64,7 +50,7 @@ namespace CTokenizer
 
         internal static string GetTokenName(this int tokenType)
         {
-            return tokenType.GetTokenName(UsedLexer);
+            return tokenType.GetTokenName(usedLexer);
         }
 
         internal static string GetTokenName(this int tokenType, Type lexerType)
@@ -193,6 +179,72 @@ namespace CTokenizer
         public static IEnumerable<string> ToStringEnumerable(this IEnumerable<TokenWrapper> enumTokens)
         {
             return enumTokens.Select(token => token.Type.Type.GetTokenName());
+        }
+        /* */
+
+
+        /// <summary>
+        /// returns enumerable containing all tokens in the lexer except EOF.
+        /// automatically resets the lexer 
+        /// </summary>
+        /// <param name="lexer"></param>
+        /// <returns></returns>
+        public static IEnumerable<IToken> GetTokens(this Lexer lexer)
+        {
+            var list = new List<IToken>();
+            IToken myToken;
+            const int eof = -1;
+
+            while (eof != (myToken = lexer.NextToken()).Type)
+            {
+                if (BaseRecognizer.Hidden == myToken.Channel)
+                    continue;
+
+                list.Add(myToken);
+            }
+
+            lexer.Reset();
+            return list;
+        }
+
+        
+        /*
+        public static IEnumerable<string> GetDebugTokenStrings(this Lexer lexer, TokenFactory factory)
+        {
+            var lexerType = lexer.GetType();
+            
+            return lexer.GetTokens().Select(
+                token => string.Format("[{0:000}:{1:00}] {2}\t\t- {3}",
+                                        token.Line,
+                                        token.CharPositionInLine,
+                                        factory.GetTokenName(token.Type, lexerType),
+                                        token.Text))
+                .ToList();
+        }
+        /* */
+
+        /// <summary>
+        /// returns a bunch of debug information for the tokens
+        /// </summary>
+        /// <param name="tokens"></param>
+        /// <returns></returns>
+        public static IEnumerable<string> GetDebugTokenStrings(this IEnumerable<TokenWrapper> tokens)
+        {
+            return tokens.Select(token => string.Format("[{0:000}:{1:00}] {2}\t\t- {3}",
+                                                 token.Token.Line,
+                                                 token.Token.CharPositionInLine,
+                                                 token.TokenName,
+                                                 token.Text));
+        }
+
+        /// <summary>
+        /// turns enumerable of TokenWrapper objects into the corresponding token names enumerable
+        /// </summary>
+        /// <param name="enumTokens"></param>
+        /// <returns></returns>
+        public static IEnumerable<string> ToStringEnumerable(this IEnumerable<TokenWrapper> enumTokens)
+        {
+            return enumTokens.Select(token => token.TokenName);
         }
     }
 }

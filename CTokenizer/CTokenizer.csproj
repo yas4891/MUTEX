@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="CLexer.cs" />
     <Compile Include="LexerHelper.cs" />
+    <Compile Include="MutexTokenFactory.cs" />
     <Compile Include="MutexTokenImpl.cs" />
     <Compile Include="test\LexerHelperTest.cs" />
     <Compile Include="MutexCLexer.cs" />

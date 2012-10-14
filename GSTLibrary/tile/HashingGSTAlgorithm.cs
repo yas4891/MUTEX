@@ -89,7 +89,15 @@ namespace GSTLibrary.tile
                     arr[i] = l[i + startIndex];
                 }
 
-                hash = arr.Select((t, i) => (t.GetHashCode() * (multiplicators[i % multiplicators.Length]))).Sum();
+                var thing = arr.Select((t, i) => (t.GetHashCode()*(multiplicators[i%multiplicators.Length])));
+                unchecked
+                {
+                    foreach (var element in thing)
+                        hash += element;
+                }
+                
+
+                //hash = unchecked(thing.Sum());
                 Tokens = arr;
             }
 
@@ -109,12 +117,12 @@ namespace GSTLibrary.tile
             public override string ToString()
             {
                 var builder = new StringBuilder("HashingEntity:\"");
-
+                builder.Append(Tokens[0].GetType());
                 foreach(var element in Tokens)
                 {
                     builder.Append(element.ToString());
                 }
-
+                
                 return builder.Append('"').ToString();
             }
         }
@@ -199,6 +207,9 @@ namespace GSTLibrary.tile
         {
             InitializeA();
             InitializeB();
+
+            // this could be a possible optimization, but so far 
+            // hash calculation does not seem like a bottleneck
             /*
             var thread1 = new Thread(InitializeA);
             var thread2 = new Thread(InitializeB);
@@ -207,6 +218,18 @@ namespace GSTLibrary.tile
 
             thread1.Join();
             thread2.Join();
+            /* */
+
+            /*
+            foreach(var asdf in HashesA)
+            {
+                Console.WriteLine("hashA:" + asdf.Key + "|" + asdf.Value[0]);
+            }
+
+            foreach (var asdf in HashesB)
+            {
+                Console.WriteLine("hashB:" + asdf.Key + "|" + asdf.Value[0]);
+            }
             /* */
 
             MinimizeHashes();

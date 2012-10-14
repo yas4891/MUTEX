@@ -22,9 +22,9 @@ namespace GSTAppLogic.ext
         /// </summary>
         /// <param name="tokens"></param>
         /// <returns></returns>
-        public static GSTTokenList<GSTToken<TokenWrapper>> ToGSTTokenList(this IEnumerable<string> tokens)
+        public static GSTTokenList<GSTToken<TokenWrapper>> ToGSTTokenList(this IEnumerable<string> tokens, TokenFactory factory)
         {
-            var enumTokens = tokens.GetTokens();
+            var enumTokens = factory.GetTokenWrapperEnumerable(tokens);
             return new GSTTokenList<GSTToken<TokenWrapper>>(enumTokens.Select(token => new GSTToken<TokenWrapper>(token)));
         }
 

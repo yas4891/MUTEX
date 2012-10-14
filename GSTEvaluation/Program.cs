@@ -16,6 +16,7 @@ using log4net.Config;
 using System.Threading;
 using GSTLibrary.test.tile;
 using System.Globalization;
+using ComparisonModel = GSTAppLogic.app.model.ComparisonModel;
 
 namespace GSTEvaluation
 {
@@ -181,7 +182,6 @@ namespace GSTEvaluation
         /// </summary>
         private static void EvaluateCompleteSetOfSources()
         {
-            LexerHelper.UsedLexer = typeof(MutexCLexer);
             new CompleteComparisonReport("01_01").Run();
             Console.WriteLine("Finished complete set of sources");
             Console.ReadLine();
@@ -194,14 +194,14 @@ namespace GSTEvaluation
         {
             try
             {
-                LexerHelper.UsedLexer = typeof(MutexCLexer);
+                var factory = new MutexTokenFactory();
                 var watch = Stopwatch.StartNew();
                 var evalModel = new EvaluationRunModel(TEST_SUITE_DIRECTORY);
                 cLogger.DebugFormat("evaluation run finished in {0} ms", watch.ElapsedMilliseconds);
                 new ListResultsExport().Run(evalModel);
 
-                File.WriteAllLines(@"test\tokens\tok1.txt", LexerHelper.CreateLexer(@"test\tokens\main-01.c").GetDebugTokenStrings());
-                File.WriteAllLines(@"test\tokens\tok2.txt", LexerHelper.CreateLexer(@"test\tokens\main-03.c").GetDebugTokenStrings());
+                File.WriteAllLines(@"test\tokens\tok1.txt", factory.GetTokenWrapperListFromFile(@"test\tokens\main-01.c").GetDebugTokenStrings());
+                File.WriteAllLines(@"test\tokens\tok2.txt", factory.GetTokenWrapperListFromFile(@"test\tokens\main-03.c").GetDebugTokenStrings());
             }
             catch (Exception ex)
             {
@@ -230,6 +230,8 @@ namespace GSTEvaluation
         {
             XmlConfigurator.Configure(new FileInfo("log4net.xml"));
 
+
+            
             //EvaluateSpeed();
             
             //EvaluateCompleteSetOfSources()

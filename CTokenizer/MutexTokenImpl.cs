@@ -13,6 +13,9 @@ namespace CTokenizer
     public class MutexTokenImpl : IToken
     {
         private static readonly ILog cLogger = LogManager.GetLogger(typeof(MutexTokenImpl).Name);
+
+        public string TokenName { get; private set; }
+
         public int Channel { get; set; }
 
         public int CharPositionInLine { get; set; }
@@ -35,15 +38,28 @@ namespace CTokenizer
         {
             try
             {
-                Type = (int)LexerHelper.UsedLexer.GetField(tokenName.ToUpper()).GetValue(null);
+                TokenName = tokenName.ToUpperInvariant();
+
+                Type = (int)typeof(MutexCLexer).GetField(TokenName).GetValue(null);
             }
             catch (Exception ex)
             {
-                var msg = string.Format("could not find token '{0}'", tokenName);
+                var msg = string.Format("could not find token '{0}'", TokenName);
                 cLogger.Warn(msg);
                 cLogger.Debug(msg, ex);
+                //Console.WriteLine("tokenName:" + tokenName);
                 throw;
             }
+        }
+
+        public override string ToString()
+        {
+            return TokenName;
+        }
+
+        public override int GetHashCode()
+        {
+            return Type.GetHashCode();
         }
     }
 }

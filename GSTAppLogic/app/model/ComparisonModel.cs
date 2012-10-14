@@ -32,17 +32,23 @@ namespace GSTAppLogic.app.model
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<TokenWrapper> Tokens { get; private set; } 
+        public IEnumerable<TokenWrapper> Tokens { get; private set; }
+
+        /// <summary>
+        /// the token factory used during comparison
+        /// </summary>
+        public TokenFactory Factory { get; private set; }
 
         /// <summary>
         /// stores the tokens and the referenceData for comparison
         /// </summary>
         /// <param name="tokens"></param>
         /// <param name="referenceData"></param>
-        public ComparisonModel(IEnumerable<TokenWrapper> tokens, IEnumerable<SourceEntityData> referenceData)
+        public ComparisonModel(IEnumerable<TokenWrapper> tokens, IEnumerable<SourceEntityData> referenceData, TokenFactory factory)
         {
             Tokens = tokens;
             ReferenceData = referenceData;
+            Factory = factory;
         }
 
         /// <summary>
@@ -50,9 +56,12 @@ namespace GSTAppLogic.app.model
         /// </summary>
         /// <param name="pathToFile"></param>
         /// <param name="referenceData"></param>
-        public ComparisonModel(string pathToFile, IEnumerable<SourceEntityData> referenceData ) : 
-            this(LexerHelper.CreateLexer(pathToFile).GetTokenWrappers(), referenceData)
+        public ComparisonModel(string pathToFile, IEnumerable<SourceEntityData> referenceData )
         {
+            ReferenceData = referenceData;
+            var factory = new MutexTokenFactory();
+            Tokens = factory.GetTokenWrapperListFromSource(pathToFile);
+
         }
 
         /// <summary>
@@ -69,9 +78,9 @@ namespace GSTAppLogic.app.model
             {
                 // create the list here, because this way it is local to this run
                 // ==> more functional and separated
-                var gstTokenList = Tokens.ToGSTTokenList(); 
-                var referenceTokens = data.Tokens.ToGSTTokenList();
-                var algorithm = new HashingGSTAlgorithm<GSTToken<TokenWrapper>>(gstTokenList, referenceTokens)
+                var sourceTokens = Tokens.ToGSTTokenList(); 
+                var referenceTokens = Factory.GetTokenWrapperEnumerable(data.Tokens).ToGSTTokenList();
+                var algorithm = new HashingGSTAlgorithm<GSTToken<TokenWrapper>>(sourceTokens, referenceTokens)
                 {
                     MinimumMatchLength = DEFAULT_MML
                 };

@@ -12,18 +12,19 @@ namespace GSTAppLogic.test.model
         private const string RELATIVE_PATH_TO_TEST_FILES = "../../../test/applogic/{0}";
         private readonly IEnumerable<string> defaultTokenSet = new []
                                                           {
-                                                              "T__24", "T__23", "T__25",
-                                                              "T__26", "T__27", "T__28", "T__29"
+                                                              "INCREMENT", "ADDEQUAL", "ARRAY_ACCESS",
+                                                              "ASSIGN", "CASE", "DECREMENT", "GOTO", "INCREMENT", "ASSIGN"
                                                           };
 
         [Test]
         public void Default()
         {
-            var model = new ComparisonModel(defaultTokenSet.GetTokens(),
+            var factory = new MutexTokenFactory();
+            var model = new ComparisonModel(factory.GetTokenWrapperEnumerable(defaultTokenSet),
                 new []{
                         new SourceEntityData("stud1", "assignment1", defaultTokenSet, "bla" ), 
-                        new SourceEntityData("stud2", "assignment1", new[] {"T__27", "T__28"}, "bla2")
-                    });
+                        new SourceEntityData("stud2", "assignment1", new[] {"CASE", "DECREMENT"}, "bla2")
+                    }, factory);
 
             model.Calculate();
 

@@ -6,6 +6,7 @@ using CTokenizer;
 using DataRepository;
 using GSTAppLogic.app.model;
 using log4net;
+using Tokenizer;
 
 namespace GSTAppLogic.app
 {
@@ -33,8 +34,12 @@ namespace GSTAppLogic.app
             get { return null != comparisonModel ? comparisonModel.MaxSimilarityStudentID : string.Empty; }
         }
 
+        /// <summary>
+        /// the threshold above which a source is considered to be plagiarism
+        /// </summary>
         public int Threshold { get; set; }
-
+        
+        
         /// <summary>
         /// calculates the maximum similarity of the provided source against
         /// all sources for the given asignment in the reference database
@@ -45,11 +50,14 @@ namespace GSTAppLogic.app
         public void Start(string student, string assignment, string source)
         {
             cLogger.DebugFormat("starting with threshold {0}", Threshold);
-            var tokens = LexerHelper.CreateLexerFromSource(source).GetTokenWrappers().ToList();
+            TokenFactory factory = new MutexTokenFactory();
+
+            var tokens = factory.GetTokenWrapperListFromSource(source); 
+            //LexerHelper.CreateLexerFromSource(source).GetTokenWrappers().ToList();
             cLogger.Debug("tokenized source... loading Data Repository");
             var repo = Repository.GetRepository();
 
-            comparisonModel = new ComparisonModel(tokens, repo.LoadByAssignment(assignment));
+            comparisonModel = new ComparisonModel(tokens, repo.LoadByAssignment(assignment), factory);
 
             comparisonModel.Calculate();
 

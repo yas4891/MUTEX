@@ -1,5 +1,6 @@
 ﻿
 using Antlr.Runtime;
+using System;
 
 namespace Tokenizer
 {
@@ -17,9 +18,12 @@ namespace Tokenizer
         /// <summary>
         /// the saved token object from ANTLR lexers
         /// </summary>
-        private IToken Token { get; set; }
+        public IToken Token { get; private set; }
 
-        private string Text { get; set; }
+        /// <summary>
+        /// returns the text of the underlying token
+        /// </summary>
+        public string Text { get { return Token.Text; } }
 
         /// <summary>
         /// a human readable representation of the token type
@@ -36,7 +40,6 @@ namespace Tokenizer
         {
             TokenName = tokenName;
             Token = token;
-            Text = token.Text;
             Type = new TokenType {Type = token.Type};
             tokenHashCode = Type.GetHashCode();
         }
@@ -69,12 +72,12 @@ namespace Tokenizer
 
         public override int GetHashCode()
         {
-            return null == Token ? GetType().GetHashCode() : Token.GetHashCode();
+            return null == Token ? Type.GetHashCode() : Token.GetHashCode();
         }
 
         public override string ToString()
         {
-            return Token.Text;
+            return Token.ToString();
         }
     }
 }

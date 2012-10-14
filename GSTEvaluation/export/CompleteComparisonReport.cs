@@ -146,8 +146,8 @@ namespace GSTEvaluation.export
 
         private static GSTTokenList<GSTToken<TokenWrapper>> GetTokens(FileInfo file)
         {
-            string source = File.ReadAllText(file.FullName);
-            var tokens = LexerHelper.CreateLexerFromSource(source).GetTokenWrappers().ToList();
+            var factory = new MutexTokenFactory();
+            var tokens = factory.GetTokenWrapperListFromFile(file.FullName);
 
             return tokens.ToGSTTokenList();
         }

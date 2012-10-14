@@ -50,8 +50,10 @@ namespace GSTEvaluation.model
             var tmplFile = Directory.GetFiles(directory, "template.c").FirstOrDefault();
             var path1 = tmplFileExists ? TemplatingHelper.StripTemplateFromSourceFile(sourcePath1, tmplFile) : sourcePath1;
             var path2 = tmplFileExists ? TemplatingHelper.StripTemplateFromSourceFile(sourcePath2, tmplFile) : sourcePath2;
-            var tokens1 = LexerHelper.CreateLexer(path1).GetTokenWrappers();
-            var tokens2 = LexerHelper.CreateLexer(path2).GetTokenWrappers();
+            var factory = new MutexTokenFactory();
+            var tokens1 = factory.GetTokenWrapperListFromFile(path1);
+            var tokens2 = factory.GetTokenWrapperListFromFile(path2);
+            
 
             cLogger.DebugFormat("TokenStream Length: {0} -- {1}", tokens1.Count(), tokens2.Count());
             var algo = new GSTAlgorithm<GSTToken<TokenWrapper>>(
@@ -61,8 +63,8 @@ namespace GSTEvaluation.model
             algo.RunToCompletion();
             Result = algo.Similarity;
 
-            Source1 = new SourceModel(Path.GetFileNameWithoutExtension(sourcePath1), tokens1.GetJoinedTokenString());
-            Source2 = new SourceModel(Path.GetFileNameWithoutExtension(sourcePath2), tokens2.GetJoinedTokenString());
+            Source1 = new SourceModel(Path.GetFileNameWithoutExtension(sourcePath1), factory.GetJoinedTokenString(tokens1));
+            Source2 = new SourceModel(Path.GetFileNameWithoutExtension(sourcePath2), factory.GetJoinedTokenString(tokens2));
             SQLFacade.Instance.CreateComparison(name, Result, watch.ElapsedMilliseconds, evalRunID, Source1.ID, Source2.ID);
         }
     }

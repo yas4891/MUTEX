@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using CTokenizer;
+using DataRepository;
 using GSTAppLogic.app;
+using GSTAppLogic.app.model;
 using GSTAppLogic.ext;
 using GSTLibrary.tile;
 using GSTLibrary.token;
@@ -29,6 +31,21 @@ namespace GSTConsole
                 cLogger.DebugFormat("64-bit process: {0}", Environment.Is64BitProcess);
                 Console.WriteLine();
 
+                IEnumerable<string> defaultTokenSet = new[]
+                                                          {
+                                                              "INCREMENT", "ADDEQUAL", "ARRAY_ACCESS",
+                                                              "ASSIGN", "CASE", "DECREMENT", "GOTO", "INCREMENT", "ASSIGN"
+                                                          };
+                var factory = new MutexTokenFactory();
+                var model = new ComparisonModel(factory.GetTokenWrapperEnumerable(defaultTokenSet),
+                    new[]{
+                        new SourceEntityData("stud1", "assignment1", defaultTokenSet, "bla" ), 
+                        new SourceEntityData("stud2", "assignment1", new[] {"CASE", "DECREMENT"}, "bla2")
+                    }, factory);
+
+                model.Calculate();
+
+                /*
                 string student;
                 string assignment;
                 string path;
@@ -78,6 +95,8 @@ namespace GSTConsole
                 if (Environment.UserInteractive)
                     Console.ReadLine();
 #endif
+
+                /* */
             }
             catch (Exception ex)
             {
@@ -143,12 +162,12 @@ namespace GSTConsole
 
         private static GSTTokenList<GSTToken<TokenWrapper>> GetTokens(FileInfo file)
         {
-            string source = File.ReadAllText(file.FullName);
-            var tokens = LexerHelper.CreateLexerFromSource(source).GetTokenWrappers().ToList();
+            var factory = new MutexTokenFactory();
+            var tokens = factory.GetTokenWrapperListFromFile(file.FullName);
 
             return tokens.ToGSTTokenList();
         }
-
+        
         private static GSTTokenList<GSTToken<TokenWrapper>> GetTokens(string file)
         {
             return GetTokens(new FileInfo(file));
