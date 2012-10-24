@@ -13,7 +13,7 @@ namespace Tokenizer
         /// <summary>
         /// stores the hash code of the underlying token to speed up comparison
         /// </summary>
-        private readonly long tokenHashCode; 
+        private readonly Int32 tokenHashCode; 
 
         /// <summary>
         /// the saved token object from ANTLR lexers
@@ -72,7 +72,7 @@ namespace Tokenizer
 
         public override int GetHashCode()
         {
-            return null == Token ? Type.GetHashCode() : Token.GetHashCode();
+            return tokenHashCode; // null == Token ? Type.GetHashCode() : Token.GetHashCode();
         }
 
         public override string ToString()

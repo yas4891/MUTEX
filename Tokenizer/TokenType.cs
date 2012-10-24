@@ -24,6 +24,7 @@ namespace Tokenizer
 
         public override int GetHashCode()
         {
+            //Console.WriteLine("TokenType: got called for {0}", Type);
             return Type.GetHashCode();
         }
 

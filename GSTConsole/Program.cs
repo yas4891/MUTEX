@@ -31,6 +31,7 @@ namespace GSTConsole
                 cLogger.DebugFormat("64-bit process: {0}", Environment.Is64BitProcess);
                 Console.WriteLine();
 
+                /*
                 IEnumerable<string> defaultTokenSet = new[]
                                                           {
                                                               "INCREMENT", "ADDEQUAL", "ARRAY_ACCESS",
@@ -44,8 +45,8 @@ namespace GSTConsole
                     }, factory);
 
                 model.Calculate();
-
-                /*
+                /* */
+                
                 string student;
                 string assignment;
                 string path;
@@ -90,7 +91,7 @@ namespace GSTConsole
                 cLogger.DebugFormat("total runtime: {0} ms", watch.ElapsedMilliseconds);
                 Console.WriteLine("{0}", appLogic.MaximumSimilarity);
                 Console.WriteLine("{0}", appLogic.MaxSimilarityStudentIdentifier);
-
+                
 #if DEBUG
                 if (Environment.UserInteractive)
                     Console.ReadLine();
@@ -117,7 +118,7 @@ namespace GSTConsole
         {
             return (string.IsNullOrWhiteSpace(templatePath))
                        ? File.ReadAllText(path)
-                       : TemplatingHelper.StripTemplateFromSourceFile(path, templatePath);
+                       : File.ReadAllText(TemplatingHelper.StripTemplateFromSourceFile(path, templatePath));
         }
 
         /// <summary>

@@ -6,6 +6,7 @@ using System.Text;
 using GSTLibrary.exception;
 using GSTLibrary.token;
 using System.Threading;
+using log4net;
 
 namespace GSTLibrary.tile
 {
@@ -24,6 +25,7 @@ namespace GSTLibrary.tile
     /// <typeparam name="T"></typeparam>
     public class HashingGSTAlgorithm<T> : AbstractGSTAlgorithm<T> where T : GSTToken
     {
+        private static readonly ILog cLogger = LogManager.GetLogger(typeof(HashingGSTAlgorithm<T>).Name);
         /// <summary>
         /// handles the hashing of any number of tokens and stores the hash values. 
         /// Used to abstract the implementation out of the algorithm
@@ -151,6 +153,13 @@ namespace GSTLibrary.tile
             if(!initialized)
             {
                 InitializeHashes();
+
+                /*
+                for (int i = 0; i < ListA.Count; i++)
+                {
+                    cLogger.DebugFormat("A: {0}, B:{1}", ListA[i].GetHashCode(), ListB[i].GetHashCode());
+                }
+                /* */
             }
 
             MatchesList = new List<Tile<T>>();

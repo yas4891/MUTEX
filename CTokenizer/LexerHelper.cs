@@ -206,23 +206,7 @@ namespace CTokenizer
             lexer.Reset();
             return list;
         }
-
         
-        /*
-        public static IEnumerable<string> GetDebugTokenStrings(this Lexer lexer, TokenFactory factory)
-        {
-            var lexerType = lexer.GetType();
-            
-            return lexer.GetTokens().Select(
-                token => string.Format("[{0:000}:{1:00}] {2}\t\t- {3}",
-                                        token.Line,
-                                        token.CharPositionInLine,
-                                        factory.GetTokenName(token.Type, lexerType),
-                                        token.Text))
-                .ToList();
-        }
-        /* */
-
         /// <summary>
         /// returns a bunch of debug information for the tokens
         /// </summary>
